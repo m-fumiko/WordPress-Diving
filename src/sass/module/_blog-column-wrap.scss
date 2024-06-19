@@ -1,0 +1,85 @@
+@use "global" as *;
+
+.blog-column-wrap time {
+    font-size: rem(14);
+    font-weight: $regular;
+    line-height: 1;
+}
+
+.blog-column-wrap h1 {
+    margin-top: rem(13);
+    padding-bottom: rem(6);
+    font-size: rem(24);
+    font-weight: $medium;
+    line-height: 1;
+    border-bottom: solid 1px $color-green;
+    @include mq("md") {
+        padding-bottom: 0;
+        font-size: rem(32);
+    }
+}
+
+.blog-column-wrap img {
+    margin-top: rem(24);
+    width: 100%;
+    aspect-ratio: 345/231;
+    object-fit: cover;
+    @include mq("md") {
+        margin-top: rem(40);
+    }
+}
+
+.blog-column-wrap p {
+    margin-top: rem(24);
+    @include mq("md") {
+        margin-top: rem(40);
+    }
+}
+
+.blog-column-wrap p,
+.blog-column-wrap :any-link {
+    font-size: rem(16);
+    font-weight: $regular;
+    line-height: calc(24/16);
+}
+
+.blog-column-wrap ul {
+    margin-top: rem(24);
+    padding-left: rem(27);
+    @include mq("md") {
+        margin-top: rem(40);
+    }
+}
+
+.blog-column-wrap li {
+    position: relative;
+}
+
+.blog-column-wrap li::before {
+    position: absolute;
+    content: '';
+    mask-image: url(../images/common/starfish.svg);
+    background-color: $color-green;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    width: rem(18);
+    height: rem(18);
+    left: rem(-22);
+    top: rem(0);
+    z-index: 100;
+}
+
+.blog-column-wrap__pagenavi {
+    margin-top: rem(40);
+    @include mq("md") {
+        margin-top: rem(80);
+    }
+}
+
+.blog-column-wrap ul li + li {
+    margin-top: rem(4);
+    @include mq("md") {
+        margin-top: 0;
+    }
+}

@@ -1,0 +1,109 @@
+@use "global" as *;
+
+.price-list__row {
+    @include mq("md") {
+        display: table-row;
+    }
+}
+
+.price-list__row + .price-list__row {
+    border-top: 1px solid $color-green;
+}
+
+.price-list__title {
+    padding-top: rem(12);
+    padding-right: rem(8);
+    padding-bottom: rem(12);
+    padding-left: rem(40);
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-size: rem(16);
+    font-weight: $bold;
+    line-height: 1;
+    color: $color-white;
+    background-color: $color-green;
+    @include mq("md") {
+        padding-top: rem(8);
+        padding-right: rem(8);
+        padding-bottom: rem(70);
+        padding-left: rem(8);
+        display: table-cell;
+        width: 28.5714285714%;
+    }
+}
+
+.price-list__title span {
+    position: relative;
+}
+
+.price-list__title span::before {
+    position: absolute;
+    content: '';
+    top: 39%;
+    transform: translateY(-50%);
+    left: rem(-33);
+    mask-image: url(../images/ocean_sea_icon1.svg);
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    background-color: $color-white;
+    width: rem(24);
+    height: rem(24);
+    @include mq("md") {
+        width: rem(64);
+        height: rem(64);
+        top: rem(25);
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.price-list__item {
+    padding-top:rem(6);
+    padding-right: rem(8);
+    padding-bottom: rem(5);
+    padding-left: rem(8);
+    width: 69.565217%;
+    font-size: rem(16);
+    font-weight: $regular;
+    line-height: 1.5;
+    @include mq("md") {
+        text-align: left;
+        width: 48.433048%;
+    }
+}
+
+.price-list__value {
+    padding-top: rem(18);
+    padding-right: rem(16);
+    padding-bottom: rem(18);
+    padding-left: rem(16);
+    width: 30.4347826%;
+    text-align: right;
+    font-size: rem(16);
+    font-weight: $regular;
+    font-family: 'Noto Sans JP',sans-serif;
+    line-height: 1;
+    border-left: 1px solid $color-green;
+    @include mq("md") {
+        width: 23.0769231%;
+    }
+}
+
+.price-list__item,
+.price-list__value {
+    display: inline-block;
+    min-height: rem(60);
+    @include mq("md") {
+        display: table-cell;
+        padding: rem(17) rem(16);
+    }
+}
+
+.price-list__item span {
+    line-height: 3;
+    @include mq("md") {
+        line-height: 1.5;
+    }
+}

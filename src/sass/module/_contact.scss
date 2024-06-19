@@ -1,0 +1,32 @@
+@use "global" as *;
+
+.contact {
+    position: relative;
+}
+
+.contact::after {
+    content: "";
+    position: absolute;
+    top: rem(-28);
+    left: calc(50% - min(46vw, rem(620)));
+    width: rem(120);
+    height: rem(55);
+    background-image: url(../images/top/hanadai-top-voice.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    z-index: -1;
+    @include mq("md") {
+        top: rem(-17);
+        left: calc(50% - min(49vw, rem(530
+        )));
+        width: rem(300);
+        height: rem(138);
+    }
+}
+
+.contact__inner.inner {
+    @include mq("md") {
+        max-width: rem(750);
+    }
+}

@@ -1,0 +1,90 @@
+@use "global" as *;
+
+.form__wrap {
+    @include mq(md){
+        display: flex;
+        align-items: center;
+    }
+}
+
+.form__wrap.form__wrap--textarea {
+    @include mq(md){
+        align-items: flex-start;
+        padding-bottom: rem(40);
+    }
+}
+
+.form__wrap + .form__wrap {
+    margin-top: rem(24);
+    border-top: dashed 1px $color-green;
+    @include mq("md") {
+        margin-top: rem(40);
+    }
+}
+
+.form__label {
+    margin-top: rem(27);
+    font-size: rem(16);
+    font-weight: $bold;
+    line-height: 1;
+    @include mq(md){
+        max-width: rem(187);
+        width: 100%;
+    }
+}
+
+.form__wrap:nth-of-type(4) .form__label {
+    @include mq("md") {
+        margin-top: rem(-16);
+    }
+}
+
+.form__label span {
+    margin-left: rem(8);
+    padding-top: rem(4);
+    padding-right: rem(13);
+    padding-bottom: rem(4);
+    padding-left: rem(13);
+    display: inline-block;
+    font-size: rem(12);
+    font-weight: 300;
+    font-family: 'Noto Sans JP',sans-serif;
+    line-height: 1;
+    letter-spacing: rem(4.5);
+    color: $color-white;
+    background-color: $color-red;
+}
+
+.form__input,
+.form__select,
+.form__checkbox,
+.form__textarea {
+    margin-top: rem(16);
+    @include mq(md){
+        margin-top: rem(40);
+    }
+}
+
+.form__input,
+.form__textarea {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: rem(480);
+    width: 100%;
+    @include mq("md") {
+        margin-right: 0;
+    }
+}
+
+.form__check {
+    width: 100%;
+    border-top: dashed 1px #408F95;
+}
+
+.form__submit {
+    margin-top: rem(20);
+    text-align: center;
+    @include mq("md") {
+        margin-top: rem(37);
+    }
+}

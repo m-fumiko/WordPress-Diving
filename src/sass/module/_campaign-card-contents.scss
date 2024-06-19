@@ -1,0 +1,55 @@
+@use "global" as *;
+
+.campaign-card-contents {
+    position: relative;
+}
+
+.campaign-card-contents::after {
+    content: "";
+    position: absolute;
+    top: rem(-143);
+    left: calc(50% - min(46vw, rem(620)));
+    width: rem(120);
+    height: rem(55);
+    background-image: url(../images/top/hanadai-top-voice.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    @include mq("md") {
+        top: rem(-140);
+        left: calc(50% - min(50vw, rem(614)));
+        width: rem(300);
+        height: rem(138);
+    }
+}
+
+.campaign-card-contents__items {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    column-gap: rem(40);
+    row-gap: rem(36);
+    width: 82.6666667%;
+    margin: auto;
+    @include mq("md") {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: rem(88);
+        width: initial;
+    }
+}
+
+.campaign-card-contents__item {
+    @include mq("md") {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.campaign-card__pc-contents {
+    margin-top: rem(24);
+}
+
+.campaign-card-contents__pagenavi {
+    margin-top: rem(80);
+    @include mq("md") {
+        margin-top: rem(88);
+    }
+}

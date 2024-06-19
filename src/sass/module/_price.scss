@@ -1,0 +1,46 @@
+@use "global" as *;
+
+.price {
+    position: relative;
+}
+
+.price::after {
+    content: "";
+    position: absolute;
+    top: rem(-23);
+    left: calc(50% - min(46vw, rem(620)));
+    width: rem(120);
+    height: rem(55);
+    background-image: url(../images/top/hanadai-top-voice.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    z-index: -1;
+    @include mq("md") {
+        top: rem(-68);
+        left: calc(50% - min(49vw, rem(620)));
+        width: rem(300);
+        height: rem(138);
+    }
+}
+
+.price__inner.inner {
+    @include mq("md") {
+        max-width: rem(750);
+    }
+}
+
+.price-tables__item {
+    width: 100%;
+    text-align: center;
+    border: 1px solid $color-green;
+    border-collapse: collapse;
+}
+
+.price-tables__item + .price-tables__item {
+    margin-top: rem(35);
+    @include mq("md") {
+        margin-top: rem(80);
+    }
+}
+

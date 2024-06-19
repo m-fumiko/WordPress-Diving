@@ -1,0 +1,18 @@
+@use "global" as *;
+
+.blog-list {
+    display: grid;
+    column-gap: rem(40);
+    row-gap: rem(40);
+    grid-template-columns: repeat(1, 1fr);
+    @include mq(md){
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.blog-list.blog-list--2 {
+    @include mq(md){
+        row-gap: rem(83);
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

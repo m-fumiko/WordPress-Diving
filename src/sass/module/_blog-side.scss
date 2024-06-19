@@ -1,0 +1,36 @@
+@use "global" as *;
+
+.blog-side {
+    width: 86.4%;
+    @include mq("md") {
+        width: 27.2222222222%;
+    }
+}
+
+.blog-side__items + .blog-side__items {
+    margin-top: rem(80);
+}
+
+.blog-side-title {
+    padding-left: rem(16);
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    height: rem(50);
+    gap: rem(8);
+    border-left: solid 8px $color-green;
+    font-size: rem(24);
+    font-weight: $regular;
+    line-height: 1;
+}
+
+.blog-side-title::before {
+    content: "";
+    mask-image: url(../images/ocean_sea_icon3.svg);
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    background-color: #0D2936;
+    width: rem(50);
+    height: rem(50);
+}

@@ -1,0 +1,17 @@
+@use "global" as *;
+
+.common-button.form-submit__button {
+    padding: 0;
+}
+
+.form-submit__button input { 
+    color: $color-white;
+    padding-top: rem(19);
+    padding-right: rem(116);
+    padding-bottom: rem(19);
+    padding-left: rem(51);
+}
+
+.form-submit__button input:hover {
+    color: $color-green;
+}

@@ -1,0 +1,54 @@
+@use "global" as *;
+
+.common-title__main {
+    font-size: rem(32);
+    font-weight: $regular;
+    line-height: 1;
+    @include mq("md") {
+        font-size: rem(40);
+    }
+}
+
+.common-title__main::first-letter {
+    color: $color-green;
+    text-transform: uppercase;
+  }
+
+.common-title__sub {
+    margin-top: rem(11);
+    font-size: rem(12);
+    font-weight: $regular;
+    font-family: 'Noto Sans JP',sans-serif;
+    line-height: 1;
+    color: $color-green;
+    @include mq("md") {
+        margin-top: rem(8);
+    }
+}
+
+.common-title__main.common-title__main--white {
+    @include mq("md") {
+        color: $color-white;
+    }
+}
+
+.common-title__main.common-title__main--white::first-letter {
+    @include mq("md") {
+        color: $color-white;
+        }
+}
+
+.common-title__sub.common-title__sub--white {
+    @include mq("md") {
+    color: $color-white;
+    }
+}
+
+.common-title__main.common-title__main--large {
+    font-size: rem(80);
+    font-weight: 300;
+}
+
+.common-title__sub.common-title__sub--large {
+    margin-top: rem(-3);
+}

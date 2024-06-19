@@ -1,0 +1,17 @@
+@use "global" as *;
+
+.contact-error__message {
+    display: flex;
+    justify-content: center;
+    font-size: rem(14);
+    text-indent: rem(-14);
+    padding-left: rem(14);
+    color: $color-red;
+}
+
+.contact-error__form {
+    padding-top: rem(10);
+    @include mq("md") {
+        padding-top: 0;
+    }
+}

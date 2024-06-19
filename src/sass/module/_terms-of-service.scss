@@ -1,0 +1,72 @@
+@use "global" as *;
+
+.terms-of-service {
+    position: relative;
+}
+
+.terms-of-service::after {
+    content: "";
+    position: absolute;
+    top: rem(-16);
+    left: calc(50% - min(46vw, rem(620)));
+    width: rem(120);
+    height: rem(55);
+    background-image: url(../images/top/hanadai-top-voice.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    z-index: -1;
+    @include mq("md") {
+        top: rem(-74);
+        left: calc(50% - min(49vw, rem(620)));
+        width: rem(300);
+        height: rem(138);
+    }
+}
+
+.terms-of-service__wrap {
+    @include mq("md") {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: rem(800);
+        width: 100%;
+    }
+}
+
+.terms-of-service__title {
+    font-size: rem(24);
+    font-weight: $medium;
+    @include mq("md") {
+        font-size: rem(32);
+    }
+}
+
+.terms-of-service__text {
+    margin-top: rem(35);
+}
+
+.terms-of-service__text,
+.terms-of-service__description {
+    font-size: rem(16);
+    font-weight: $regular;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: calc(32/16);
+}
+
+
+.terms-of-service__description-numbers {
+    margin-top: rem(33);
+    padding-left: rem(9);
+    counter-reset: number;
+}
+
+.terms-of-service__description-number {
+    padding-left: rem(15);
+    text-indent: rem(-15);
+}
+
+.terms-of-service__description-number::before {
+    content: counter(number) ". ";
+    counter-increment: number;
+    font-family: 'Noto Sans JP', sans-serif;
+}

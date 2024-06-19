@@ -1,0 +1,54 @@
+@use "global" as *;
+
+.top-voice__inner {
+    position: relative;
+}
+
+.top-voice__inner::before {
+    @include mq("md") {
+        content: '';
+        position: absolute;
+        top: rem(-116);
+        left: calc(50% - min(48vw, rem(620)));
+        width: rem(301);
+        height: rem(138);
+        background-image: url(../images/top/hanadai-top-voice.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+}
+
+.top-voice__inner::after {
+    @include mq("md") {
+        content: '';
+        position: absolute;
+        bottom: rem(-71);
+        right: calc(50% - min(48vw, rem(540)));
+        width: rem(71);
+        height: rem(162);
+        background-image: url(../images/top/seahorse-top-voice.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+}
+
+.top-voice__title {
+    text-align: center;
+}
+
+.top-voice__list {
+    margin-top: rem(46);
+    @include mq("md") {
+        margin-top: rem(35);
+    }
+}
+
+.top-voice__button-wrapper {
+    text-align: center;
+    margin-top: rem(40);
+    @include mq("md") {
+        margin-top: rem(80);
+    }
+}

@@ -1,0 +1,73 @@
+@use "global" as *;
+
+.footer-menu {
+    display: flex;
+    justify-content: space-around;
+    @include mq("md") {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.footer-menu__left {
+    margin-left: rem(20);
+}
+
+.footer-menu__right {
+    margin-left: rem(37);
+}
+
+.footer-menu__left,
+.footer-menu__right {
+    @include mq("md") {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: rem(45);
+    }
+}
+
+.footer-menu__wrap {
+    margin-top: rem(22);
+    @include mq("md") {
+        margin-top: 0
+        ;
+    }
+}
+
+.footer-menu__items + .footer-menu__items {
+    margin-top: rem(16);
+}
+
+.footer-menu__item-title {
+    position: relative;
+    display: block;
+    padding-top: rem(12);
+    padding-bottom: rem(12);
+    font-size: rem(16);
+    font-weight: 300;
+    font-weight: $bold;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1;
+    color: $color-white;
+}
+
+.footer-menu__item-title::before {
+    background: url(../images/common/starfish.svg);
+    position: absolute;
+    content: '';
+    width: rem(18);
+    height: rem(18);
+    left: rem(-22);
+    top: rem(14);
+    z-index: 100;
+}
+
+.footer-menu__sub-item {
+    padding-top: rem(12);
+    padding-bottom: rem(12);
+    font-size: rem(16);
+    font-weight: 300;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: calc(18/16);
+    color: $color-white;
+}

@@ -1,0 +1,12 @@
+@use "global" as *;
+
+.voice-layout {
+    margin-top: rem(36);
+}
+
+.voice__pagenavi {
+    margin-top: rem(80);
+    @include mq("md") {
+        margin-top: rem(72);
+    }
+}

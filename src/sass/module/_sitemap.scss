@@ -1,0 +1,25 @@
+@use "global" as *;
+
+.sitemap {
+    position: relative;
+}
+
+.sitemap::after {
+    content: "";
+    position: absolute;
+    top: rem(-16);
+    left: calc(50% - min(46vw, rem(620)));
+    width: rem(120);
+    height: rem(55);
+    background-image: url(../images/top/hanadai-top-voice.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    z-index: -1;
+    @include mq("md") {
+        top: rem(-67);
+        left: calc(50% - min(49vw, rem(620)));
+        width: rem(300);
+        height: rem(138);
+    }
+}

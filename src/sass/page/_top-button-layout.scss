@@ -1,0 +1,12 @@
+@use "global" as *;
+
+.top-button-layout {
+    position: fixed;
+    z-index: 1000;
+    bottom: rem(15);
+    right: rem(15);
+    @include mq("md") {
+        bottom: rem(20);
+        right: rem(20);
+    }
+}

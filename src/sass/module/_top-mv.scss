@@ -1,0 +1,67 @@
+@use "global" as *;
+
+.top-mv {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    min-height: rem(400);
+}
+
+.top-mv__inner {
+    height: inherit;
+    min-height: inherit;
+}
+
+.top-mv__title-wrap {
+    position: absolute;
+    display: inline-block;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    color: $color-white;
+    text-align: center;
+}
+
+.top-mv__main-title {
+    font-size: rem(40);
+    font-weight: $regular;
+    font-family: $second-font-family;
+    line-height: 1;
+    letter-spacing: 0.54em;
+    text-indent: 0.54em;
+    text-transform: uppercase;
+    @include mq("md") {
+        font-size: rem(80);
+    }
+}
+
+.top-mv__sub-title {
+    margin-top: rem(3);
+    font-size: rem(20);
+    font-weight: $regular;
+    line-height: calc(33/20);
+    @include mq(md) {
+        margin-top: rem(10);
+        font-size: prem(35);
+    }
+}
+
+.top-mv__swiper {
+    height: inherit;
+    min-height: inherit;
+}
+
+.top-mv__swiper .swiper-slide picture {
+    display: block;
+    height: inherit;
+    min-height: inherit;
+}
+
+.top-mv__swiper .swiper-slide img {
+    height: inherit;
+    min-height: inherit;
+    width: 100%;
+    object-fit: cover;
+}

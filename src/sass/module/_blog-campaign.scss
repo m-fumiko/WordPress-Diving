@@ -1,0 +1,100 @@
+@use "global" as *;
+
+.blog-campaign__cards {
+    margin-top: rem(24);
+}
+
+.blog-campaign__card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: rem(1) rem(2) rem(4) rem(1) rgba(0, 0, 0, .25);
+}
+
+.blog-campaign__card+.blog-campaign__card {
+    margin-top: rem(40);
+}
+
+.blog-campaign__card-img {
+    width: 100%;
+}
+
+.blog-campaign__card-img img {
+    aspect-ratio: 294/188;
+    width: 100%;
+    object-fit: cover;
+}
+
+.blog-campaign__card-content {
+    padding-top: rem(16);
+    padding-left: rem(24);
+    padding-right: rem(24);
+    padding-bottom: rem(24);
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+.blog-campaign__card-title {
+    padding-bottom: rem(10);
+    flex-grow: 1;
+    text-align: center;
+    font-size: rem(16);
+    font-weight: $medium;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1;
+    border-bottom: solid rem(1) $color-green
+}
+
+.blog-campaign__card-text {
+    margin-top: rem(10);
+    font-size: rem(14);
+    font-weight: $regular;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: calc(24/14);
+    text-align: center;
+}
+
+.blog-campaign__card-price {
+    margin-top: rem(10);
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.blog-campaign__card-price.blog-campaign__card-price--sub {
+    margin: rem(5);
+}
+
+.blog-campaign__card-black {
+    position: relative;
+    font-size: rem(20);
+    font-weight: $bold;
+    font-family: $second-font-family;
+    line-height: 1;
+}
+
+.blog-campaign__card-black::after {
+    content: "";
+    top: 40%;
+    left: 0;
+    position: absolute;
+    border: solid rem(2) $color-red;
+    width: rem(76);
+}
+
+.blog-campaign__card-green {
+    margin-left: rem(18);
+    font-size: rem(32);
+    font-weight: $bold;
+    font-family: $second-font-family;
+    line-height: 1;
+    color: $color-green;
+}
+
+.blog-campaign__button-wrapper {
+    text-align: center;
+    margin-top: rem(40);
+}

@@ -1,0 +1,39 @@
+@use "global" as *;
+
+.blog-review__content {
+    margin-top: rem(24);
+}
+
+.blog-review__img {
+    width: 100%;
+}
+
+.blog-review__img img{
+    aspect-ratio: 294/218;
+    width: 100%;
+    object-fit: cover;
+}
+
+.blog-review__contents {
+    margin-top: rem(16);
+}
+
+.blog-review__info {
+    font-size: rem(12);
+    font-weight: $regular;
+    line-height: calc(18/12);
+}
+
+.blog-review__text {
+    margin-top: rem(8);
+    font-size: rem(24);
+    font-weight: $regular;
+    line-height: calc(35/24);
+}
+
+.blog-review__button-wrapper {
+    margin-top: rem(40);
+    text-align: center;
+}
+
+

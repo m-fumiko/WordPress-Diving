@@ -1,0 +1,57 @@
+@use "global" as *;
+
+.blog-card a {
+    padding-top: rem(16);
+    padding-right: rem(16);
+    padding-left: rem(16);
+    padding-bottom: rem(24);
+    display: block;
+    height: 100%;
+    background: $color-white;
+    box-shadow: rem(2) rem(2) rem(10) 0 rgba(0, 0, 0, .25);
+}
+
+.blog-card__img img {
+    width: 100%;
+    aspect-ratio: 300/200;
+    object-fit: cover;
+}
+
+.blog-card__content {
+    margin-top: rem(16);
+}
+
+.blog-card__date {
+    font-size: rem(12);
+    font-weight: $regular;
+    line-height: 1;
+}
+
+.blog-card__title {
+    padding-bottom: rem(3);
+    font-size: rem(16);
+    font-weight: $medium;
+    font-family: 'Noto Sans JP', sans-serif;
+    border-bottom: solid 1px $color-green;
+}
+
+.blog-card__text {
+    margin-top: rem(15);
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.blog-card.blog-card--2 a {
+    opacity: 1;
+}
+
+.blog-card.blog-card--2 .blog-card__img  {
+    overflow: hidden;
+}
+
+.blog-card.blog-card--2 .blog-card__img img {
+    transition: transform .6s ease;
+}
+
+.blog-card.blog-card--2:hover .blog-card__img img {
+    transform: scale(1.1);
+}

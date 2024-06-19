@@ -1,0 +1,138 @@
+@use "global" as *;
+
+.about {
+    position: relative;
+}
+
+.about::after {
+    content: "";
+    position: absolute;
+    top: rem(-24);
+    left: calc(50% - min(46vw, rem(620)));
+    width: rem(120);
+    height: rem(55);
+    background-image: url(../images/top/hanadai-top-voice.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    @include mq("md") {
+        top: rem(-71);
+        left: calc(50% - min(49vw, rem(620)));
+        width: rem(300);
+        height: rem(138);
+    }
+}
+
+.about__content {
+    position: relative;
+}
+
+.about__img-wrap {
+    @include mq("md") {
+        display: flex;
+    }
+}
+
+.about__img-01 {
+    @include mq("md") {
+        max-width: 37.111111%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+    }
+}
+
+.about__img-01 img {
+    @include mq("md") {
+        width: 100%;
+        height: auto;
+        display: block;
+        aspect-ratio: 400/606;
+        object-fit: cover;
+    }
+}
+
+.about__img-02 {
+    @include mq("md") {
+        margin-top: rem(80);
+        margin-left: auto;
+        max-width: 81.4814815%;
+        width: 100%;
+        position: relative;
+        z-index: 0;
+    }
+}
+
+.about__img-02 img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 345/228;
+    @include mq("md") {
+        aspect-ratio: 880/581;
+    }
+}
+
+.about__contents {
+    @include mq("md") {
+        display: flex;
+    }
+}
+
+.about__contents-title {
+    position: absolute;
+    top: 6%;
+    left: 7%;
+    max-width: rem(200);
+    width: 100%;
+    z-index: 2;
+    font-size: rem(40);
+    font-weight: $regular;
+    line-height: 1;
+    color: $color-white;
+    @include mq("md") {
+        top: 31%;
+        left: 19%;
+        max-width: 50%;
+        width: 100%;
+
+        font-size: rem(80);
+        color: $color-white;
+        line-height: 1.2;
+    }
+}
+
+.about__contents-text {
+    margin-top: rem(40);
+    font-size: rem(16);
+    font-weight: $regular;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: calc(24/16);
+    @include mq("md") {
+        margin-top: 0;
+        position: absolute;
+        top: 34%;
+        right: 2%;
+        max-width: 38%;
+        width: 100%;
+        color: $color-white;
+    }
+}
+
+.about__title {
+    margin-top: rem(40);
+    text-align: center;
+    @include mq("md") {
+        margin-top: rem(120);
+    }
+}
+
+.about__gallery {
+    margin-top: rem(43);
+    @include mq("md") {
+        margin-top: rem(85);
+    }
+}

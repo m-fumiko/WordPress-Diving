@@ -1,0 +1,46 @@
+@use "global" as *;
+
+.blog-article__items {
+    margin-top: rem(24);
+}
+
+.blog-article__item {
+    padding: rem(16);
+    box-shadow: rem(2) rem(2) rem(10) 0 rgba(0, 0, 0, .25);
+}
+
+.blog-article__item + .blog-article__item {
+    margin-top: rem(24);
+}
+
+.blog-article__flex {
+    display: flex;
+}
+
+.blog-article__img {
+    max-width: 45.9770115%;
+    width: 100%;
+}
+
+.blog-article__img img {
+    aspect-ratio: 121/90;
+    width: 100%;
+    object-fit: cover;
+}
+
+.blog-article__contents {
+    margin-left: rem(16);
+}
+
+.blog-article__date {
+    display: block;
+    font-size: rem(12);
+    font-weight: $regular;
+}
+
+.blog-article__text {
+    margin-top: rem(4);
+    font-size: rem(16);
+    font-weight: $regular;
+}
+

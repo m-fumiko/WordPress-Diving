@@ -1,0 +1,25 @@
+@use "global" as *;
+
+.voice {
+    position: relative;
+}
+
+.voice::after {
+    content: "";
+    position: absolute;
+    top: rem(-147);
+    left: calc(50% - min(46vw, rem(620)));
+    width: rem(120);
+    height: rem(55);
+    background-image: url(../images/top/hanadai-top-voice.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    z-index: -1;
+    @include mq("md") {
+        top: rem(-146);
+        left: calc(50% - min(50vw, rem(619)));
+        width: rem(300);
+        height: rem(138);
+    }
+}

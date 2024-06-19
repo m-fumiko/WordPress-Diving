@@ -1,0 +1,69 @@
+@use "global" as *;
+
+.form-check {
+    margin-top: rem(24);
+    margin-left: auto;
+    margin-right: auto;
+    width: 84.73913%;
+    text-align: center;
+    @include mq("md") {
+        margin-top: rem(-16);
+        padding-top: rem(49);
+    }
+}
+
+.form-check label {
+    display:block;
+}
+
+.form-check input + span {
+    margin-top: rem(34);
+    cursor: pointer;
+    display: inline-block;
+    padding-left: rem(30);
+    position: relative;
+    font-size: rem(14);
+    line-height: 1.5;
+    text-align: left;
+}
+
+.form-check input + span::before {
+    content: "";
+    position: absolute;
+    top: 20%;
+    left: 0;
+    transform: translateY(-50%);
+    background: #fff;
+    border: 1px solid $color-green;
+    display: block;
+    width: rem(22);
+    height: rem(22);
+    @include mq("md") {
+        top: 37%;
+        left: rem(-7);
+    }
+}
+
+.form-check input + span::after {
+    content: "";
+    margin-top: rem(-2);
+    position: absolute;
+    top: 17%;
+    left: rem(3);
+    transform: translateY(-50%) rotate(-45deg);
+    display: block;
+    width: rem(15);
+    height: rem(8);
+    border-bottom: rem(2) solid #C94800;
+    border-left: rem(2) solid #C94800;
+    transition:  .3s;
+    opacity: 0;
+    @include mq("md") {
+        top: 37%;
+        left: rem(-3);
+    }
+}
+
+.form-check input:checked + span::after {
+    opacity: 1;
+}

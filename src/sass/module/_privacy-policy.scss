@@ -1,0 +1,79 @@
+@use "global" as *;
+
+.privacy-policy {
+    position: relative;
+}
+
+.privacy-policy::after {
+    content: "";
+    position: absolute;
+    top: rem(-16);
+    left: calc(50% - min(46vw, rem(620)));
+    width: rem(120);
+    height: rem(55);
+    background-image: url(../images/top/hanadai-top-voice.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    z-index: -1;
+    @include mq("md") {
+        top: rem(-74);
+        left: calc(50% - min(49vw, rem(620)));
+        width: rem(300);
+        height: rem(138);
+    }
+}
+
+.privacy-policy__wrap {
+    @include mq("md") {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: rem(800);
+        width: 100%;
+    }
+}
+
+.privacy-policy__title {
+    font-size: rem(24);
+    font-weight: $medium;
+    @include mq("md") {
+        font-size: rem(32);
+    }
+}
+
+.privacy-policy__text {
+    margin-top: rem(32);
+}
+
+.privacy-policy__text,
+.privacy-policy__description {
+    font-size: rem(16);
+    font-weight: $regular;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: calc(32/16);
+}
+
+.privacy-policy__items {
+    margin-top: rem(33);
+}
+
+.privacy-policy__description-numbers {
+    padding-left: rem(9);
+    counter-reset: number;
+}
+
+.privacy-policy__description-number {
+    padding-left: rem(15);
+    text-indent: rem(-15);
+}
+
+.privacy-policy__description-number::before {
+    content: counter(number) ". ";
+    counter-increment: number;
+    font-family: 'Noto Sans JP', sans-serif;
+    ;
+}
+
+.privacy-policy__description-text {
+    margin-top: rem(33);
+}

@@ -1,0 +1,169 @@
+@use "global" as *;
+
+.information-tab__menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include mq("md") {
+        justify-content: space-between;
+    }
+}
+
+.information-tab__menu-item {
+    position: relative;
+    padding: rem(10) rem(16);
+    min-width: rem(102);
+    width: fit-content;
+    font-size: rem(14);
+    font-weight: $regular;
+    line-height: 1.3;
+    color: $color-green;
+    background-color: $color-skyblue;
+    text-align: center;
+    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: .3s;
+    @include mq("md") {
+        padding: rem(13) 0;
+        min-width: rem(300);
+        height: rem(90);
+        font-size: rem(24);
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: rem(8);
+    }
+}
+
+.information-tab__menu-item::before {
+    @include mq("md") {
+        content: '';
+        mask-image: url(../images/ocean_sea_icon1.svg);
+        mask-position: center;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        background-color: $color-green;
+        width: rem(64);
+        height: rem(64);
+    }
+}
+
+.information-tab__menu-item:hover::before,
+.information-tab__menu-item:focus::before,
+.information-tab__menu-item.is-active::before {
+    @include mq("md") {
+        background-color: $color-white;
+
+    }
+}
+
+.information-tab__menu-item--icon02::before {
+    @include mq("md") {
+        mask-image: url(../images/shark_icon1.svg);
+    }
+}
+
+.information-tab__menu-item--icon03::before {
+    @include mq("md") {
+        mask-image: url(../images/seafood_icon1.svg);
+    }
+}
+
+.information-tab__menu-item:hover {
+    color: $color-white;
+    background-color: $color-green;
+}
+
+.information-tab__menu-item+.information-tab__menu-item {
+    margin-left: rem(20);
+    @include mq("md") {
+        margin-left: 0;
+    }
+}
+
+.information-tab__menu-item.is-active {
+    color: $color-white;
+    background-color: $color-green;
+}
+
+.information-tab__menu-item.is-active::before {
+    color: $color-white;
+}
+
+.information-tab__content {
+    margin-top: rem(16);
+    @include mq("md") {
+        margin-top: rem(24);
+    }
+}
+
+.information-tab__content-item {
+    padding: rem(24);
+    display: none;
+    background-color: $color-white;
+    border: 1px solid $color-green;
+}
+
+.information-tab__content-item.is-active {
+    display: block;
+    animation: fade 0.7s;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.information-tab__contents-wrap {
+    @include mq("md") {
+        display: flex;
+    }
+}
+
+.information-tab__contents {
+    @include mq("md") {
+        padding: rem(67) 0;
+        max-width: 50%;
+        width: 100%;
+    }
+}
+
+.information-tab__content-title {
+    padding-bottom: rem(4);
+    font-size: rem(24);
+    font-weight: $bold;
+    line-height: 1;
+    border-bottom: 1px solid $color-green;
+}
+
+.information-tab__content-text {
+    margin-top: rem(8);
+    font-size: rem(16);
+    font-weight: $regular;
+    line-height: calc(24/16);
+}
+
+.information-tab__img {
+    margin-top: rem(8);
+    @include mq("md") {
+        margin-top: 0;
+        margin-left: rem(48);
+        max-width: 50%;
+        width: 100%;
+    }
+}
+
+.information-tab__img img {
+    aspect-ratio: 297/189;
+    width: 100%;
+    object-fit: cover;
+    @include mq("md") {
+        aspect-ratio: 492/313;
+    }
+}
