@@ -1,48 +1,51 @@
 <aside class="blog-side blog-side-layout">
     <!-- 人気記事 -->
     <div class="blog-side__items">
-        <div class="blog-side__article blog-article">
-            <h3 class="blog-article__title blog-side-title">人気記事</h3>
-            <ul class="blog-article__items">
-                <?php
-                // 最新記事3件表示
-                $latest_posts = new WP_Query(array(
-                    'posts_per_page' => 3,
-                    'post_type' => 'post',
-                    'orderby' => 'date',
-                    'order' => 'DESC'
-                ));
-                if ($latest_posts->have_posts()) :
-                    while ($latest_posts->have_posts()) : $latest_posts->the_post();
-                ?>
-                        <li class="blog-article__item">
-                            <a href="<?php the_permalink(); ?>">
-                                <div class="blog-article__flex">
-                                    <div class="blog-article__img">
-                                        <?php if (has_post_thumbnail()) : ?>
-                                            <?php the_post_thumbnail('custom-thumbnail'); ?>
-                                        <?php else : ?>
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="blog-article__contents">
-                                        <time class="blog-article__date" datetime="<?php echo get_the_date('c'); ?>"><?php echo get_the_date('Y.m.d'); ?></time>
-                                        <p class="blog-article__text"><?php the_title(); ?></p>
-                                    </div>
+    <div class="blog-side__article blog-article">
+        <h3 class="blog-article__title blog-side-title">人気記事</h3>
+        <ul class="blog-article__items">
+            <?php
+            // 人気記事3件表示
+            $popular_posts = new WP_Query(array(
+                'posts_per_page' => 3,
+                'post_type' => 'post',
+                'meta_key' => 'post_views_count',
+                'orderby' => 'meta_value_num',
+                'order' => 'DESC'
+            ));
+            if ($popular_posts->have_posts()) :
+                while ($popular_posts->have_posts()) : $popular_posts->the_post();
+            ?>
+                    <li class="blog-article__item">
+                        <a href="<?php the_permalink(); ?>">
+                            <div class="blog-article__flex">
+                                <div class="blog-article__img">
+                                    <?php if (has_post_thumbnail()) : ?>
+                                        <?php the_post_thumbnail('custom-thumbnail'); ?>
+                                    <?php else : ?>
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
+                                    <?php endif; ?>
                                 </div>
-                            </a>
-                        </li>
-                    <?php
-                    endwhile;
-                    wp_reset_postdata();
-                else :
-                    echo '<li>最新記事がありません。</li>';
-                endif;
-                ?>
-            </ul>
-
-        </div>
+                                <div class="blog-article__contents">
+                                    <time class="blog-article__date" datetime="<?php echo get_the_date('c'); ?>"><?php echo get_the_date('Y.m.d'); ?></time>
+                                    <p class="blog-article__text"><?php the_title(); ?></p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                <?php
+                endwhile;
+                wp_reset_postdata();
+            else :
+                echo '<li>人気記事がありません。</li>';
+            endif;
+            ?>
+        </ul>
     </div>
+</div>
+
+
+
     <!-- 口コミ -->
     <div class="blog-side__items">
         <?php
@@ -66,7 +69,7 @@
                     <div class="blog-review__content">
                         <div class="blog-review__img">
                             <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('thumbnail'); ?>
+                                <?php the_post_thumbnail('full'); ?>
                             <?php else : ?>
                                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
                             <?php endif; ?>
@@ -117,7 +120,7 @@
                         <li class="blog-campaign__card">
                             <div class="blog-campaign__card-img">
                                 <?php if (has_post_thumbnail()) : ?>
-                                    <?php the_post_thumbnail('custom-thumbnail'); ?>
+                                    <?php the_post_thumbnail('full'); ?>
                                 <?php else : ?>
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
                                 <?php endif; ?>

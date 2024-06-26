@@ -39,6 +39,7 @@
 }
 
 .common-button span {
+    // display: none;
     display: block;
 }
 
@@ -116,3 +117,49 @@
 .common-button.common-button--white:hover span::after {
     background: $color-white;
 }
+
+
+
+// .form-submit__button {
+//     position: relative;
+// }
+
+// .form-submit__button::before {
+//     content: "";
+//     position: absolute;
+//     display: block;
+//     bottom: rem(24);
+//     left: rem(122);
+//     width: rem(40);
+//     height: rem(1);
+//     // background: $color-white;
+//     background: red;
+//     border-radius: rem(1);
+// }
+
+// .form__submit::after {
+//     content: "";
+//     position: absolute;
+//     display: block;
+//     bottom: rem(27);
+//     right: rem(38);
+//     width: rem(10);
+//     height: rem(1);
+//     // background: $color-white;
+//     background: red;
+//     border-radius: rem(1);
+//     transform: rotate(42deg);
+// }
+
+// .form__submit::before {
+//     content: "";
+//     position: absolute;
+//     display: block;
+//     bottom: rem(24);
+//     left: rem(122);
+//     width: rem(40);
+//     height: rem(1);
+//     // background: $color-white;
+//     background: red;
+//     border-radius: rem(1);
+// }

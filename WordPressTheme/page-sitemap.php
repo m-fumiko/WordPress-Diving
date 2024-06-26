@@ -13,21 +13,8 @@
     </div>
 </div>
 <!-- パンくず -->
-<div class="breadcrumb breadcrumb-layout">
-    <div class="breadcrumb__inner inner">
-        <!-- Breadcrumb NavXTで出力される部分 ここから -->
-        <span>
-            <a href="<?php echo esc_url(home_url("/")) ?>">
-                <span>top</span>
-            </a>
-        </span>
-        &nbsp;&gt;&nbsp;
-        <span>
-            <span class="current-item">サイトマップ</span>
-        </span>
-        <!-- Breadcrumb NavXTで出力される部分 ここまで -->
-    </div>
-</div>
+<?php get_template_part('breadcrumb'); ?>
+
 <section class="sitemap sitemap-layout">
     <div class="sitemap__inner inner">
         <nav class="sitemap__nav-menu sitemap-menu">
@@ -35,7 +22,7 @@
                 <div class="sitemap-menu__wrap-top">
                     <ul class="sitemap-menu__items">
                         <li class="sitemap-menu__item">
-                            <a class="sitemap-menu__item-title" href="campaign.html">キャンペーン</a>
+                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/campaign")) ?>">キャンペーン</a>
                             <ul class="sitemap-menu__sub-items">
                                 <li class="sitemap-menu__sub-item">
                                     <a href="#">ライセンス取得</a>
@@ -51,14 +38,14 @@
                     </ul>
                     <ul class="sitemap-menu__items">
                         <li class="sitemap-menu__item">
-                            <a class="sitemap-menu__item-title" href="about.html">私たちについて</a>
+                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/about")) ?>">私たちについて</a>
                         </li>
                     </ul>
                 </div>
                 <div class="sitemap-menu__wrap">
                     <ul class="sitemap-menu__items">
                         <li class="sitemap-menu__item">
-                            <a class="sitemap-menu__item-title" href="information.html">ダイビング情報</a>
+                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/information")) ?>">ダイビング情報</a>
                             <ul class="sitemap-menu__sub-items">
                                 <li class="sitemap-menu__sub-item">
                                     <a href="information.html?tab=tab01">ライセンス講習</a>
@@ -74,7 +61,7 @@
                     </ul>
                     <ul class="sitemap-menu__items">
                         <li class="sitemap-menu__item">
-                            <a class="sitemap-menu__item-title" href="blog.html">ブログ</a>
+                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/blog")) ?>">ブログ</a>
                         </li>
                     </ul>
                 </div>
@@ -83,12 +70,12 @@
                 <div class="sitemap-menu__wrap-top">
                     <ul class="sitemap-menu__items">
                         <li class="sitemap-menu__item">
-                            <a class="sitemap-menu__item-title" href="voice.html">お客様の声</a>
+                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/voice")) ?>">お客様の声</a>
                         </li>
                     </ul>
                     <ul class="sitemap-menu__items">
                         <li class="sitemap-menu__item">
-                            <a class="sitemap-menu__item-title" href="price.html">料金一覧</a>
+                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/price")) ?>">料金一覧</a>
                             <ul class="sitemap-menu__sub-items">
                                 <li class="sitemap-menu__sub-item">
                                     <a href="#">ライセンス講習</a>
@@ -106,22 +93,22 @@
                 <div class="sitemap-menu__wrap">
                     <ul class="sitemap-menu__items">
                         <li class="sitemap-menu__item">
-                            <a class="sitemap-menu__item-title" href="faq.html">よくある質問</a>
+                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/price")) ?>">よくある質問</a>
                         </li>
                     </ul>
                     <ul class="sitemap-menu__items">
                         <li class="sitemap-menu__item">
-                            <a class="sitemap-menu__item-title" href="privacy-policy.html"><span>プライバシー<br class="u-mobile">ポリシー</span></a>
+                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/privacy-policy")) ?>"><span>プライバシー<br class="u-mobile">ポリシー</span></a>
                         </li>
                     </ul>
                     <ul class="sitemap-menu__items">
                         <li class="sitemap-menu__item">
-                            <a class="sitemap-menu__item-title" href="terms-of-service.html">利用規約</a>
+                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/terms-of-service")) ?>">利用規約</a>
                         </li>
                     </ul>
                     <ul class="sitemap-menu__items">
                         <li class="sitemap-menu__item">
-                            <a class="sitemap-menu__item-title" href="contact.html">お問い合わせ</a>
+                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/contact")) ?>">お問い合わせ</a>
                         </li>
                     </ul>
                 </div>

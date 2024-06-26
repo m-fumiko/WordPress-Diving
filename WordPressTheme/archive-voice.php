@@ -22,17 +22,17 @@
                     <a href="<?php echo esc_url(get_post_type_archive_link('voice')); ?>">ALL</a>
                 </li>
                 <?php
-                $terms = get_terms(array(
-                    'taxonomy' => 'voice_category',
-                    'hide_empty' => false,
-                ));
-                if (!empty($terms)) {
-                    foreach ($terms as $term) {
-                        $active_class = is_tax('voice_category', $term->slug) ? 'tag__menu-item--green' : '';
-                        echo '<li class="tag__menu-item ' . esc_attr($active_class) . '"><a href="' . esc_url(get_term_link($term)) . '">' . esc_html($term->name) . '</a></li>';
-                    }
+            $terms = get_terms(array(
+                'taxonomy' => 'voice_category',
+                'hide_empty' => false,
+            ));
+            if (!empty($terms)) {
+                foreach ($terms as $term) {
+                    $active_class = is_tax('voice_category', $term->slug) ? 'tag__menu-item--green' : '';
+                    echo '<li class="tag__menu-item ' . esc_attr($active_class) . '"><a href="' . esc_url(get_term_link($term)) . '">' . esc_html($term->name) . '</a></li>';
                 }
-                ?>
+            }
+            ?>
             </ul>
         </div>
     </div>
@@ -102,6 +102,8 @@
                 ?>
             </ul>
         </div>
+        <!-- ページネーション -->
+        <?php wp_pagenavi(); ?>
     </section>
 </main>
 <?php get_footer(); ?>

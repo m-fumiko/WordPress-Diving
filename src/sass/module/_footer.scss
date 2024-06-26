@@ -69,6 +69,7 @@
 }
 
 .footer.footer--not-found {
+    margin-top: rem(-1);
     padding-top: rem(91);
     @include mq("md") {
         padding-top: rem(232);

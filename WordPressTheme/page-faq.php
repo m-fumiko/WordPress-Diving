@@ -14,55 +14,34 @@
     </div>
     <!-- パンくず -->
     <?php get_template_part('breadcrumb'); ?>
-    
+
     <div class="faq faq-layout">
         <div class="faq__inner inner">
             <ul class="faq__list faq-list">
-                <li class="faq-list__item faq-item">
-                    <p class="faq-item__question js-faq-question">ここに質問が入ります。</p>
-                    <p class="faq-item__answer">
-                        ここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入ります
-                    </p>
-                </li>
-                <li class="faq-list__item faq-item">
-                    <p class="faq-item__question js-faq-question">ここに質問が入ります。</p>
-                    <p class="faq-item__answer">
-                        ここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入ります
-                    </p>
-                </li>
-                <li class="faq-list__item faq-item">
-                    <p class="faq-item__question js-faq-question">ここに質問が入ります。</p>
-                    <p class="faq-item__answer">
-                        ここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入ります
-                    </p>
-                </li>
-                <li class="faq-list__item faq-item">
-                    <p class="faq-item__question js-faq-question">ここに質問が入ります。</p>
-                    <p class="faq-item__answer">
-                        ここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入ります
-                    </p>
-                </li>
-                <li class="faq-list__item faq-item">
-                    <p class="faq-item__question js-faq-question">ここに質問が入ります。</p>
-                    <p class="faq-item__answer">
-                        ここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入ります
-                    </p>
-                </li>
-                <li class="faq-list__item faq-item">
-                    <p class="faq-item__question js-faq-question">ここに質問が入ります。</p>
-                    <p class="faq-item__answer">
-                        ここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入ります
-                    </p>
-                </li>
-                <li class="faq-list__item faq-item">
-                    <p class="faq-item__question js-faq-question">ここに質問が入ります。</p>
-                    <p class="faq-item__answer">
-                        ここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入りますここに質問の答えが入ります
-                    </p>
-                </li>
+                <?php
+                // SCFのフィールドグループ 'faq' からデータを取得
+                $faqs = SCF::get('faq');
+                if (!empty($faqs)) {
+                    foreach ($faqs as $faq) {
+                        $question = esc_html($faq['faq_question']); // 質問を取得
+                        $answer = esc_html($faq['faq_answer']); // 回答を取得
+                ?>
+                        <li class="faq-list__item faq-item">
+                            <p class="faq-item__question js-faq-question"><?php echo $question; ?></p>
+                            <div class="faq-item__answer"><?php echo nl2br($answer); ?></div>
+                        </li>
+                <?php
+                    }
+                } else {
+                    // FAQがない場合のメッセージ
+                    echo '<li class="faq-list__item faq-item">FAQがありません。</li>';
+                }
+                ?>
             </ul>
         </div>
     </div>
+
+
 </main>
 
 <?php get_footer(); ?>

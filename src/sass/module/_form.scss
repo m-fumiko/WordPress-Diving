@@ -10,12 +10,11 @@
 .form__wrap.form__wrap--textarea {
     @include mq(md){
         align-items: flex-start;
-        padding-bottom: rem(40);
     }
 }
 
 .form__wrap + .form__wrap {
-    margin-top: rem(24);
+    margin-top: rem(28);
     border-top: dashed 1px $color-green;
     @include mq("md") {
         margin-top: rem(40);
@@ -59,9 +58,9 @@
 .form__select,
 .form__checkbox,
 .form__textarea {
-    margin-top: rem(16);
+    margin-top: rem(7);
     @include mq(md){
-        margin-top: rem(40);
+        margin-top: rem(22);
     }
 }
 
@@ -77,14 +76,100 @@
 }
 
 .form__check {
-    width: 100%;
+    margin-top: rem(20);
+    margin-bottom: rem(20);
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: rem(20);
     border-top: dashed 1px #408F95;
+    @include mq("md") {
+        margin-top: rem(40);
+        padding-top: rem(40);
+    }
 }
 
 .form__submit {
-    margin-top: rem(20);
+    padding-top: rem(20);
     text-align: center;
     @include mq("md") {
-        margin-top: rem(37);
+        padding-top: 4rem(40);
     }
 }
+
+// ワードプレス調整
+// .wpcf7-form init {
+//     margin-top: rem(132);
+// }
+
+// .wpcf7-not-valid-tip {
+//     color: #C94800;
+//     display: flex;
+//     font-size: 0.875rem;
+//     justify-content: center;
+//     padding-left: 0.875rem;
+//     text-indent: -0.875rem;
+// }
+
+// ワードプレス用
+// .contact__message.wpcf7-not-valid-tip {
+//     display: flex;
+//     justify-content: center;
+//     font-size: rem(14);
+//     text-indent: rem(-14);
+//     padding-left: rem(14);
+//     color: $color-red;
+// }
+
+
+
+
+.wpcf7-form invalid {
+    position: relative;
+
+    @include mq("md") {
+        // margin-top: 210px;
+    }
+}
+
+.wpcf7-response-output {
+    content: "";
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    font-size: rem(14);
+    text-indent: rem(-14);
+    // padding-left: rem(14);
+    color: $color-red;
+}
+
+.wpcf7 form .wpcf7-response-output {
+    margin-top: rem(50);
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    border: 0;
+}
+
+.wpcf7-not-valid-tip {
+    display: none;
+}
+
+.wpcf7-form-control.wpcf7-not-valid {
+    background-color: rgba(201, 72, 0, 0.2);
+    border: 1px solid #C94800;
+}
+
+.wpcf7-list-item-label.wpcf7-not-valid {
+    background-color: rgba(201, 72, 0, 0.2);
+    border: 1px solid #C94800;
+}
+
+.wpcf7-not-valid .wpcf7-list-item-label::before {
+    background-color: rgba(201, 72, 0, 0.2);
+    border: 1px solid #C94800;
+}
+

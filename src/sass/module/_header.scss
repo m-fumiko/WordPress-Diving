@@ -71,6 +71,7 @@
 .header__nav-item {
     height: inherit;
     display: flex;
+    white-space: nowrap;
 }
 
 .header__nav-item a {

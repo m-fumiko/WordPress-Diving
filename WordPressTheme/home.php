@@ -30,7 +30,7 @@
                                                 <!-- 記事のアイキャッチ画像があるかを判別 -->
                                                 <?php if (has_post_thumbnail()) : ?>
                                                     <!-- 記事のアイキャッチ画像があればその画像を出力 -->
-                                                    <?php the_post_thumbnail('custom-thumbnail'); ?>
+                                                    <?php the_post_thumbnail('full'); ?>
                                                 <?php else : ?>
                                                     <!-- 記事のアイキャッチ画像がなければNoImage画像を出力 -->
                                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="NoImage画像">
@@ -56,18 +56,7 @@
                         <p>記事が投稿されていません</p>
                     <?php endif; ?>
                     <!-- ページネーション -->
-                    <div class="blog-main__pagenavi wp-pagenavi">
-                        <!-- WP-PageNaviで出力される部分 ここから -->
-                        <a class="previouspostslink" rel="prev" href="#"></a>
-                        <span class='current'>1</span>
-                        <a class="page larger" href="#">2</a>
-                        <a class="page larger" href="#">3</a>
-                        <a class="page larger" href="#">4</a>
-                        <a class="page larger u-desktop" href="#">5</a>
-                        <a class="page larger u-desktop" href="#">6</a>
-                        <a class="nextpostslink" rel="next" href="#"></a>
-                        <!-- WP-PageNaviで出力される部分 ここまで -->
-                    </div>
+                    <?php wp_pagenavi(); ?>
                 </article>
                 <!-- サイドバー -->
                 <?php get_sidebar(); ?>

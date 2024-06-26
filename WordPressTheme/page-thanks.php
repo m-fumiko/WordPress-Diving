@@ -14,14 +14,13 @@
     </div>
     <!-- パンくず -->
     <?php get_template_part('breadcrumb'); ?>
-    <!-- コンタクトフォーム -->
-    <div class="contact contact-layout contact-layout--error">
-        <div class="contact__inner inner">
-            <!-- <p class="contact__message wpcf7-not-valid-tip">※必須項目が入力されていません。<br class="u-mobile">入力してください。</p> -->
-            <!-- Contact Form7などのショートコードの読み込み -->
-            <?php echo do_shortcode('[contact-form-7 id="a2d89ce" title="お問い合わせフォーム"]'); ?>
+
+    <div class="thanks thanks-layout">
+        <div class="tanks__inner inner">
+            <p class="thanks__top-text">
+                お問い合わせ内容を送信完了しました。</p>
+            <p class="thanks__text">このたびは、お問い合わせ頂き<br class="u-mobile">誠にありがとうございます。<br>お送り頂きました内容を確認の上、<br class="u-mobile">3営業日以内に折り返しご連絡させて頂きます。<br>また、ご記入頂いたメールアドレスへ、<br class="u-mobile">自動返信の確認メールをお送りしております。</p>
         </div>
     </div>
 </main>
-
 <?php get_footer(); ?>

@@ -12,7 +12,7 @@
     left: calc(50% - min(46vw, rem(620)));
     width: rem(330);
     height: rem(360);
-    background-image: url(../images/not-found_icon.svg);
+    background-image: url('../images/not-found_icon.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -37,6 +37,8 @@
     padding-left: rem(40);
     font-size: rem(80);
     letter-spacing: 0.5em;
+    position: relative;
+    z-index: 1;
     @include mq("md") {
         padding-left: rem(78);
         font-size: rem(160);

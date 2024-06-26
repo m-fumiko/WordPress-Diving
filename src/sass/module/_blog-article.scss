@@ -30,6 +30,8 @@
 
 .blog-article__contents {
     margin-left: rem(16);
+    flex: 1;
+    min-width: 0;
 }
 
 .blog-article__date {
@@ -40,6 +42,11 @@
 
 .blog-article__text {
     margin-top: rem(4);
+    display: block;
+    white-space: nowrap; /* テキストを一行に制限 */
+    overflow: hidden; /* オーバーフロー部分を隠す */
+    text-overflow: ellipsis; /* オーバーフロー部分を省略記号に変える */
+    width: 100%; /* 必要に応じて幅を調整 */
     font-size: rem(16);
     font-weight: $regular;
 }

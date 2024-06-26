@@ -101,9 +101,61 @@
     }
 }
 
-.price-list__item span {
-    line-height: 3;
-    @include mq("md") {
-        line-height: 1.5;
-    }
-}
+
+// ワードプレススタイル調整用
+// .price-list__item {
+//     line-height: 1.5;
+//     // display: block;
+//     @include mq("md") {
+//         line-height: 1.5;
+//     }
+// }
+
+// .special-course {
+//     line-height: 3;
+//     // display: block;
+//     @include mq("md") {
+//         line-height: 1.5;
+//     }
+// }
+
+// .u-mobile-price {
+//     display: block;
+
+//     @include mq("md") {
+//       display: none;
+//     }
+//   }
+
+// .price-list__item span.u-mobile-price {
+//     display: block;
+//     @include mq("md") {
+//         display: none;
+//     }
+// }
+
+// .price-list__item {
+//     line-height: 3;
+//     @include mq("md") {
+//         line-height: 1.5;
+//     }
+// }
+
+// .price-list__item,
+// .price-list__value {
+//     display: inline-block;
+//     min-height: rem(60);
+//     @include mq("md") {
+//         display: table-cell;
+//         padding: rem(17) rem(16);
+//     }
+// }
+
+// .price-list__item span {
+//     display: inline;
+// }
+
+// /* スペースを含むu-mobile-priceクラスを非表示にする */
+// .no-space .u-mobile-price {
+//     display: none;
+// }

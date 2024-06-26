@@ -37,8 +37,18 @@
                     <!-- ページネーション -->
                     <div class="blog-column-wrap__pagenavi wp-pagenavi">
                         <!-- WP-PageNaviで出力される部分 ここから -->
-                        <a class="previouspostslink" rel="prev" href="#"></a>
-                        <a class="nextpostslink" rel="next" href="#"></a>
+                        <?php
+                        $prev_post = get_previous_post();
+                        $next_post = get_next_post();
+                        if ($prev_post) :
+                            $prev_post_url = get_permalink($prev_post->ID);
+                            echo '<a class="previouspostslink" rel="prev" href="' . esc_url($prev_post_url) . '" aria-label="次のページへ"></a>';
+                        endif;
+                        if ($next_post) :
+                            $next_post_url = get_permalink($next_post->ID);
+                            echo '<a class="nextpostslink" rel="next" href="' . esc_url($next_post_url) . '" aria-label="前のページへ"></a>';
+                        endif;
+                        ?>
                         <!-- WP-PageNaviで出力される部分 ここまで -->
                     </div>
                 </article>

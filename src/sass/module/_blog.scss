@@ -8,10 +8,30 @@
 }
 
 .blog__inner.inner {
+    position: relative;
     padding-left: rem(20);
     padding-right: rem(20);
     @include mq("md") {
         padding-left: rem(25);
         padding-right: rem(25);
+    }
+}
+
+.blog__inner::after {
+    content: "";
+    position: absolute;
+    top: rem(-23);
+    left: calc(50% - min(46vw, rem(620)));
+    width: rem(120);
+    height: rem(55);
+    background-image: url(../images/top/hanadai-top-voice.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    z-index: -1;
+    @include mq("md") {
+        top: rem(-74);
+        width: rem(300);
+        height: rem(138);
     }
 }

@@ -1,10 +1,18 @@
 @use "global" as *;
 
 .wp-pagenavi {
+    margin-top: rem(80);
 	clear: both;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.wp-pagenavi__inner {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    justify-content: center;
 }
 
 .wp-pagenavi a,
@@ -28,8 +36,13 @@
 
 .wp-pagenavi .previouspostslink {
     margin-left: 0rem;
-    margin-right: rem(36);
-    padding: rem(18);
+    margin-right: rem(30);
+    position: relative;
+}
+
+.wp-pagenavi .nextpostslink {
+    margin-right: 0rem;
+    margin-left: rem(30);
     position: relative;
 }
 
@@ -50,13 +63,6 @@
     top: 33%;
     left: 26%;
     transform: rotate(45deg);
-}
-
-.wp-pagenavi .nextpostslink {
-    margin-right: 0rem;
-    margin-left: rem(36);
-    padding: rem(18);
-    position: relative;
 }
 
 .wp-pagenavi .current {
@@ -82,4 +88,14 @@
 .wp-pagenavi .previouspostslink:hover::before,
 .wp-pagenavi .nextpostslink:hover::after {
     border-color: $color-white;
+}
+
+.previouspostslink,
+.nextpostslink {
+    text-indent: -9999px;  /* テキストを視覚的に非表示にする */
+    overflow: hidden;      /* 見た目の崩れを防ぐ */
+}
+
+.wp-pagenavi .page:nth-last-child(2) {
+    display: inline-grid;
 }

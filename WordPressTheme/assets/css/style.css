@@ -479,7 +479,9 @@ main {
 }
 
 .blog-article__contents {
+	flex: 1;
 	margin-left: 1rem;
+	min-width: 0;
 }
 
 .blog-article__date {
@@ -489,9 +491,14 @@ main {
 }
 
 .blog-article__text {
+	display: block;
 	font-size: 1rem;
 	font-weight: 400;
 	margin-top: 0.25rem;
+	overflow: hidden; /* オーバーフロー部分を隠す */
+	text-overflow: ellipsis; /* オーバーフロー部分を省略記号に変える */
+	white-space: nowrap; /* テキストを一行に制限 */
+	width: 100%; /* 必要に応じて幅を調整 */
 }
 
 .blog-campaign__cards {
@@ -754,21 +761,6 @@ main {
 .blog-main {
 	margin-left: auto;
 	margin-right: auto;
-	position: relative;
-}
-
-.blog-main::after {
-	background-image: url(../images/top/hanadai-top-voice.svg);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: contain;
-	content: "";
-	height: 3.4375rem;
-	left: calc(50% - min(46vw, 38.75rem));
-	position: absolute;
-	top: -1.4375rem;
-	width: 7.5rem;
-	z-index: -1;
 }
 
 .blog-review__content {
@@ -847,6 +839,21 @@ main {
 .blog__inner.inner {
 	padding-left: 1.25rem;
 	padding-right: 1.25rem;
+	position: relative;
+}
+
+.blog__inner::after {
+	background-image: url(../images/top/hanadai-top-voice.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	content: "";
+	height: 3.4375rem;
+	left: calc(50% - min(46vw, 38.75rem));
+	position: absolute;
+	top: -1.4375rem;
+	width: 7.5rem;
+	z-index: -1;
 }
 
 .breadcrumb__inner {
@@ -865,7 +872,6 @@ main {
 }
 
 .breadcrumb.breadcrumb--not-found {
-	background-color: #408F95;
 	color: #fff;
 }
 
@@ -1351,7 +1357,7 @@ main {
 	line-height: 1.5;
 	padding-bottom: 0.9375rem;
 	padding-left: 1rem;
-	padding-right: 2.8125rem;
+	padding-right: 3.4375rem;
 	padding-top: 1.125rem;
 	position: relative;
 }
@@ -1499,13 +1505,11 @@ main {
 }
 
 .footer.footer--not-found {
+	margin-top: -0.0625rem;
 	padding-top: 5.6875rem;
 }
 
 .form-check {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 1.5rem;
 	text-align: center;
 	width: 84.73913%;
 }
@@ -1519,8 +1523,8 @@ main {
 	display: inline-block;
 	font-size: 0.875rem;
 	line-height: 1.5;
-	margin-top: 2.125rem;
-	padding-left: 1.875rem;
+	margin-top: 0.5625rem;
+	padding-left: 0.75rem;
 	position: relative;
 	text-align: left;
 }
@@ -1531,7 +1535,7 @@ main {
 	content: "";
 	display: block;
 	height: 1.375rem;
-	left: 0;
+	left: -1rem;
 	position: absolute;
 	top: 20%;
 	transform: translateY(-50%);
@@ -1544,11 +1548,11 @@ main {
 	content: "";
 	display: block;
 	height: 0.5rem;
-	left: 0.1875rem;
+	left: -0.75rem;
 	margin-top: -0.125rem;
 	opacity: 0;
 	position: absolute;
-	top: 17%;
+	top: 19%;
 	transform: translateY(-50%) rotate(-45deg);
 	transition: 0.3s;
 	width: 0.9375rem;
@@ -1561,6 +1565,7 @@ main {
 .form-checkbox {
 	display: flex;
 	flex-direction: column;
+	margin-left: -1rem;
 }
 
 .form-checkbox label {
@@ -1616,6 +1621,11 @@ main {
 
 .form-checkbox input:checked + span::after {
 	opacity: 1;
+}
+
+.wpcf7-list-item {
+	display: block;
+	margin: 0 0 0 1em;
 }
 
 .form-input input {
@@ -1678,7 +1688,7 @@ main {
 	pointer-events: none;
 	position: absolute;
 	right: 0.5rem;
-	top: 0.8125rem;
+	top: 45%;
 }
 
 .form-select select {
@@ -1720,8 +1730,49 @@ main {
 	padding-top: 1.1875rem;
 }
 
+.form-submit__button-wrap {
+	position: relative;
+}
+
+.form-submit__button-wrap::before {
+	background: #fff;
+	border-radius: 0.0625rem;
+	bottom: 1.5rem;
+	content: "";
+	display: block;
+	height: 0.0625rem;
+	left: 7.625rem;
+	position: absolute;
+	width: 2.5rem;
+}
+
+.form-submit__button-wrap::after {
+	background: #fff;
+	border-radius: 0.0625rem;
+	bottom: 1.6875rem;
+	content: "";
+	display: block;
+	height: 0.0625rem;
+	position: absolute;
+	right: 2.375rem;
+	transform: rotate(42deg);
+	width: 0.625rem;
+}
+
+.form-submit__button-wrap:hover::before {
+	background-color: #408F95; /* 緑色に変更 */
+}
+
+.form-submit__button-wrap:hover::after {
+	background-color: #408F95; /* 緑色に変更 */
+}
+
 .form-submit__button input:hover {
 	color: #408F95;
+}
+
+.wpcf7-spinner {
+	display: none !important;
 }
 
 .form-textarea textarea {
@@ -1746,7 +1797,7 @@ main {
 
 .form__wrap + .form__wrap {
 	border-top: dashed 1px #408F95;
-	margin-top: 1.5rem;
+	margin-top: 1.75rem;
 }
 
 .form__label {
@@ -1776,7 +1827,7 @@ main {
 .form__select,
 .form__checkbox,
 .form__textarea {
-	margin-top: 1rem;
+	margin-top: 0.4375rem;
 }
 
 .form__input,
@@ -1789,12 +1840,61 @@ main {
 
 .form__check {
 	border-top: dashed 1px #408F95;
-	width: 100%;
+	margin-bottom: 1.25rem;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1.25rem;
+	padding-top: 1.25rem;
 }
 
 .form__submit {
-	margin-top: 1.25rem;
+	padding-top: 1.25rem;
 	text-align: center;
+}
+
+.wpcf7-form invalid {
+	position: relative;
+}
+
+.wpcf7-response-output {
+	color: #C94800;
+	content: "";
+	display: flex;
+	font-size: 0.875rem;
+	justify-content: center;
+	left: 50%;
+	position: absolute;
+	text-indent: -0.875rem;
+	top: -80px;
+	transform: translate(-50%, -50%);
+}
+
+.wpcf7 form .wpcf7-response-output {
+	border: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 3.125rem;
+	padding: 0;
+}
+
+.wpcf7-not-valid-tip {
+	display: none;
+}
+
+.wpcf7-form-control.wpcf7-not-valid {
+	background-color: rgba(201, 72, 0, 0.2);
+	border: 1px solid #C94800;
+}
+
+.wpcf7-list-item-label.wpcf7-not-valid {
+	background-color: rgba(201, 72, 0, 0.2);
+	border: 1px solid #C94800;
+}
+
+.wpcf7-not-valid .wpcf7-list-item-label::before {
+	background-color: rgba(201, 72, 0, 0.2);
+	border: 1px solid #C94800;
 }
 
 .gallery-modal__item {
@@ -1928,6 +2028,7 @@ main {
 .header__nav-item {
 	display: flex;
 	height: inherit;
+	white-space: nowrap;
 }
 
 .header__nav-item a {
@@ -2158,7 +2259,7 @@ main {
 }
 
 .not-found::after {
-	background-image: url(../images/not-found_icon.svg);
+	background-image: url("../images/not-found_icon.svg");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
@@ -2183,6 +2284,8 @@ main {
 	font-size: 5rem;
 	letter-spacing: 0.5em;
 	padding-left: 2.5rem;
+	position: relative;
+	z-index: 1;
 }
 
 .not-found__text {
@@ -2200,6 +2303,14 @@ main {
 	clear: both;
 	display: flex;
 	justify-content: center;
+	margin-top: 5rem;
+}
+
+.wp-pagenavi__inner {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	overflow: hidden;
 }
 
 .wp-pagenavi a,
@@ -2225,8 +2336,13 @@ main {
 
 .wp-pagenavi .previouspostslink {
 	margin-left: 0rem;
-	margin-right: 2.25rem;
-	padding: 1.125rem;
+	margin-right: 1.875rem;
+	position: relative;
+}
+
+.wp-pagenavi .nextpostslink {
+	margin-left: 1.875rem;
+	margin-right: 0rem;
 	position: relative;
 }
 
@@ -2249,13 +2365,6 @@ main {
 	transform: rotate(45deg);
 }
 
-.wp-pagenavi .nextpostslink {
-	margin-left: 2.25rem;
-	margin-right: 0rem;
-	padding: 1.125rem;
-	position: relative;
-}
-
 .wp-pagenavi .current {
 	background-color: #408F95;
 	border-color: #408F95;
@@ -2276,6 +2385,16 @@ main {
 .wp-pagenavi .previouspostslink:hover::before,
 .wp-pagenavi .nextpostslink:hover::after {
 	border-color: #fff;
+}
+
+.previouspostslink,
+.nextpostslink {
+	overflow: hidden; /* 見た目の崩れを防ぐ */
+	text-indent: -9999px; /* テキストを視覚的に非表示にする */
+}
+
+.wp-pagenavi .page:nth-last-child(2) {
+	display: inline-grid;
 }
 
 .pc-contents__article {
@@ -2377,10 +2496,6 @@ main {
 .price-list__value {
 	display: inline-block;
 	min-height: 3.75rem;
-}
-
-.price-list__item span {
-	line-height: 3;
 }
 
 .price {
@@ -2519,7 +2634,7 @@ main {
 .sitemap-menu__sub-item {
 	font-family: "Noto Sans JP", sans-serif;
 	font-size: 1rem;
-	font-weight: 300;
+	font-weight: 400;
 	line-height: 1.125;
 	padding-bottom: 0.75rem;
 	padding-top: 0.75rem;
@@ -3397,13 +3512,6 @@ html {
 	width: 65.3703703704%;
 }
 
-.blog-main::after {
-	height: 8.625rem;
-	left: calc(50% - min(49vw, 26.875rem));
-	top: -4.625rem;
-	width: 18.75rem;
-}
-
 .blog-side {
 	width: 27.2222222222%;
 }
@@ -3416,6 +3524,12 @@ html {
 .blog__inner.inner {
 	padding-left: 1.5625rem;
 	padding-right: 1.5625rem;
+}
+
+.blog__inner::after {
+	height: 8.625rem;
+	top: -4.625rem;
+	width: 18.75rem;
 }
 
 .breadcrumb__inner {
@@ -3649,23 +3763,18 @@ html {
 	padding-top: 14.5rem;
 }
 
-.form-check {
-	margin-top: -1rem;
-	padding-top: 3.0625rem;
-}
-
 .form-check input + span::before {
-	left: -0.4375rem;
-	top: 37%;
+	left: -1.5625rem;
+	top: 45%;
 }
 
 .form-check input + span::after {
-	left: -0.1875rem;
+	left: -1.3125rem;
 	top: 37%;
 }
 
 .form-checkbox {
-	margin-left: 30px;
+	margin-left: 1.25rem;
 }
 
 .form-checkbox label {
@@ -3674,6 +3783,10 @@ html {
 
 .form-select {
 	margin-right: 0;
+}
+
+.form-select::after {
+	top: 60%;
 }
 
 .form-select select {
@@ -3688,7 +3801,6 @@ html {
 
 .form__wrap.form__wrap--textarea {
 	align-items: flex-start;
-	padding-bottom: 2.5rem;
 }
 
 .form__wrap + .form__wrap {
@@ -3708,7 +3820,7 @@ html {
 .form__select,
 .form__checkbox,
 .form__textarea {
-	margin-top: 2.5rem;
+	margin-top: 1.375rem;
 }
 
 .form__input,
@@ -3716,8 +3828,13 @@ html {
 	margin-right: 0;
 }
 
+.form__check {
+	margin-top: 2.5rem;
+	padding-top: 2.5rem;
+}
+
 .form__submit {
-	margin-top: 2.3125rem;
+	padding-top: 4rem 40;
 }
 
 .gallery-modal__inner.inner {
@@ -3935,10 +4052,6 @@ html {
 .price-list__value {
 	display: table-cell;
 	padding: 1.0625rem 1rem;
-}
-
-.price-list__item span {
-	line-height: 1.5;
 }
 
 .price::after {

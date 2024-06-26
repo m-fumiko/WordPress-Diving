@@ -27,29 +27,11 @@
                     </div>
                 </div>
                 <div class="about__contents">
-                    <?php
-                    // ACFで設定したグループフィールドの値を取得
-                    $about_us = get_field('about_us');
-                    if ($about_us) {
-                        $about_us_title = isset($about_us['about_us_title']) ? $about_us['about_us_title'] : 'デフォルトのタイトル';
-                        $about_us_text = isset($about_us['about_us_text']) ? $about_us['about_us_text'] : 'デフォルトのテキスト';
-                    } else {
-                        $about_us_title = 'デフォルトのタイトル';
-                        $about_us_text = 'デフォルトのテキスト';
-                    }
-                    // タイトルの特定の位置で改行を挿入
-                    // 例えば、 "Dive into the Ocean" を改行させる
-                    if ($about_us_title === 'Dive into the Ocean') {
-                        $about_us_title = 'Dive into<br>the Ocean';
-                    }
-                    ?>
-                    <!-- タイトルの表示 -->
                     <p class="about__contents-title">
-                        <?php echo $about_us_title; ?>
+                        Dive into<br>the Ocean
                     </p>
-                    <!-- テキストの表示 -->
                     <p class="about__contents-text">
-                        <?php echo nl2br(esc_html($about_us_text)); ?>
+                        ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。<br>ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
                     </p>
                 </div>
             </div>

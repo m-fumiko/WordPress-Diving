@@ -18,12 +18,15 @@
     border-left: rem(6) solid transparent;
     border-top: rem(9) solid $color-green;
     border-bottom: 0;
-    top: rem(13);
+    top: 45%;
     right: rem(8);
     bottom: 0;
     margin: auto;
     cursor: pointer;
     pointer-events: none;
+    @include mq("md") {
+        top: 60%;
+    }
 }
 
 .form-select select {

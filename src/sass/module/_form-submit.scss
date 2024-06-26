@@ -4,7 +4,7 @@
     padding: 0;
 }
 
-.form-submit__button input { 
+.form-submit__button input {
     color: $color-white;
     padding-top: rem(19);
     padding-right: rem(116);
@@ -12,6 +12,47 @@
     padding-left: rem(51);
 }
 
+.form-submit__button-wrap {
+    position: relative;
+}
+
+.form-submit__button-wrap::before {
+    content: "";
+    position: absolute;
+    display: block;
+    bottom: rem(24);
+    left: rem(122);
+    width: rem(40);
+    height: rem(1);
+    background: $color-white;
+    border-radius: rem(1);
+}
+
+.form-submit__button-wrap::after {
+    content: "";
+    position: absolute;
+    display: block;
+    bottom: rem(27);
+    right: rem(38);
+    width: rem(10);
+    height: rem(1);
+    background: $color-white;
+    border-radius: rem(1);
+    transform: rotate(42deg);
+}
+
+.form-submit__button-wrap:hover::before {
+    background-color: $color-green; /* 緑色に変更 */
+}
+
+.form-submit__button-wrap:hover::after {
+    background-color: $color-green; /* 緑色に変更 */
+}
+
 .form-submit__button input:hover {
     color: $color-green;
+}
+
+.wpcf7-spinner {
+    display: none !important;
 }
