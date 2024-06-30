@@ -19,7 +19,7 @@
 
             if ($pc_image_id && $sp_image_id) {
               $pc_image_url = wp_get_attachment_image_src($pc_image_id, 'full')[0];
-              $sp_image_url = wp_get_attachment_image_src($sp_image_id, 'medium')[0];
+              $sp_image_url = wp_get_attachment_image_src($sp_image_id, 'full')[0];
 
               echo '<div class="swiper-slide">';
               echo '<picture>';
@@ -126,38 +126,38 @@
   </section>
   <!-- アバウト -->
   <section id="top-about" class="top-about top-about-layout">
-      <div class="top-about__inner inner">
-        <div class="top-about__title common-title">
-          <p class="common-title__main">about us</p>
-          <h2 class="common-title__sub">私たちについて</h2>
-        </div>
-        <div class="top-about__contents">
-          <div class="top-about__img-wrap">
-            <div class="top-about__img-before">
-              <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/aboutus1.jpg" alt="屋根に乗っているシーサーの画像">
-            </div>
-            <div class="top-about__img-after">
-              <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/aboutus2.jpg" alt="2匹の黄色い熱帯魚が泳いでいる様子">
-            </div>
+    <div class="top-about__inner inner">
+      <div class="top-about__title common-title">
+        <p class="common-title__main">about us</p>
+        <h2 class="common-title__sub">私たちについて</h2>
+      </div>
+      <div class="top-about__contents">
+        <div class="top-about__img-wrap">
+          <div class="top-about__img-before">
+            <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/aboutus1.jpg" alt="屋根に乗っているシーサーの画像">
           </div>
-          <div class="top-about__content">
-            <h3 class="top-about__sub-title">
-              Dive into<br>the Ocean
-            </h3>
-            <div class="top-about__content-right">
-              <p class="top-about__text">
-                ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。<br>ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
-              </p>
-              <!-- ボタン -->
-              <div class="top-about__button-wrapper">
-                <a href="<?php echo esc_url(home_url("/about")) ?>" class="common-button">View more<span></span>
-                </a>
-              </div>
+          <div class="top-about__img-after">
+            <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/aboutus2.jpg" alt="2匹の黄色い熱帯魚が泳いでいる様子">
+          </div>
+        </div>
+        <div class="top-about__content">
+          <h3 class="top-about__sub-title">
+            Dive into<br>the Ocean
+          </h3>
+          <div class="top-about__content-right">
+            <p class="top-about__text">
+              ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。<br>ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
+            </p>
+            <!-- ボタン -->
+            <div class="top-about__button-wrapper">
+              <a href="<?php echo esc_url(home_url("/about")) ?>" class="common-button">View more<span></span>
+              </a>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
   <!-- インフォメーション -->
   <section id="top-information" class="top-information top-information-layout">
     <div class="top-information__inner inner">
@@ -192,37 +192,36 @@
         <?php
         // カスタムクエリの作成
         $args = array(
-          'post_type' => 'post',
-          'posts_per_page' => 3,
-          'orderby' => 'date',
-          'order' => 'DESC',
+          'post_type' => 'post', // 投稿タイプを「post」に指定
+          'posts_per_page' => 3, // 表示する投稿数を3に設定
+          'orderby' => 'date', // 日付で並べ替え
+          'order' => 'DESC', // 降順で並べ替え（新しいものが先に表示される）
         );
-        $custom_query = new WP_Query($args);
+        $custom_query = new WP_Query($args); // カスタムクエリを作成
         ?>
-
-        <?php if ($custom_query->have_posts()) : ?>
-          <?php while ($custom_query->have_posts()) : $custom_query->the_post(); ?>
+        <?php if ($custom_query->have_posts()) : // 投稿があるかチェック ?>
+          <?php while ($custom_query->have_posts()) : $custom_query->the_post(); // 投稿がある限りループ ?>
             <li class="blog-list__item blog-card blog-card--2">
-              <a href="<?php the_permalink(); ?>">
+              <a href="<?php the_permalink(); // 投稿のパーマリンクを取得 ?>">
                 <div class="blog-card__img">
-                  <?php if (has_post_thumbnail()) : ?>
-                    <?php the_post_thumbnail('full'); ?>
-                  <?php else : ?>
+                  <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック ?>
+                    <?php the_post_thumbnail('full'); // アイキャッチ画像をフルサイズで表示 ?>
+                  <?php else : // アイキャッチ画像が設定されていない場合 ?>
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/noimage.jpg'); ?>" alt="NoImage画像">
                   <?php endif; ?>
                 </div>
                 <div class="blog-card__content">
-                  <time class="blog-card__date" datetime="<?php echo get_the_date('c'); ?>"><?php echo get_the_date('Y.m/d'); ?></time>
-                  <p class="blog-card__title"><?php the_title(); ?></p>
+                  <time class="blog-card__date" datetime="<?php echo get_the_date('c'); ?>"><?php echo get_the_date('Y.m/d'); // 投稿の日付を表示 ?></time>
+                  <p class="blog-card__title"><?php the_title(); // 投稿のタイトルを表示 ?></p>
                   <p class="blog-card__text">
-                    <?php echo wp_trim_words(get_the_excerpt(), 100, '...'); ?>
+                    <?php echo wp_trim_words(get_the_excerpt(), 100, '...'); // 投稿の抜粋を100語にトリムして表示 ?>
                   </p>
                 </div>
               </a>
             </li>
           <?php endwhile; ?>
-          <?php wp_reset_postdata(); ?>
-        <?php else : ?>
+          <?php wp_reset_postdata(); // カスタムクエリのデータをリセット ?>
+        <?php else : // 投稿がない場合の処理 ?>
           <p>記事が見つかりませんでした。</p>
         <?php endif; ?>
       </ul>
@@ -231,7 +230,6 @@
       </div>
     </div>
   </section>
-
   <!-- ボイス -->
   <section id="top-voice" class="top-voice top-voice-layout">
     <div class="top-voice__inner inner">
@@ -243,61 +241,61 @@
         <?php
         // カスタムクエリの作成
         $args = array(
-          'post_type' => 'voice', // ボイスタイプを指定
-          'posts_per_page' => 2, // 表示する投稿数
-          'orderby' => 'date', // 日付順に並べる
-          'order' => 'DESC', // 新しい順に表示
+          'post_type' => 'voice', // カスタム投稿タイプ「voice」を指定
+          'posts_per_page' => 2, // 表示する投稿数を2に設定
+          'orderby' => 'date', // 日付で並べ替え
+          'order' => 'DESC', // 降順で並べ替え（新しいものが先に表示される）
         );
-        $custom_query = new WP_Query($args);
+        $custom_query = new WP_Query($args); // カスタムクエリを作成
         ?>
-
-        <?php if ($custom_query->have_posts()) : ?>
-          <?php while ($custom_query->have_posts()) : $custom_query->the_post(); ?>
-            <?php if (have_rows('voice_card')) : while (have_rows('voice_card')) : the_row(); ?>
-              <li class="voice-list__item">
-                <div class="voice-card">
-                  <div class="voice-card__flex">
-                    <div class="voice-card__content">
-                      <div class="voice-card__meta">
-                        <p class="voice-card__info"><?php echo esc_html(get_sub_field('voice_age')); ?>（<?php echo esc_html(get_sub_field('voice_gender')); ?>）</p>
-                        <p class="voice-card__category">
-                          <?php
-                          $categories = get_the_terms(get_the_ID(), 'voice_category');
-                          if ($categories && !is_wp_error($categories)) {
+        <?php if ($custom_query->have_posts()) : // 投稿があるかチェック ?>
+          <?php while ($custom_query->have_posts()) : $custom_query->the_post(); // 投稿がある限りループ ?>
+            <?php if (have_rows('voice_card')) : while (have_rows('voice_card')) : the_row(); // カスタムフィールド「voice_card」があるかチェック ?>
+                <li class="voice-list__item">
+                  <div class="voice-card">
+                    <div class="voice-card__flex">
+                      <div class="voice-card__content">
+                        <div class="voice-card__meta">
+                          <p class="voice-card__info"><?php echo esc_html(get_sub_field('voice_age')); ?>（<?php echo esc_html(get_sub_field('voice_gender')); ?>）</p> <!-- カスタムフィールド「voice_age」と「voice_gender」を表示 -->
+                          <p class="voice-card__category">
+                            <?php
+                            $categories = get_the_terms(get_the_ID(), 'voice_category'); // カテゴリーを取得
+                            if ($categories && !is_wp_error($categories)) {
                               $category_list = array_map(function ($category) {
-                                  return esc_html($category->name);
+                                return esc_html($category->name);
                               }, $categories);
-                              echo implode(', ', $category_list);
+                              echo implode(', ', $category_list); // カテゴリー名をカンマ区切りで表示
+                            }
+                            ?>
+                          </p>
+                        </div>
+                        <p class="voice-card__title">
+                          <?php
+                          $title = get_the_title(); // 投稿のタイトルを取得
+                          if (mb_strlen($title) > 20) {
+                            $title = mb_substr($title, 0, 20) . '...'; // タイトルが20文字以上の場合、20文字で切り取って「...」を追加
                           }
+                          echo esc_html($title); // タイトルを表示
                           ?>
                         </p>
                       </div>
-                      <p class="voice-card__title">
-                        <?php
-                        $title = get_the_title();
-                        if (mb_strlen($title) > 20) {
-                            $title = mb_substr($title, 0, 20) . '...';
-                        }
-                        echo esc_html($title);
-                        ?>
-                      </p>
+                      <div class="voice-card__img color-box js-color-box">
+                        <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック ?>
+                          <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" width="151" height="117" loading="lazy" />
+                        <?php else : // アイキャッチ画像が設定されていない場合 ?>
+                          <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/noimage.jpg" alt="NoImage画像">
+                        <?php endif; ?>
+                      </div>
                     </div>
-                    <div class="voice-card__img color-box js-color-box">
-                      <?php if (has_post_thumbnail()) : ?>
-                        <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" width="151" height="117" loading="lazy" />
-                      <?php else : ?>
-                        <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/noimage.jpg" alt="NoImage画像">
-                      <?php endif; ?>
-                    </div>
+                    <p class="voice-card__text">
+                      <?php echo wpautop(esc_html(get_sub_field('voice_review'))); // カスタムフィールド「voice_review」を表示し、自動で段落を追加 ?>
+                    </p>
                   </div>
-                  <p class="voice-card__text">
-                    <?php echo wpautop(esc_html(get_sub_field('voice_review'))); ?>
-                  </p>
-                </div>
-              </li>
-            <?php endwhile; endif; ?>
-          <?php endwhile; ?>
-          <?php wp_reset_postdata(); ?>
+                </li>
+            <?php endwhile;
+            endif; ?>
+          <?php endwhile; // ループ終了 ?>
+          <?php wp_reset_postdata(); // カスタムクエリのデータをリセット ?>
         <?php else : ?>
           <p>記事が見つかりませんでした。</p>
         <?php endif; ?>
@@ -307,6 +305,7 @@
       </div>
     </div>
   </section>
+
   <!-- プライス -->
   <section id="top-price" class="top-price top-price-layout">
     <div class="top-price__inner inner">
@@ -325,7 +324,6 @@
           <?php
           // 固定ページIDを手動で設定
           $price_page_id = 17; // 価格ページのIDを手動で設定
-
           // 各コースのタイトルと詳細情報を取得
           $courses = [
             'course_title1' => 'details1',
@@ -333,30 +331,25 @@
             'course_title3' => 'details3',
             'course_title4' => 'details4',
           ];
-
           foreach ($courses as $title_key => $details_key) {
             // SCFプラグインを使用してデータを取得
             $course_title = SCF::get($title_key, $price_page_id);
             $details = SCF::get($details_key, $price_page_id);
-
             if (!empty($course_title) && !empty($details)) {
               echo '<li class="top-price__item">';
               echo '<h3 class="top-price__item-title">' . esc_html($course_title) . '</h3>';
               echo '<dl>';
-
               foreach ($details as $detail) {
                 $course_content = wp_kses_post($detail['course_content' . substr($title_key, -1)]);
                 $course_price = esc_html($detail['course_price' . substr($title_key, -1)]);
                 if (strpos($course_price, '¥') === false) {
                   $course_price = '¥' . $course_price;
                 }
-
                 echo '<div class="top-price__item-content">';
                 echo '<dt class="top-price__item-text">' . $course_content . '</dt>';
                 echo '<dd class="top-price__item-price">' . $course_price . '</dd>';
                 echo '</div>';
               }
-
               echo '</dl>';
               echo '</li>';
             }
