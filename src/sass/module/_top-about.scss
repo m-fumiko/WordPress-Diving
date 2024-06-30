@@ -91,7 +91,7 @@
         display: flex;
         position: absolute;
         top: 32%;
-        left: 20.4%;
+        left: 18.5%;
         max-width: rem(845);
         width: 100%;
         z-index: 2;
@@ -113,7 +113,7 @@
     line-height: 1;
     color: $color-green;
     @include mq("md") {
-        max-width: 50%;
+        max-width: 49%;
         width: 100%;
         font-size: rem(80);
         color: $color-white;

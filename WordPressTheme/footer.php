@@ -103,7 +103,7 @@ if (!is_404() && !is_page('contact')) {
                     <div class="footer-menu__wrap">
                         <ul class="footer-menu__items">
                             <li class="footer-menu__item">
-                                <a class="footer-menu__item-title" href="<?php echo esc_url(home_url("/price")) ?>">よくある質問</a>
+                                <a class="footer-menu__item-title" href="<?php echo esc_url(home_url("/faq")) ?>">よくある質問</a>
                             </li>
                         </ul>
                         <ul class="footer-menu__items">
@@ -130,8 +130,8 @@ if (!is_404() && !is_page('contact')) {
                 </div>
             </nav>
         </div>
-        <small class="footer__copyright">Copyright&nbsp;&copy;&nbsp;2021&nbsp;-&nbsp;<?php echo wp_date("Y"); ?>&nbsp;CodeUps&nbsp;LLC.&nbsp;All&nbsp;Rights&nbsp;Reserved.</small>
     </div>
+    <small class="footer__copyright">Copyright&nbsp;&copy;&nbsp;2021&nbsp;-&nbsp;<?php echo wp_date("Y"); ?>&nbsp;CodeUps&nbsp;LLC.&nbsp;All&nbsp;Rights&nbsp;Reserved.</small>
 </footer>
 <?php wp_footer(); ?>
 </body>

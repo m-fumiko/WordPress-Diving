@@ -15,19 +15,10 @@
     <!-- パンくず -->
     <div class="breadcrumb breadcrumb-layout">
         <div class="breadcrumb__inner inner">
-            <!-- Breadcrumb NavXTで出力される部分 ここから -->
-            <span>
-                <a href="<?php echo esc_url(home_url("/")) ?>">
-                    <span>top</span>
-                </a>
-            </span>
-            &nbsp;&gt;&nbsp;
-            <span>
-                <span class="current-item">プライバシーポリシー</span>
-            </span>
-            <!-- Breadcrumb NavXTで出力される部分 ここまで -->
+        <?php get_template_part('breadcrumb'); ?>
         </div>
     </div>
+    <!-- privacy-policy -->
     <section class="privacy-policy privacy-policy-layout">
         <div class="privacy-policy__inner inner">
             <div class="privacy-policy__wrap">

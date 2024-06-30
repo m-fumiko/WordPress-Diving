@@ -17,11 +17,9 @@
     <!-- コンタクトフォーム -->
     <div class="contact contact-layout contact-layout--error">
         <div class="contact__inner inner">
-            <!-- <p class="contact__message wpcf7-not-valid-tip">※必須項目が入力されていません。<br class="u-mobile">入力してください。</p> -->
             <!-- Contact Form7などのショートコードの読み込み -->
             <?php echo do_shortcode('[contact-form-7 id="a2d89ce" title="お問い合わせフォーム"]'); ?>
         </div>
     </div>
 </main>
-
 <?php get_footer(); ?>

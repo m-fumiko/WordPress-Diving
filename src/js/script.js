@@ -201,26 +201,28 @@ jQuery(function ($) { // この中であればWordpressでも「$」が使用可
         }
     });
 
-    // アコーディオン
-    $(function () {
+    // アーカイブアコーディオン
+    $(document).ready(function () {
+        // クリックイベントの設定
         $('.js-accordion').on('click', function () {
-            $(this).next().slideToggle();
-            $(this).toggleClass('is-open');
+            var $this = $(this);
+            $this.toggleClass('clicked');
+            $this.next('.js-accordion__content').slideToggle();
         });
-        $(".js-accordion__item:first-child .js-accordion__content").css(
-            "display",
-            "block"
-        );
+
+        // 初期化：最初の項目だけ展開、それ以外は閉じる
+        $('.js-accordion').each(function (index) {
+            if (index === 0) {
+                $(this).addClass('clicked');
+                $(this).next('.js-accordion__content').show();
+            } else {
+                $(this).removeClass('clicked');
+                $(this).next('.js-accordion__content').hide();
+            }
+        });
     });
 
-    // サブメニュー三角
-    $(function() {
-        $('.blog-archive__year').on('click',function (){
-            $(this).toggleClass('clicked');
-        });
-    });
-
-    // アコーディオン
+    // faqアコーディオン
     jQuery(function ($) {
         $('.js-faq-question').on('click', function () {
             $(this).next().slideToggle();

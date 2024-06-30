@@ -1,5 +1,4 @@
 <?php
-
 // テーマの設定を行う関数
 function my_setup()
 {
@@ -18,7 +17,6 @@ function my_setup()
         'caption',
     ]);
 }
-
 // テーマがセットアップされた後に実行されるアクションフックに関数を追加
 add_action('after_setup_theme', 'my_setup');
 
@@ -69,17 +67,6 @@ function my_script_init()
     }
 }
 
-// if (function_exists('acf_add_options_page')) {
-//     acf_add_options_page(array(
-//         'page_title'    => 'テーマ設定',
-//         'menu_title'    => 'テーマ設定',
-//         'menu_slug'     => 'theme-settings',
-//         'capability'    => 'edit_posts',
-//         'redirect'      => false
-//     ));
-// }
-
-
 // 'wp_enqueue_scripts'アクションフックに'my_script_init'関数を追加します
 add_action('wp_enqueue_scripts', 'my_script_init');
 
@@ -101,7 +88,7 @@ function create_voice_taxonomy()
                 'update_item' => __('Update Voice Category'),
                 'add_new_item' => __('Add New Voice Category'),
                 'new_item_name' => __('New Voice Category Name'),
-                'menu_name' => __('Voice Categories')
+                'menu_name' => __('お客様の声カテゴリー')
             ),
             'rewrite' => array('slug' => 'voice-category'),
             'hierarchical' => true,
@@ -112,7 +99,6 @@ function create_voice_taxonomy()
     );
 }
 add_action('init', 'create_voice_taxonomy');
-
 
 // カスタム投稿タイプ 'voice' を登録する関数
 function custom_post_type()
@@ -133,18 +119,6 @@ function custom_post_type()
 }
 add_action('init', 'custom_post_type');
 
-
-// カスタムタクソノミー 'voice_category'
-
-
-// // 投稿にアイキャッチ追加
-// function setup_theme() {
-//     add_theme_support('post-thumbnails');
-//     add_image_size('custom-thumbnail', 300, 200, true); // 一覧ページ用のアスペクト比3:2
-//     add_image_size('single-thumbnail', 700, 468, true); // 詳細ページ用のアスペクト比3:2
-// }
-// add_action('after_setup_theme', 'setup_theme');
-
 /* サムネイルのサイズ出力を消す */
 add_filter('post_thumbnail_html', 'custom_attribute');
 function custom_attribute($html)
@@ -153,85 +127,6 @@ function custom_attribute($html)
     $html = preg_replace('/(width|height)="\d*"\s/', '', $html);
     return $html;
 }
-
-// ページナビ
-// function custom_paginate_links() {
-//     global $wp_query;
-
-//     $big = 999999999; // need an unlikely integer
-//     $total_pages = $wp_query->max_num_pages;
-
-//     if ($total_pages > 1) {
-//         $paginate_links = paginate_links(array(
-//             'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-//             'format' => '?paged=%#%',
-//             'current' => max(1, get_query_var('paged')),
-//             'total' => $total_pages,
-//             'prev_text' => '<i class="fa-regular fa-circle-left"></i>',
-//             'next_text' => '<i class="fa-regular fa-circle-right"></i>',
-//             'mid_size' => 1,
-//             'end_size' => 1,
-//             'type' => 'array',
-//         ));
-
-//         if (is_array($paginate_links)) {
-//             echo '<div class="wp-pagenavi"><div class="wp-pagenavi__inner inner">';
-//             foreach ($paginate_links as $link) {
-//                 echo $link;
-//             }
-//             echo '</div></div>';
-//         }
-//     }
-// }
-
-
-
-
-
-
-function add_desktop_class_to_pagination($html)
-{
-    // 5ページ目以降に u-desktop クラスを追加
-    $html = preg_replace('/<a class="page larger"/', '<a class="page larger u-desktop"', $html, 4);
-    return $html;
-}
-add_filter('wp_pagenavi', 'add_desktop_class_to_pagination');
-
-function custom_paginate_links()
-{
-    echo paginate_links(
-        array(
-            'mid_size' => 2,
-            'prev_next' => true,
-            'prev_text' => '<i class="fa-regular fa-circle-left"></i>',
-            'next_text' => '<i class="fa-regular fa-circle-right"></i>'
-        )
-    );
-}
-
-
-// ページネーションリンク
-// function custom_paginate_links() {
-//     $args = array(
-//         'mid_size' => 3,  // 現在のページの前後に表示するページ数
-//         'prev_next' => true,
-//         'prev_text' => '<i class="fa-regular fa-circle-left"></i>',
-//         'next_text' => '<i class="fa-regular fa-circle-right"></i>',
-//         'type' => 'array',
-//         'before_page_number' => '<span class="page larger">',
-//         'after_page_number' => '</span>',
-//     );
-//     $links = paginate_links($args);
-
-//     if ($links) {
-//         echo '<div class="wp-pagenavi"><div class="wp-pagenavi__inner inner">';
-//         foreach ($links as $link) {
-//             echo $link;
-//         }
-//         echo '</div></div>';
-//     }
-// }
-
 
 // サイドバー表示
 function theme_slug_widgets_init()
@@ -283,33 +178,6 @@ function remove_post_views_column($columns)
 }
 add_filter('manage_posts_columns', 'remove_post_views_column');
 
-//カテゴリーの選択を1つに制限
-add_action('admin_print_footer_scripts', 'limit_category_select');
-function limit_category_select()
-{
-?>
-    <script type="text/javascript">
-        jQuery(function($) {
-            // 投稿画面のカテゴリー選択を制限
-            var categorydiv = $('#categorydiv input[type=checkbox]');
-            categorydiv.click(function() {
-                $(this).parents('#categorydiv').find('input[type=checkbox]').attr('checked', false);
-                $(this).attr('checked', true);
-            });
-            // クイック編集のカテゴリー選択を制限
-            var inline_edit_col_center = $('.inline-edit-col-center input[type=checkbox]');
-            inline_edit_col_center.click(function() {
-                $(this).parents('.inline-edit-col-center').find('input[type=checkbox]').attr('checked', false);
-                $(this).attr('checked', true);
-            });
-
-            $('#categorydiv #category-pop > ul > li:first-child, #categorydiv #category-all > ul > li:first-child, .inline-edit-col-center > ul.category-checklist > li:first-child').before('<p style="padding-top:5px;">カテゴリーは1つしか選択できません</p>');
-
-        });
-    </script>
-<?php
-}
-
 // Contact Form 7で自動挿入されるPタグ、brタグを削除
 add_filter('wpcf7_autop_or_not', 'wpcf7_autop_return_false');
 function wpcf7_autop_return_false()
@@ -351,17 +219,3 @@ function Change_menulabel() {
     add_action( 'admin_menu', 'Change_menulabel' );
 
 // ダッシュボードアイコン
-function my_dashboard_print_styles() {
-    ?>
-    <style>
-    /* voice カスタム投稿タイプのアイコン設定 */
-    #dashboard_right_now .voice-count:before { content: "\f130"; }
-    #adminmenu #menu-posts-voice div.wp-menu-image:before { content: "\f130"; }
-
-    /* campaign カスタム投稿タイプのアイコン設定 */
-    #dashboard_right_now .campaign-count:before { content: "\f488"; }
-    #adminmenu #menu-posts-campaign div.wp-menu-image:before { content: "\f488"; }
-    </style>
-    <?php
-}
-add_action('admin_print_styles', 'my_dashboard_print_styles');

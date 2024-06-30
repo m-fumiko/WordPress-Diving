@@ -39,6 +39,8 @@
         margin-top: rem(40);
         flex-direction: row-reverse;
         display: flex;
+        display: -webkit-box;
+        display: -ms-flexbox;
     }
 }
 
@@ -87,12 +89,12 @@
     margin-top: rem(8);
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
+    font-size: rem(14);
     font-weight: $regular;
     font-family: 'Noto Sans JP', sans-serif;
     line-height: calc(24/14);
     @include mq("md") {
-        font-size: 16px;
+        font-size: rem(16);
         line-height: calc(24/16);
     }
 }

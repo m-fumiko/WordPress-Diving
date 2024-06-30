@@ -96,39 +96,13 @@
     }
 }
 
-// ワードプレス調整
-// .wpcf7-form init {
-//     margin-top: rem(132);
+
+// .wpcf7-form invalid {
+//     position: relative;
 // }
 
-// .wpcf7-not-valid-tip {
-//     color: #C94800;
-//     display: flex;
-//     font-size: 0.875rem;
-//     justify-content: center;
-//     padding-left: 0.875rem;
-//     text-indent: -0.875rem;
-// }
-
-// ワードプレス用
-// .contact__message.wpcf7-not-valid-tip {
-//     display: flex;
-//     justify-content: center;
-//     font-size: rem(14);
-//     text-indent: rem(-14);
-//     padding-left: rem(14);
-//     color: $color-red;
-// }
-
-
-
-
-.wpcf7-form invalid {
+.wpcf7-form init {
     position: relative;
-
-    @include mq("md") {
-        // margin-top: 210px;
-    }
 }
 
 .wpcf7-response-output {
@@ -141,7 +115,6 @@
     justify-content: center;
     font-size: rem(14);
     text-indent: rem(-14);
-    // padding-left: rem(14);
     color: $color-red;
 }
 

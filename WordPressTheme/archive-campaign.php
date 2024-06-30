@@ -78,7 +78,7 @@
                                     <p class="pc-contents__date"><?php echo esc_html($campaign_period); ?></p>
                                     <p class="pc-contents__contact-text">ご予約・お問い合わせはコチラ</p>
                                     <div class="pc-contents__button-wrapper">
-                                        <a href="contact.html" class="common-button">Contact us<span></span></a>
+                                        <a href="/contact" class="common-button">Contact us<span></span></a>
                                     </div>
                                 </div>
                             </div>

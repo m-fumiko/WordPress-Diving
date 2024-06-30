@@ -14,7 +14,7 @@
     </div>
     <!-- パンくず -->
     <?php get_template_part('breadcrumb'); ?>
-
+    <!-- thanks -->
     <div class="thanks thanks-layout">
         <div class="tanks__inner inner">
             <p class="thanks__top-text">

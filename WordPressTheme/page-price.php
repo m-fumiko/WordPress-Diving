@@ -15,8 +15,6 @@
     <!-- パンくず -->
     <?php get_template_part('breadcrumb'); ?>
     <!-- 料金表 -->
-
-
     <section class="price price-layout">
         <div class="price__inner inner">
             <div class="price__tables price-tables">
@@ -31,7 +29,6 @@
                             'course_title5' => 'details5',
                             'course_title6' => 'details6',
                         ];
-
                         foreach ($courses as $title_key => $details_key) {
                             // コースタイトルを取得
                             $course_title = SCF::get($title_key);
@@ -80,11 +77,5 @@
             </div>
         </div>
     </section>
-
-
-
-
-
 </main>
-
 <?php get_footer(); ?>

@@ -99,3 +99,11 @@
 .wp-pagenavi .page:nth-last-child(2) {
     display: inline-grid;
 }
+
+.u-desktop {
+    display: none;
+    @include mq("md") {
+        display: block;
+    }
+}
+

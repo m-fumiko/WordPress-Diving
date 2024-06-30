@@ -52,11 +52,15 @@
                             <?php endwhile;
                             endif;  ?>
                         </ul>
+
                     <?php else : ?>
                         <p>記事が投稿されていません</p>
                     <?php endif; ?>
                     <!-- ページネーション -->
-                    <?php wp_pagenavi(); ?>
+                    <?php if (function_exists('wp_pagenavi')) {
+    wp_pagenavi();
+} ?>
+
                 </article>
                 <!-- サイドバー -->
                 <?php get_sidebar(); ?>

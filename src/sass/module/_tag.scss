@@ -14,7 +14,7 @@
 }
 
 .tag__menu-item {
-    min-width: rem(162);
+    // min-width: rem(162);
     width: 100%;
     text-align: center;
     font-size: rem(14);
@@ -26,6 +26,7 @@
     border: solid 1px $color-green;
     transition: .3s;
     @include mq("md") {
+        min-width: rem(162);
         width: fit-content;
     }
 }

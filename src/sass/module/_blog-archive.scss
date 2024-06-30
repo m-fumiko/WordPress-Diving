@@ -47,7 +47,8 @@
     bottom: 0;
     margin: auto;
     transition: all .5s;
-}
+    transform: rotate(0deg); /* デフォルトは右向き */
+  }
 
 .blog-archive__year.blog-archive__year--first::before {
     transform: rotate(90deg);

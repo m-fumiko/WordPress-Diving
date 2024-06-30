@@ -14,7 +14,7 @@
 </div>
 <!-- パンくず -->
 <?php get_template_part('breadcrumb'); ?>
-
+<!-- sitemap -->
 <section class="sitemap sitemap-layout">
     <div class="sitemap__inner inner">
         <nav class="sitemap__nav-menu sitemap-menu">
@@ -93,7 +93,7 @@
                 <div class="sitemap-menu__wrap">
                     <ul class="sitemap-menu__items">
                         <li class="sitemap-menu__item">
-                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/price")) ?>">よくある質問</a>
+                            <a class="sitemap-menu__item-title" href="<?php echo esc_url(home_url("/faq")) ?>">よくある質問</a>
                         </li>
                     </ul>
                     <ul class="sitemap-menu__items">

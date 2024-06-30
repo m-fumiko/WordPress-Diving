@@ -30,7 +30,7 @@
     width: rem(28);
     height: rem(1);
     background: $color-white;
-    transition: .3s;
+    transition: .5s;
     @include mq(md) {
         top: rem(40);
         right: rem(40);

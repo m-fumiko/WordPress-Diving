@@ -15,15 +15,10 @@
     <!-- パンくず -->
     <div class="breadcrumb breadcrumb-layout">
       <div class="breadcrumb__inner inner">
-        <!-- Breadcrumb NavXTで出力される部分 ここから -->
-        <?php if (function_exists('bcn_display')) { ?>
-                <div class="breadcrumb-navxt" vocab="http://schema.org/" typeof="BreadcrumbList">
-                    <?php bcn_display(); ?>
-                </div>
-            <?php } ?>
-        <!-- Breadcrumb NavXTで出力される部分 ここまで -->
+      <?php get_template_part('breadcrumb'); ?>
       </div>
     </div>
+    <!-- information -->
     <section class="information information-layout">
       <div class="information__inner inner">
         <div class="information__tab information-tab">

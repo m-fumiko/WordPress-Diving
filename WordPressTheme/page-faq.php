@@ -14,7 +14,7 @@
     </div>
     <!-- パンくず -->
     <?php get_template_part('breadcrumb'); ?>
-
+    <!-- faq -->
     <div class="faq faq-layout">
         <div class="faq__inner inner">
             <ul class="faq__list faq-list">
@@ -40,8 +40,5 @@
             </ul>
         </div>
     </div>
-
-
 </main>
-
 <?php get_footer(); ?>

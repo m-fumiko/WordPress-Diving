@@ -13,21 +13,8 @@
     </div>
 </div>
 <!-- パンくず -->
-<div class="breadcrumb breadcrumb-layout">
-    <div class="breadcrumb__inner inner">
-        <!-- Breadcrumb NavXTで出力される部分 ここから -->
-        <span>
-            <a href="<?php echo esc_url(home_url("/")) ?>">
-                <span>top</span>
-            </a>
-        </span>
-        &nbsp;&gt;&nbsp;
-        <span>
-            <span class="current-item">利用規約</span>
-        </span>
-        <!-- Breadcrumb NavXTで出力される部分 ここまで -->
-    </div>
-</div>
+<?php get_template_part('breadcrumb'); ?>
+<!-- terms-of-service -->
 <section class="terms-of-service terms-of-service-layout">
     <div class="terms-of-service__inner inner">
         <div class="terms-of-service__wrap">

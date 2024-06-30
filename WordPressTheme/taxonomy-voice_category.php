@@ -100,7 +100,6 @@
             </ul>
         </div>
     </section>
-
     <!-- ページネーション -->
     <div class="voice__pagenavi wp-pagenavi">
         <?php
