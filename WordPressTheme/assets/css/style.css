@@ -2065,7 +2065,7 @@ main {
 
 .header__nav-item span {
 	font-family: "Noto Sans JP", sans-serif;
-	font-size: 0.9375rem;
+	font-size: 0.625rem;
 	font-weight: 400;
 	line-height: 1.5;
 	padding-top: 0.25rem;
@@ -2076,7 +2076,7 @@ main {
 	cursor: pointer;
 	height: inherit;
 	position: fixed;
-	right: 0.625rem;
+	right: 0.9375rem;
 	top: 0;
 	width: 2.6875rem;
 	z-index: 999;
