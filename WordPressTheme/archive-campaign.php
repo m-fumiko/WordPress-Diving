@@ -54,7 +54,7 @@
                         // 価格から「¥」とカンマを取り除いて数値に変換
                         $normal_price = intval(preg_replace('/[^\d]/', '', $normal_price));
                         $campaign_price = intval(preg_replace('/[^\d]/', '', $campaign_price));
-                ?>
+                        ?>
                         <li class="campaign-card-contents__item campaign-card">
                             <div class="campaign-card__img">
                                 <?php if (has_post_thumbnail()) : ?>

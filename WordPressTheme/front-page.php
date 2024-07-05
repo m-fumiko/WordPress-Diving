@@ -37,93 +37,76 @@
   <!-- キャンーペーン -->
   <section id="top-campaign" class="top-campaign top-campaign-layout">
     <div class="top-campaign__inner inner">
-      <div class="top-campaign__container">
-        <div class="top-campaign__title common-title">
-          <p class="common-title__main">campaign</p>
-          <h2 class="common-title__sub">キャンペーン</h2>
+        <div class="top-campaign__container">
+            <div class="top-campaign__title common-title">
+                <p class="common-title__main">campaign</p>
+                <h2 class="common-title__sub">キャンペーン</h2>
+            </div>
+            <!-- 矢印 -->
+            <div class="top-campaign__swiper-button u-desktop">
+                <div class="top-campaign__swiper-button-prev swiper-button-prev js-siwper-button"></div>
+                <div class="top-campaign__swiper-button-next swiper-button-next js-siwper-button"></div>
+            </div>
         </div>
-        <!-- 矢印 -->
-        <div class="top-campaign__swiper-button u-desktop">
-          <div class="top-campaign__swiper-button-prev swiper-button-prev js-siwper-button"></div>
-          <div class="top-campaign__swiper-button-next swiper-button-next js-siwper-button"></div>
+        <div class="top-campaign__swiper">
+            <div class="swiper js-top-campaign-swiper">
+                <ul class="swiper-wrapper">
+                    <?php
+                    // 最新のキャンペーン投稿を取得
+                    $args = array(
+                        'post_type' => 'campaign', // カスタム投稿タイプ名
+                        'posts_per_page' => -1, // 全ての投稿を表示
+                        'orderby' => 'date', // 並び替えの基準
+                        'order' => 'DESC' // 降順
+                    );
+                    $campaign_query = new WP_Query($args);
+                    if ($campaign_query->have_posts()) :
+                        while ($campaign_query->have_posts()) : $campaign_query->the_post();
+                            $category = get_the_terms(get_the_ID(), 'campaign_category'); // カスタムタクソノミーを取得
+                            $category_name = !empty($category) ? $category[0]->name : '';
+                            $price_comment = get_field('campaign_card_price_comment');
+                            $normal_price = get_field('campaign_card_normal_price');
+                            $campaign_price = get_field('campaign_card_campaign_price');
+                            // 価格から「¥」とカンマを取り除いて数値に変換
+                            $normal_price = intval(preg_replace('/[^\d]/', '', $normal_price));
+                            $campaign_price = intval(preg_replace('/[^\d]/', '', $campaign_price));
+                    ?>
+                            <li class="swiper-slide">
+                                <div class="top-campaign__card campaign-card">
+                                    <div class="campaign-card__img">
+                                        <?php if (has_post_thumbnail()) : ?>
+                                            <img src="<?php the_post_thumbnail_url('full'); ?>" alt="<?php the_title_attribute(); ?>">
+                                        <?php else : ?>
+                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="campaign-card__content">
+                                        <p class="campaign-card__category"><?php echo esc_html($category_name); ?></p>
+                                        <p class="campaign-card__title"><?php the_title(); ?></p>
+                                        <p class="campaign-card__text"><?php echo esc_html($price_comment); ?></p>
+                                        <div class="campaign-card__price">
+                                            <p class="campaign-card__price-black">¥<?php echo number_format($normal_price); ?></p>
+                                            <p class="campaign-card__price-green">¥<?php echo number_format($campaign_price); ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                    <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    else :
+                        echo '<p>キャンペーンがありません。</p>';
+                    endif;
+                    ?>
+                </ul>
+            </div>
         </div>
-      </div>
-      <div class="top-campaign__swiper ">
-        <div class="swiper js-top-campaign-swiper">
-          <ul class="swiper-wrapper">
-            <li class="swiper-slide">
-              <div class="top-campaign__card campaign-card">
-                <div class="campaign-card__img">
-                  <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/campaign1.jpg" alt="無数の熱帯魚が泳いでいる様子">
-                </div>
-                <div class="campaign-card__content">
-                  <p class="campaign-card__category">ライセンス講習</p>
-                  <p class="campaign-card__title">ライセンス取得</p>
-                  <p class="campaign-card__text">全部コミコミ(お一人様)</p>
-                  <div class="campaign-card__price">
-                    <p class="campaign-card__price-black">¥56,000</p>
-                    <p class="campaign-card__price-green">¥46,000</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="swiper-slide">
-              <div class="top-campaign__card campaign-card">
-                <div class="campaign-card__img">
-                  <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/campaign2.jpg" alt="浅瀬に船が浮かんでいる景色の画像">
-                </div>
-                <div class="campaign-card__content">
-                  <p class="campaign-card__category">体験ダイビング</p>
-                  <p class="campaign-card__title">貸切体験ダイビング</p>
-                  <p class="campaign-card__text">全部コミコミ(お一人様)</p>
-                  <div class="campaign-card__price">
-                    <p class="campaign-card__price-black">¥24,000</p>
-                    <p class="campaign-card__price-green">¥18,000</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="swiper-slide">
-              <div class="top-campaign__card campaign-card">
-                <div class="campaign-card__img">
-                  <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/campaign3.jpg" alt="多くの光るクラゲが泳いでいる様子">
-                </div>
-                <div class="campaign-card__content">
-                  <p class="campaign-card__category">体験ダイビング</p>
-                  <p class="campaign-card__title">ナイトダイビング</p>
-                  <p class="campaign-card__text">全部コミコミ(お一人様)</p>
-                  <div class="campaign-card__price">
-                    <p class="campaign-card__price-black">¥10,000</p>
-                    <p class="campaign-card__price-green">¥8,000</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="swiper-slide">
-              <div class="top-campaign__card campaign-card">
-                <div class="campaign-card__img">
-                  <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/campaign4.jpg" alt="ダイビングをしている3人の男性が海から顔を出しているコミュニケーションを取っている様子">
-                </div>
-                <div class="campaign-card__content">
-                  <p class="campaign-card__category">ファンダイビング</p>
-                  <p class="campaign-card__title">貸切ファンダイビング</p>
-                  <p class="campaign-card__text">全部コミコミ(お一人様)</p>
-                  <div class="campaign-card__price">
-                    <p class="campaign-card__price-black">¥20,000</p>
-                    <p class="campaign-card__price-green">¥16,000</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
+        <div class="top-campaign__button-wrapper">
+            <a href="<?php echo esc_url(home_url("/campaign")) ?>" class="common-button">View more<span></span></a>
         </div>
-      </div>
-      <div class="top-campaign__button-wrapper">
-        <a href="<?php echo esc_url(home_url("/campaign")) ?>" class="common-button">View more<span></span>
-        </a>
-      </div>
     </div>
-  </section>
+</section>
+
   <!-- アバウト -->
   <section id="top-about" class="top-about top-about-layout">
     <div class="top-about__inner inner">
@@ -214,7 +197,7 @@
                   <time class="blog-card__date" datetime="<?php echo get_the_date('c'); ?>"><?php echo get_the_date('Y.m/d'); // 投稿の日付を表示 ?></time>
                   <p class="blog-card__title"><?php the_title(); // 投稿のタイトルを表示 ?></p>
                   <p class="blog-card__text">
-                    <?php echo wp_trim_words(get_the_excerpt(), 100, '...'); // 投稿の抜粋を100語にトリムして表示 ?>
+                    <?php echo wp_trim_words(get_the_excerpt(), 85, '...'); // 投稿の抜粋を100語にトリムして表示 ?>
                   </p>
                 </div>
               </a>

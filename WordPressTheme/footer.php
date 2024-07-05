@@ -16,17 +16,18 @@ if (!is_404() && !is_page('contact')) {
         <div class="footer__wrap">
             <div class="footer__top">
                 <div class="footer__logo">
-                    <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/CodeUps-logo2.svg" alt="CodeUps">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/common/CodeUps-logo2.svg" alt="CodeUps">
                 </div>
                 <div class="footer__sns">
-                    <a class="footer__sns-icon" href="" target="_blank">
-                        <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/facebook.svg" alt="facebook">
+                    <a class="footer__sns-icon" target="_blank" href="https://www.facebook.com/">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/common/facebook.svg" alt="facebook">
                     </a>
-                    <a class="footer__sns-icon" href="" target="_blank">
-                        <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/instagram.svg" alt="instagram">
+                    <a class="footer__sns-icon" href="https://www.instagram.com/" target="_blank">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/common/instagram.svg" alt="instagram">
                     </a>
                 </div>
             </div>
+
             <nav class="footer__nav-menu footer-menu">
                 <div class="footer-menu__left">
                     <div class="footer-menu__wrap-top">

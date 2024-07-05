@@ -70,6 +70,55 @@ function my_script_init()
 // 'wp_enqueue_scripts'アクションフックに'my_script_init'関数を追加します
 add_action('wp_enqueue_scripts', 'my_script_init');
 
+// タクソノミー 'campaign_category' を登録する関数
+function create_campaign_taxonomy() {
+    register_taxonomy(
+        'campaign_category',
+        'campaign',
+        array(
+            'labels' => array(
+                'name' => __('Campaign Categories'),
+                'singular_name' => __('Campaign Category'),
+                'search_items' => __('Search Campaign Categories'),
+                'all_items' => __('All Campaign Categories'),
+                'parent_item' => __('Parent Campaign Category'),
+                'parent_item_colon' => __('Parent Campaign Category:'),
+                'edit_item' => __('Edit Campaign Category'),
+                'update_item' => __('Update Campaign Category'),
+                'add_new_item' => __('Add New Campaign Category'),
+                'new_item_name' => __('New Campaign Category Name'),
+                'menu_name' => __('キャンペーンカテゴリー')
+            ),
+            'rewrite' => array('slug' => 'campaign-category'),
+            'hierarchical' => true,
+            'show_in_nav_menus' => true,
+            'show_ui' => true,
+            'show_admin_column' => true
+        )
+    );
+}
+add_action('init', 'create_campaign_taxonomy');
+
+// // カスタム投稿タイプ 'campaign' を登録する関数
+// function custom_campaign_post_type() {
+//     register_post_type(
+//         'campaign',
+//         array(
+//             'labels' => array(
+//                 'name' => __('キャンペーン'),
+//                 'singular_name' => __('キャンペーン')
+//             ),
+//             'public' => true,
+//             'has_archive' => true,
+//             'rewrite' => array('slug' => 'campaign'),
+//             'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
+//         )
+//     );
+// }
+// add_action('init', 'custom_campaign_post_type');
+
+
+
 // カスタムタクソノミー 'voice_category' を登録する関数
 function create_voice_taxonomy()
 {
@@ -101,23 +150,24 @@ function create_voice_taxonomy()
 add_action('init', 'create_voice_taxonomy');
 
 // カスタム投稿タイプ 'voice' を登録する関数
-function custom_post_type()
-{
-    register_post_type(
-        'voice',
-        array(
-            'labels' => array(
-                'name' => __('お客様の声'),
-                'singular_name' => __('お客様の声')
-            ),
-            'public' => true,
-            'has_archive' => true,
-            'rewrite' => array('slug' => 'voice'),
-            'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
-        )
-    );
-}
-add_action('init', 'custom_post_type');
+// function custom_post_type()
+// {
+//     register_post_type(
+//         'voice',
+//         array(
+//             'labels' => array(
+//                 'name' => __('お客様の声'),
+//                 'singular_name' => __('お客様の声')
+//             ),
+//             'public' => true,
+//             'has_archive' => true,
+//             'rewrite' => array('slug' => 'voice'),
+//             'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
+//         )
+//     );
+// }
+// add_action('init', 'custom_post_type');
+
 
 /* サムネイルのサイズ出力を消す */
 add_filter('post_thumbnail_html', 'custom_attribute');
@@ -218,4 +268,3 @@ function Change_menulabel() {
     add_action( 'init', 'Change_objectlabel' );
     add_action( 'admin_menu', 'Change_menulabel' );
 
-// ダッシュボードアイコン

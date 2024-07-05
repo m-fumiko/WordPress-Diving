@@ -22,17 +22,17 @@
                     <a href="<?php echo esc_url(get_post_type_archive_link('voice')); ?>">ALL</a>
                 </li>
                 <?php
-            $terms = get_terms(array(
-                'taxonomy' => 'voice_category',
-                'hide_empty' => false,
-            ));
-            if (!empty($terms)) {
-                foreach ($terms as $term) {
-                    $active_class = is_tax('voice_category', $term->slug) ? 'tag__menu-item--green' : '';
-                    echo '<li class="tag__menu-item ' . esc_attr($active_class) . '"><a href="' . esc_url(get_term_link($term)) . '">' . esc_html($term->name) . '</a></li>';
+                $terms = get_terms(array(
+                    'taxonomy' => 'voice_category',
+                    'hide_empty' => false,
+                ));
+                if (!empty($terms)) {
+                    foreach ($terms as $term) {
+                        $active_class = is_tax('voice_category', $term->slug) ? 'tag__menu-item--green' : '';
+                        echo '<li class="tag__menu-item ' . esc_attr($active_class) . '"><a href="' . esc_url(get_term_link($term)) . '">' . esc_html($term->name) . '</a></li>';
+                    }
                 }
-            }
-            ?>
+                ?>
             </ul>
         </div>
     </div>
@@ -48,7 +48,9 @@
                                 $voice_age = get_sub_field('voice_age');
                                 $voice_gender = get_sub_field('voice_gender');
                                 $voice_review = get_sub_field('voice_review');
-                ?>
+                                // 120文字まで制限
+                                $trimmed_voice_review = mb_substr($voice_review, 0, 140, 'UTF-8') . (mb_strlen($voice_review) > 120 ? '...' : '');
+                                ?>
                                 <li class="voice-card">
                                     <div class="voice-card__flex">
                                         <div class="voice-card__content">
@@ -87,7 +89,7 @@
                                         </div>
                                     </div>
                                     <p class="voice-card__text">
-                                        <?php echo wpautop(esc_html($voice_review)); ?>
+                                        <?php echo wpautop(esc_html($trimmed_voice_review)); ?>
                                     </p>
                                 </li>
                 <?php

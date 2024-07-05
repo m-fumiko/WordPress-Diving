@@ -43,7 +43,7 @@
                                                 </time>
                                                 <!-- 記事のタイトルを出力する -->
                                                 <p class="blog-card__title"><?php the_title(); ?></p>
-                                                <p class="blog-card__text"><?php echo wp_trim_words(get_the_content(), 100, '...'); ?>
+                                                <p class="blog-card__text"><?php echo wp_trim_words(get_the_content(), 85, '...'); ?>
                                                 </p>
                                             </div>
                                         </a>
@@ -52,15 +52,13 @@
                             <?php endwhile;
                             endif;  ?>
                         </ul>
-
                     <?php else : ?>
                         <p>記事が投稿されていません</p>
                     <?php endif; ?>
                     <!-- ページネーション -->
                     <?php if (function_exists('wp_pagenavi')) {
-    wp_pagenavi();
-} ?>
-
+                        wp_pagenavi();
+                    } ?>
                 </article>
                 <!-- サイドバー -->
                 <?php get_sidebar(); ?>

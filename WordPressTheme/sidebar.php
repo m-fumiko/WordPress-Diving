@@ -57,30 +57,32 @@
             while ($latest_reviews->have_posts()) : $latest_reviews->the_post();
                 // カスタムフィールドの値を取得
                 $voice_card = get_field('voice_card');
-                $voice_age = $voice_card['voice_age'];
-                $voice_gender = $voice_card['voice_gender'];
-                $voice_title = get_the_title();
+                if ($voice_card) {
+                    $voice_age = isset($voice_card['voice_age']) ? $voice_card['voice_age'] : '';
+                    $voice_gender = isset($voice_card['voice_gender']) ? $voice_card['voice_gender'] : '';
+                    $voice_title = get_the_title();
         ?>
-                <div class="blog-side__review blog-review">
-                    <h3 class="blog-review__title blog-side-title">口コミ</h3>
-                    <div class="blog-review__content">
-                        <div class="blog-review__img">
-                            <?php if (has_post_thumbnail()) : ?>
-                                <?php the_post_thumbnail('full'); ?>
-                            <?php else : ?>
-                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
-                            <?php endif; ?>
-                        </div>
-                        <div class="blog-review__contents">
-                            <div class="blog-review__info"><?php echo esc_html($voice_age); ?> (<?php echo esc_html($voice_gender); ?>)</div>
-                            <div class="blog-review__text"><?php echo esc_html($voice_title); ?></div>
-                            <div class="blog-review__button-wrapper">
-                                <a href="<?php echo get_post_type_archive_link('voice'); ?>" class="common-button">View more<span></span></a>
+                    <div class="blog-side__review blog-review">
+                        <h3 class="blog-review__title blog-side-title">口コミ</h3>
+                        <div class="blog-review__content">
+                            <div class="blog-review__img">
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <?php the_post_thumbnail('full'); ?>
+                                <?php else : ?>
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
+                                <?php endif; ?>
+                            </div>
+                            <div class="blog-review__contents">
+                                <div class="blog-review__info"><?php echo esc_html($voice_age); ?> (<?php echo esc_html($voice_gender); ?>)</div>
+                                <div class="blog-review__text"><?php echo esc_html($voice_title); ?></div>
+                                <div class="blog-review__button-wrapper">
+                                    <a href="<?php echo get_post_type_archive_link('voice'); ?>" class="common-button">View more<span></span></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
         <?php
+                }
             endwhile;
             wp_reset_postdata();
         else :
@@ -88,6 +90,7 @@
         endif;
         ?>
     </div>
+
     <!-- キャンペーン -->
     <div class="blog-side__items">
         <div class="blog-side__campaign blog-campaign">
@@ -143,38 +146,37 @@
             </div>
         </div>
     </div>
-    <!-- アーカイブ -->
-    <!-- アーカイブ -->
-<!-- アーカイブ -->
-<div class="blog-side__items">
-  <div class="blog-side__archive blog-archive">
-    <h3 class="blog-archive__title blog-side-title">アーカイブ</h3>
-    <div class="blog-archive__accordion">
-      <ul class="blog-archive__items">
-        <?php
-        global $wpdb;
-        $years = $wpdb->get_col("SELECT DISTINCT YEAR(post_date) FROM $wpdb->posts WHERE post_type = 'post' AND post_status = 'publish' ORDER BY post_date DESC");
 
-        foreach ($years as $index => $year) {
-            $is_first = $index === 0 ? ' blog-archive__year--first' : '';
-            ?>
-            <li class="blog-archive__item js-accordion__item">
-              <div class="blog-archive__year js-accordion<?php echo $is_first; ?>"><?php echo $year; ?></div>
-              <ul class="blog-archive__month js-accordion__content" style="<?php echo $is_first ? 'display:block;' : 'display:none;'; ?>">
-                <?php
-                $months = $wpdb->get_results($wpdb->prepare("SELECT DISTINCT MONTH(post_date) AS month FROM $wpdb->posts WHERE YEAR(post_date) = %d AND post_type = 'post' AND post_status = 'publish' ORDER BY post_date DESC", $year));
-                foreach ($months as $month) {
-                  $month_name = date_i18n('F', mktime(0, 0, 0, $month->month, 1));
-                  ?>
-                  <li class="blog-archive__month-item"><a href="<?php echo get_month_link($year, $month->month); ?>"><?php echo $month_name; ?></a></li>
-                <?php } ?>
-              </ul>
-            </li>
-        <?php } ?>
-      </ul>
+    <!-- アーカイブ -->
+    <div class="blog-side__items">
+        <div class="blog-side__archive blog-archive">
+            <h3 class="blog-archive__title blog-side-title">アーカイブ</h3>
+            <div class="blog-archive__accordion">
+                <ul class="blog-archive__items">
+                    <?php
+                    global $wpdb;
+                    $years = $wpdb->get_col("SELECT DISTINCT YEAR(post_date) FROM $wpdb->posts WHERE post_type = 'post' AND post_status = 'publish' ORDER BY post_date DESC");
+
+                    foreach ($years as $index => $year) {
+                        $is_first = $index === 0 ? ' blog-archive__year--first' : '';
+                    ?>
+                        <li class="blog-archive__item js-accordion__item">
+                            <div class="blog-archive__year js-accordion<?php echo $is_first; ?>"><?php echo $year; ?></div>
+                            <ul class="blog-archive__month js-accordion__content" style="<?php echo $is_first ? 'display:block;' : 'display:none;'; ?>">
+                                <?php
+                                $months = $wpdb->get_results($wpdb->prepare("SELECT DISTINCT MONTH(post_date) AS month FROM $wpdb->posts WHERE YEAR(post_date) = %d AND post_type = 'post' AND post_status = 'publish' ORDER BY post_date DESC", $year));
+                                foreach ($months as $month) {
+                                    $month_name = date_i18n('F', mktime(0, 0, 0, $month->month, 1));
+                                ?>
+                                    <li class="blog-archive__month-item"><a href="<?php echo get_month_link($year, $month->month); ?>"><?php echo $month_name; ?></a></li>
+                                <?php } ?>
+                            </ul>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 
 </aside>
