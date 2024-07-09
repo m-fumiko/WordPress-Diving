@@ -43,7 +43,7 @@
                 <?php
                 if (have_posts()) :
                     while (have_posts()) : the_post();
-                        $category = get_the_terms(get_the_ID(), 'campaign_category'); // カスタムタクソノミーを取得
+                        $category = get_the_terms(get_the_ID(), 'campaign_category');
                         $category_name = !empty($category) ? $category[0]->name : '';
                         $price_comment = get_field('campaign_card_price_comment');
                         $normal_price = get_field('campaign_card_normal_price');
@@ -51,7 +51,6 @@
                         $campaign_description = get_field('campaign_card_campaign_description');
                         $campaign_period = get_field('campaign_card_campaign_period');
 
-                        // 価格から「¥」とカンマを取り除いて数値に変換
                         $normal_price = intval(preg_replace('/[^\d]/', '', $normal_price));
                         $campaign_price = intval(preg_replace('/[^\d]/', '', $campaign_price));
                         ?>
@@ -78,7 +77,7 @@
                                     <p class="pc-contents__date"><?php echo esc_html($campaign_period); ?></p>
                                     <p class="pc-contents__contact-text">ご予約・お問い合わせはコチラ</p>
                                     <div class="pc-contents__button-wrapper">
-                                        <a href="contact.html" class="common-button">Contact us<span></span></a>
+                                        <a href="/contact" class="common-button">Contact us<span></span></a>
                                     </div>
                                 </div>
                             </div>

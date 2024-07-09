@@ -15,6 +15,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    z-index: -1;
     @include mq("md") {
         top: rem(-140);
         left: calc(50% - min(50vw, rem(614)));

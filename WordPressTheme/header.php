@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="robots" content="noindex" />
-<?php wp_head(); ?>
+  <?php wp_head(); ?>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'YOUR_GA_MEASUREMENT_ID');
+  </script>
+  <!-- / Google Analytics -->
 </head>
+
 <body>
-  <header class="header header-layout  js-header">
+<div id="top"></div> 
+  <header class="header header-layout js-header">
     <div class="header__inner">
       <h1 class="header__logo">
         <a href="<?php echo esc_url(home_url("/")) ?>">
@@ -41,18 +54,21 @@
               <li class="drawer-menu__item">
                 <a class="drawer-menu__item-title" href="<?php echo esc_url(home_url("/campaign")) ?>">キャンペーン</a>
                 <ul class="drawer-menu__sub-items">
-                  <li class="drawer-menu__sub-item">
-                    <a href="#">ライセンス取得</a>
-                  </li>
-                  <li class="drawer-menu__sub-item">
-                    <a href="#">貸切体験ダイビング</a>
-                  </li>
-                  <li class="drawer-menu__sub-item">
-                    <a href="#">ナイトダイビング</a>
-                  </li>
+                  <?php
+                  $campaign_categories = get_terms(array(
+                    'taxonomy' => 'campaign_category',
+                    'hide_empty' => false,
+                  ));
+                  if (!empty($campaign_categories)) {
+                    foreach ($campaign_categories as $category) {
+                      echo '<li class="drawer-menu__sub-item"><a href="' . esc_url(get_term_link($category)) . '">' . esc_html($category->name) . '</a></li>';
+                    }
+                  }
+                  ?>
                 </ul>
               </li>
             </ul>
+
             <ul class="drawer-menu__items">
               <li class="drawer-menu__item">
                 <a class="drawer-menu__item-title" href="<?php echo esc_url(home_url("/about")) ?>">私たちについて</a>
@@ -60,16 +76,16 @@
             </ul>
             <ul class="drawer-menu__items">
               <li class="drawer-menu__item">
-                <a class="drawer-menu__item-title" href="<?php echo esc_url(home_url("/information")) ?>">ダイビング情報</a>
+                <a class="drawer-menu__item-title" href="<?php echo esc_url(home_url("/information")); ?>">ダイビング情報</a>
                 <ul class="drawer-menu__sub-items">
                   <li class="drawer-menu__sub-item">
-                    <a href="information.html?tab=tab01">ライセンス講習</a>
+                    <a href="<?php echo esc_url(home_url('/information')); ?>?tab=tab01">ライセンス講習</a>
                   </li>
                   <li class="drawer-menu__sub-item">
-                    <a href="information.html?tab=tab02">体験ダイビング</a>
+                    <a href="<?php echo esc_url(home_url('/information')); ?>?tab=tab02">体験ダイビング</a>
                   </li>
                   <li class="drawer-menu__sub-item">
-                    <a href="information.html?tab=tab03">ファンダイビング</a>
+                    <a href="<?php echo esc_url(home_url('/information')); ?>?tab=tab03">ファンダイビング</a>
                   </li>
                 </ul>
               </li>
@@ -90,18 +106,37 @@
               <li class="drawer-menu__item">
                 <a class="drawer-menu__item-title" href="<?php echo esc_url(home_url("/price")) ?>">料金一覧</a>
                 <ul class="drawer-menu__sub-items">
-                  <li class="drawer-menu__sub-item">
-                    <a href="#">ライセンス講習</a>
-                  </li>
-                  <li class="drawer-menu__sub-item">
-                    <a href="#">体験ダイビング</a>
-                  </li>
-                  <li class="drawer-menu__sub-item">
-                    <a href="#">ファンダイビング</a>
-                  </li>
+                  <?php
+                  // カスタムクエリを使用して料金表のタイトルを取得
+                  $price_query = new WP_Query(array(
+                    'post_type' => 'page',
+                    'pagename' => 'price' // "price" スラッグを持つ固定ページを指定
+                  ));
+                  if ($price_query->have_posts()) :
+                    while ($price_query->have_posts()) :
+                      $price_query->the_post();
+                      $courses = [
+                        'course_title1',
+                        'course_title2',
+                        'course_title3',
+                        'course_title4',
+                        'course_title5',
+                        'course_title6',
+                      ];
+                      foreach ($courses as $title_key) {
+                        $course_title = SCF::get($title_key);
+                        if (!empty($course_title)) {
+                          echo '<li class="drawer-menu__sub-item"><a href="' . esc_url(home_url("/price") . sanitize_title($course_title)) . '">' . esc_html($course_title) . '</a></li>';
+                        }
+                      }
+                    endwhile;
+                  endif;
+                  wp_reset_postdata();
+                  ?>
                 </ul>
               </li>
             </ul>
+
             <ul class="drawer-menu__items">
               <li class="drawer-menu__item">
                 <a class="drawer-menu__item-title" href="<?php echo esc_url(home_url("/faq")) ?>">よくある質問</a>

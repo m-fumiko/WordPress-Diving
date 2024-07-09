@@ -6,7 +6,7 @@ if (!is_404() && !is_page('contact')) {
 ?>
 <!-- トップに戻るボタン -->
 <div class="top-button top-button-layout js-top-button">
-    <a href="">
+    <a href="#top">
         <img src="<?php echo get_theme_file_uri(); ?>/assets/images/common/top.svg" alt="PAGE TOP">
     </a>
 </div>
@@ -27,7 +27,6 @@ if (!is_404() && !is_page('contact')) {
                     </a>
                 </div>
             </div>
-
             <nav class="footer__nav-menu footer-menu">
                 <div class="footer-menu__left">
                     <div class="footer-menu__wrap-top">
@@ -35,15 +34,17 @@ if (!is_404() && !is_page('contact')) {
                             <li class="footer-menu__item">
                                 <a class="footer-menu__item-title" href="<?php echo esc_url(home_url("/campaign")) ?>">キャンペーン</a>
                                 <ul class="footer-menu__sub-items">
-                                    <li class="footer-menu__sub-item">
-                                        <a href="#">ライセンス取得</a>
-                                    </li>
-                                    <li class="footer-menu__sub-item">
-                                        <a href="#">貸切体験ダイビング</a>
-                                    </li>
-                                    <li class="footer-menu__sub-item">
-                                        <a href="#">ナイトダイビング</a>
-                                    </li>
+                                    <?php
+                                    $campaign_categories = get_terms(array(
+                                        'taxonomy' => 'campaign_category',
+                                        'hide_empty' => false,
+                                    ));
+                                    if (!empty($campaign_categories)) {
+                                        foreach ($campaign_categories as $category) {
+                                            echo '<li class="footer-menu__sub-item"><a href="' . esc_url(get_term_link($category)) . '">' . esc_html($category->name) . '</a></li>';
+                                        }
+                                    }
+                                    ?>
                                 </ul>
                             </li>
                         </ul>
@@ -56,16 +57,16 @@ if (!is_404() && !is_page('contact')) {
                     <div class="footer-menu__wrap">
                         <ul class="footer-menu__items">
                             <li class="footer-menu__item">
-                                <a class="footer-menu__item-title" href="<?php echo esc_url(home_url("/information")) ?>">ダイビング情報</a>
+                                <a class="footer-menu__item-title" href="<?php echo esc_url(home_url("/information")); ?>">ダイビング情報</a>
                                 <ul class="footer-menu__sub-items">
                                     <li class="footer-menu__sub-item">
-                                        <a href="information.html?tab=tab01">ライセンス講習</a>
+                                        <a href="<?php echo esc_url(home_url('/information')); ?>?tab=tab01">ライセンス講習</a>
                                     </li>
                                     <li class="footer-menu__sub-item">
-                                        <a href="information.html?tab=tab02">体験ダイビング</a>
+                                        <a href="<?php echo esc_url(home_url('/information')); ?>?tab=tab02">体験ダイビング</a>
                                     </li>
                                     <li class="footer-menu__sub-item">
-                                        <a href="information.html?tab=tab03">ファンダイビング</a>
+                                        <a href="<?php echo esc_url(home_url('/information')); ?>?tab=tab03">ファンダイビング</a>
                                     </li>
                                 </ul>
                             </li>
@@ -88,18 +89,37 @@ if (!is_404() && !is_page('contact')) {
                             <li class="footer-menu__item">
                                 <a class="footer-menu__item-title" href="<?php echo esc_url(home_url("/price")) ?>">料金一覧</a>
                                 <ul class="footer-menu__sub-items">
-                                    <li class="footer-menu__sub-item">
-                                        <a href="#">ライセンス講習</a>
-                                    </li>
-                                    <li class="footer-menu__sub-item">
-                                        <a href="#">体験ダイビング</a>
-                                    </li>
-                                    <li class="footer-menu__sub-item">
-                                        <a href="#">ファンダイビング</a>
-                                    </li>
+                                    <?php
+                                    // カスタムクエリを使用して料金表のタイトルを取得
+                                    $price_query = new WP_Query(array(
+                                        'post_type' => 'page',
+                                        'pagename' => 'price' // "price" スラッグを持つ固定ページを指定
+                                    ));
+                                    if ($price_query->have_posts()) :
+                                        while ($price_query->have_posts()) :
+                                            $price_query->the_post();
+                                            $courses = [
+                                                'course_title1',
+                                                'course_title2',
+                                                'course_title3',
+                                                'course_title4',
+                                                'course_title5',
+                                                'course_title6',
+                                            ];
+                                            foreach ($courses as $title_key) {
+                                                $course_title = SCF::get($title_key);
+                                                if (!empty($course_title)) {
+                                                    echo '<li class="footer-menu__sub-item"><a href="' . esc_url(home_url("/price") . sanitize_title($course_title)) . '">' . esc_html($course_title) . '</a></li>';
+                                                }
+                                            }
+                                        endwhile;
+                                    endif;
+                                    wp_reset_postdata();
+                                    ?>
                                 </ul>
                             </li>
                         </ul>
+
                     </div>
                     <div class="footer-menu__wrap">
                         <ul class="footer-menu__items">

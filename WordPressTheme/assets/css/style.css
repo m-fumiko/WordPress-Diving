@@ -895,6 +895,7 @@ main {
 	position: absolute;
 	top: -8.9375rem;
 	width: 7.5rem;
+	z-index: -1;
 }
 
 .campaign-card-contents__items {

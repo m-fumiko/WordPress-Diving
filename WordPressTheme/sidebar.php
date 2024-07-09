@@ -177,6 +177,4 @@
             </div>
         </div>
     </div>
-
-
 </aside>

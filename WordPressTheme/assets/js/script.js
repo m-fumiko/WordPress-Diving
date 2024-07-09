@@ -220,6 +220,24 @@ jQuery(function ($) {
       $(this).toggleClass('is-open');
     });
   });
+
+  // キャンペーン投稿ページタイトル取得（WP）
+  jQuery(document).ready(function($) {
+    $.ajax({
+        url: myAjax.ajaxurl,
+        type: 'post',
+        data: {
+            action: 'get_campaign_titles'
+        },
+        success: function(response) {
+            $('#campaign-select').empty().append(response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Ajax error:', error); // エラーメッセージは残しておくと役立つことがあります
+        }
+    });
+});
+
 });
 
 

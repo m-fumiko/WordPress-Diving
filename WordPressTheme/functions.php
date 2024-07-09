@@ -71,7 +71,8 @@ function my_script_init()
 add_action('wp_enqueue_scripts', 'my_script_init');
 
 // タクソノミー 'campaign_category' を登録する関数
-function create_campaign_taxonomy() {
+function create_campaign_taxonomy()
+{
     register_taxonomy(
         'campaign_category',
         'campaign',
@@ -99,75 +100,31 @@ function create_campaign_taxonomy() {
 }
 add_action('init', 'create_campaign_taxonomy');
 
-// // カスタム投稿タイプ 'campaign' を登録する関数
-// function custom_campaign_post_type() {
-//     register_post_type(
-//         'campaign',
-//         array(
-//             'labels' => array(
-//                 'name' => __('キャンペーン'),
-//                 'singular_name' => __('キャンペーン')
-//             ),
-//             'public' => true,
-//             'has_archive' => true,
-//             'rewrite' => array('slug' => 'campaign'),
-//             'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
-//         )
-//     );
-// }
-// add_action('init', 'custom_campaign_post_type');
-
-
-
-// カスタムタクソノミー 'voice_category' を登録する関数
-function create_voice_taxonomy()
+// テーマの基本設定
+function my_theme_setup()
 {
-    register_taxonomy(
-        'voice_category',
-        'voice',
-        array(
-            'labels' => array(
-                'name' => __('Voice Categories'),
-                'singular_name' => __('Voice Category'),
-                'search_items' => __('Search Voice Categories'),
-                'all_items' => __('All Voice Categories'),
-                'parent_item' => __('Parent Voice Category'),
-                'parent_item_colon' => __('Parent Voice Category:'),
-                'edit_item' => __('Edit Voice Category'),
-                'update_item' => __('Update Voice Category'),
-                'add_new_item' => __('Add New Voice Category'),
-                'new_item_name' => __('New Voice Category Name'),
-                'menu_name' => __('お客様の声カテゴリー')
-            ),
-            'rewrite' => array('slug' => 'voice-category'),
-            'hierarchical' => true,
-            'show_in_nav_menus' => true,
-            'show_ui' => true,
-            'show_admin_column' => true
-        )
-    );
+    add_theme_support('post-thumbnails');
+    add_theme_support('title-tag');
 }
-add_action('init', 'create_voice_taxonomy');
+add_action('after_setup_theme', 'my_theme_setup');
 
-// カスタム投稿タイプ 'voice' を登録する関数
-// function custom_post_type()
-// {
-//     register_post_type(
-//         'voice',
-//         array(
-//             'labels' => array(
-//                 'name' => __('お客様の声'),
-//                 'singular_name' => __('お客様の声')
-//             ),
-//             'public' => true,
-//             'has_archive' => true,
-//             'rewrite' => array('slug' => 'voice'),
-//             'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
-//         )
-//     );
-// }
-// add_action('init', 'custom_post_type');
+// キャンペーンアーカイブの表示件数を設定
+function set_campaign_posts_per_page($query)
+{
+    if (!is_admin() && $query->is_main_query() && (is_post_type_archive('campaign') || is_tax('campaign_category'))) {
+        $query->set('posts_per_page', 6);
+    }
+}
+add_action('pre_get_posts', 'set_campaign_posts_per_page');
 
+// Voice アーカイブの表示件数を設定
+function set_voice_posts_per_page($query)
+{
+    if (!is_admin() && $query->is_main_query() && (is_post_type_archive('voice') || is_tax('voice_category'))) {
+        $query->set('posts_per_page', 6);
+    }
+}
+add_action('pre_get_posts', 'set_voice_posts_per_page');
 
 /* サムネイルのサイズ出力を消す */
 add_filter('post_thumbnail_html', 'custom_attribute');
@@ -221,12 +178,61 @@ function track_post_views($post_id)
 add_action('wp_head', 'track_post_views');
 
 // カスタムフィールドを管理画面に表示しない
-function remove_post_views_column($columns)
+// function remove_post_views_column($columns)
+// {
+//     unset($columns['post_views']);
+//     return $columns;
+// }
+// add_filter('manage_posts_columns', 'remove_post_views_column');
+
+// Contact Form 7でのキャンペーン内容を、投稿ページタイトルから動的に取得
+function campaign_titles_dropdown()
 {
-    unset($columns['post_views']);
-    return $columns;
+    $args = array(
+        'post_type' => 'campaign',
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+    );
+
+    $posts = get_posts($args);
+    if (empty($posts)) {
+        return '<option value="">キャンペーンがありません</option>';
+    }
+
+    $options = '<option value="">キャンペーン内容を選択</option>';
+    foreach ($posts as $post) {
+        $options .= sprintf('<option value="%1$s">%1$s</option>', esc_html($post->post_title));
+    }
+
+    return $options;
 }
-add_filter('manage_posts_columns', 'remove_post_views_column');
+
+add_shortcode('campaign_titles', 'campaign_titles_dropdown');
+
+// JavaScriptをエンキュー
+// function enqueue_custom_scripts()
+// {
+//     wp_enqueue_script('custom-js', get_template_directory_uri() . '/assets/js/custom-script.js', array('jquery'), '1.0.1', true);
+//     wp_localize_script('custom-js', 'myAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
+// }
+// add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
+function enqueue_custom_scripts()
+{
+    wp_enqueue_script('custom-js', get_template_directory_uri() . '/assets/js/script.js', array('jquery'), '1.0.1', true);
+    wp_localize_script('custom-js', 'myAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
+
+// Ajaxハンドラの追加
+function ajax_get_campaign_titles()
+{
+    echo do_shortcode('[campaign_titles]');
+    wp_die();
+}
+add_action('wp_ajax_get_campaign_titles', 'ajax_get_campaign_titles');
+add_action('wp_ajax_nopriv_get_campaign_titles', 'ajax_get_campaign_titles');
+
+
 
 // Contact Form 7で自動挿入されるPタグ、brタグを削除
 add_filter('wpcf7_autop_or_not', 'wpcf7_autop_return_false');
@@ -242,29 +248,30 @@ function my_theme_enqueue_styles()
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_styles');
 
 // 管理画面の『投稿』の名前を変更
-function Change_menulabel() {
+function Change_menulabel()
+{
     global $menu;
     global $submenu;
     $name = 'ブログ';
     $menu[5][0] = $name;
-    $submenu['edit.php'][5][0] = $name.'一覧';
-    $submenu['edit.php'][10][0] = '新しい'.$name;
-    }
-    function Change_objectlabel() {
+    $submenu['edit.php'][5][0] = $name . '一覧';
+    $submenu['edit.php'][10][0] = '新しい' . $name;
+}
+function Change_objectlabel()
+{
     global $wp_post_types;
     $name = 'ブログ';
     $labels = &$wp_post_types['post']->labels;
     $labels->name = $name;
     $labels->singular_name = $name;
     $labels->add_new = _x('追加', $name);
-    $labels->add_new_item = $name.'の新規追加';
-    $labels->edit_item = $name.'の編集';
-    $labels->new_item = '新規'.$name;
-    $labels->view_item = $name.'を表示';
-    $labels->search_items = $name.'を検索';
-    $labels->not_found = $name.'が見つかりませんでした';
-    $labels->not_found_in_trash = 'ゴミ箱に'.$name.'は見つかりませんでした';
-    }
-    add_action( 'init', 'Change_objectlabel' );
-    add_action( 'admin_menu', 'Change_menulabel' );
-
+    $labels->add_new_item = $name . 'の新規追加';
+    $labels->edit_item = $name . 'の編集';
+    $labels->new_item = '新規' . $name;
+    $labels->view_item = $name . 'を表示';
+    $labels->search_items = $name . 'を検索';
+    $labels->not_found = $name . 'が見つかりませんでした';
+    $labels->not_found_in_trash = 'ゴミ箱に' . $name . 'は見つかりませんでした';
+}
+add_action('init', 'Change_objectlabel');
+add_action('admin_menu', 'Change_menulabel');

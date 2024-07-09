@@ -13,17 +13,17 @@
             $contact_page = get_page_by_path('contact-section'); // ここでスラッグを使用してページを取得
             if ($contact_page) {
               $contact_page_id = $contact_page->ID;
-              
+
               // ACFフィールドから情報を取得
               $contact_info = get_field('contact_information', $contact_page_id);
-              
+
               // 情報を表示
               if ($contact_info) {
                 $address = $contact_info['address'];
                 $tel = $contact_info['tel'];
                 $open = $contact_info['open'];
                 $closed = $contact_info['closed'];
-                
+
                 echo '<p class="common-contact__access-text">' . esc_html($address) . '</p>';
                 echo '<p class="common-contact__access-text"><a href="tel:' . esc_attr($tel) . '">TEL: ' . esc_html($tel) . '</a></p>';
                 echo '<p class="common-contact__access-text">営業時間: ' . esc_html($open) . '</p>';
