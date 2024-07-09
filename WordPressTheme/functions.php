@@ -71,34 +71,34 @@ function my_script_init()
 add_action('wp_enqueue_scripts', 'my_script_init');
 
 // タクソノミー 'campaign_category' を登録する関数
-function create_campaign_taxonomy()
-{
-    register_taxonomy(
-        'campaign_category',
-        'campaign',
-        array(
-            'labels' => array(
-                'name' => __('Campaign Categories'),
-                'singular_name' => __('Campaign Category'),
-                'search_items' => __('Search Campaign Categories'),
-                'all_items' => __('All Campaign Categories'),
-                'parent_item' => __('Parent Campaign Category'),
-                'parent_item_colon' => __('Parent Campaign Category:'),
-                'edit_item' => __('Edit Campaign Category'),
-                'update_item' => __('Update Campaign Category'),
-                'add_new_item' => __('Add New Campaign Category'),
-                'new_item_name' => __('New Campaign Category Name'),
-                'menu_name' => __('キャンペーンカテゴリー')
-            ),
-            'rewrite' => array('slug' => 'campaign-category'),
-            'hierarchical' => true,
-            'show_in_nav_menus' => true,
-            'show_ui' => true,
-            'show_admin_column' => true
-        )
-    );
-}
-add_action('init', 'create_campaign_taxonomy');
+// function create_campaign_taxonomy()
+// {
+//     register_taxonomy(
+//         'campaign_category',
+//         'campaign',
+//         array(
+//             'labels' => array(
+//                 'name' => __('Campaign Categories'),
+//                 'singular_name' => __('Campaign Category'),
+//                 'search_items' => __('Search Campaign Categories'),
+//                 'all_items' => __('All Campaign Categories'),
+//                 'parent_item' => __('Parent Campaign Category'),
+//                 'parent_item_colon' => __('Parent Campaign Category:'),
+//                 'edit_item' => __('Edit Campaign Category'),
+//                 'update_item' => __('Update Campaign Category'),
+//                 'add_new_item' => __('Add New Campaign Category'),
+//                 'new_item_name' => __('New Campaign Category Name'),
+//                 'menu_name' => __('キャンペーンカテゴリー')
+//             ),
+//             'rewrite' => array('slug' => 'campaign-category'),
+//             'hierarchical' => true,
+//             'show_in_nav_menus' => true,
+//             'show_ui' => true,
+//             'show_admin_column' => true
+//         )
+//     );
+// }
+// add_action('init', 'create_campaign_taxonomy');
 
 // テーマの基本設定
 function my_theme_setup()
@@ -209,17 +209,12 @@ function campaign_titles_dropdown()
 
 add_shortcode('campaign_titles', 'campaign_titles_dropdown');
 
+// お問い合わせのセレクトメニュー
 // JavaScriptをエンキュー
-// function enqueue_custom_scripts()
-// {
-//     wp_enqueue_script('custom-js', get_template_directory_uri() . '/assets/js/custom-script.js', array('jquery'), '1.0.1', true);
-//     wp_localize_script('custom-js', 'myAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
-// }
-// add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
 function enqueue_custom_scripts()
 {
-    wp_enqueue_script('custom-js', get_template_directory_uri() . '/assets/js/script.js', array('jquery'), '1.0.1', true);
-    wp_localize_script('custom-js', 'myAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
+    wp_enqueue_script('main-js', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0.1', true);
+    wp_localize_script('main-js', 'myAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
 
@@ -231,7 +226,6 @@ function ajax_get_campaign_titles()
 }
 add_action('wp_ajax_get_campaign_titles', 'ajax_get_campaign_titles');
 add_action('wp_ajax_nopriv_get_campaign_titles', 'ajax_get_campaign_titles');
-
 
 
 // Contact Form 7で自動挿入されるPタグ、brタグを削除
