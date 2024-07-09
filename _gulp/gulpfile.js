@@ -30,7 +30,7 @@ const srcPath = {
 
 // html反映用
 const destPath = {
-  // all: "../dist/**/*",
+  all: "../dist/**/*",
   // css: "../dist/assets/css/",
   css: "../WordPressTheme/assets/css/",
   js: "../dist/assets/js/",
