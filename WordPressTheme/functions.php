@@ -70,36 +70,6 @@ function my_script_init()
 // 'wp_enqueue_scripts'アクションフックに'my_script_init'関数を追加します
 add_action('wp_enqueue_scripts', 'my_script_init');
 
-// タクソノミー 'campaign_category' を登録する関数
-// function create_campaign_taxonomy()
-// {
-//     register_taxonomy(
-//         'campaign_category',
-//         'campaign',
-//         array(
-//             'labels' => array(
-//                 'name' => __('Campaign Categories'),
-//                 'singular_name' => __('Campaign Category'),
-//                 'search_items' => __('Search Campaign Categories'),
-//                 'all_items' => __('All Campaign Categories'),
-//                 'parent_item' => __('Parent Campaign Category'),
-//                 'parent_item_colon' => __('Parent Campaign Category:'),
-//                 'edit_item' => __('Edit Campaign Category'),
-//                 'update_item' => __('Update Campaign Category'),
-//                 'add_new_item' => __('Add New Campaign Category'),
-//                 'new_item_name' => __('New Campaign Category Name'),
-//                 'menu_name' => __('キャンペーンカテゴリー')
-//             ),
-//             'rewrite' => array('slug' => 'campaign-category'),
-//             'hierarchical' => true,
-//             'show_in_nav_menus' => true,
-//             'show_ui' => true,
-//             'show_admin_column' => true
-//         )
-//     );
-// }
-// add_action('init', 'create_campaign_taxonomy');
-
 // テーマの基本設定
 function my_theme_setup()
 {
@@ -117,7 +87,7 @@ function set_campaign_posts_per_page($query)
 }
 add_action('pre_get_posts', 'set_campaign_posts_per_page');
 
-// Voice アーカイブの表示件数を設定
+// ボイスアーカイブの表示件数を設定
 function set_voice_posts_per_page($query)
 {
     if (!is_admin() && $query->is_main_query() && (is_post_type_archive('voice') || is_tax('voice_category'))) {
@@ -134,21 +104,6 @@ function custom_attribute($html)
     $html = preg_replace('/(width|height)="\d*"\s/', '', $html);
     return $html;
 }
-
-// サイドバー表示
-function theme_slug_widgets_init()
-{
-    register_sidebar(array(
-        'name'          => __('Blog Sidebar', 'theme-slug'),
-        'id'            => 'sidebar-1',
-        'description'   => __('Widgets in this area will be shown on all posts and pages.', 'theme-slug'),
-        'before_widget' => '<div class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ));
-}
-add_action('widgets_init', 'theme_slug_widgets_init');
 
 // 記事の閲覧数を増加させる関数
 function set_post_views($postID)
@@ -177,13 +132,52 @@ function track_post_views($post_id)
 }
 add_action('wp_head', 'track_post_views');
 
-// カスタムフィールドを管理画面に表示しない
-// function remove_post_views_column($columns)
-// {
-//     unset($columns['post_views']);
-//     return $columns;
-// }
-// add_filter('manage_posts_columns', 'remove_post_views_column');
+// アーカイブタイトルから余計な文字を削除するフィルターを追加
+add_filter('get_the_archive_title', function ($title) {
+    // カテゴリーアーカイブの場合
+    if (is_category()) {
+        // カテゴリーの名前をタイトルに設定
+        $title = single_cat_title('', false);
+    // タグアーカイブの場合
+    } elseif (is_tag()) {
+        // タグの名前をタイトルに設定
+        $title = single_tag_title('', false);
+    // タクソノミーアーカイブの場合
+    } elseif (is_tax()) {
+        // タクソノミーの名前をタイトルに設定
+        $title = single_term_title('', false);
+    // 投稿タイプアーカイブの場合
+    } elseif (is_post_type_archive()) {
+        // 投稿タイプの名前をタイトルに設定
+        $title = post_type_archive_title('', false);
+    // 年別アーカイブの場合
+    } elseif (is_year()) {
+        // 年をタイトルに設定
+        $title = get_the_date('Y年');
+    // 月別アーカイブの場合
+    } elseif (is_month()) {
+        // 年と月をタイトルに設定
+        $title = get_the_date('Y年 F');
+    // 日別アーカイブの場合
+    } elseif (is_day()) {
+        // 日付をタイトルに設定
+        $title = get_the_date();
+    // 検索結果ページの場合
+    } elseif (is_search()) {
+        // 検索結果のクエリをタイトルに設定
+        $title = '検索結果：' . esc_html(get_search_query(false));
+    // 404ページの場合
+    } elseif (is_404()) {
+        // 404エラーメッセージをタイトルに設定
+        $title = '「404」ページが見つかりません';
+    // その他のアーカイブの場合
+    } else {
+        // 一般的なアーカイブタイトルを設定
+        $title = __('Archives');
+    }
+    // フィルターフックによってカスタマイズされたタイトルを返す
+    return $title;
+});
 
 // Contact Form 7でのキャンペーン内容を、投稿ページタイトルから動的に取得
 function campaign_titles_dropdown()
@@ -226,7 +220,6 @@ function ajax_get_campaign_titles()
 }
 add_action('wp_ajax_get_campaign_titles', 'ajax_get_campaign_titles');
 add_action('wp_ajax_nopriv_get_campaign_titles', 'ajax_get_campaign_titles');
-
 
 // Contact Form 7で自動挿入されるPタグ、brタグを削除
 add_filter('wpcf7_autop_or_not', 'wpcf7_autop_return_false');

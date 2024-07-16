@@ -13,23 +13,22 @@
           // カスタムフィールドの値を取得
           $slide_images = SCF::get('slider_images');
           // スライド画像を表示
-          foreach ($slide_images as $slide_image) {
+          foreach ($slide_images as $slide_image) :
             $pc_image_id = $slide_image['pc_image'];
             $sp_image_id = $slide_image['sp_image'];
 
-            if ($pc_image_id && $sp_image_id) {
+            if ($pc_image_id && $sp_image_id) :
               $pc_image_url = wp_get_attachment_image_src($pc_image_id, 'full')[0];
               $sp_image_url = wp_get_attachment_image_src($sp_image_id, 'full')[0];
-
-              echo '<div class="swiper-slide">';
-              echo '<picture>';
-              echo '<source srcset="' . esc_url($sp_image_url) . '" media="(max-width: 767px)" />';
-              echo '<img src="' . esc_url($pc_image_url) . '" alt="スライド画像">';
-              echo '</picture>';
-              echo '</div>';
-            }
-          }
           ?>
+              <div class="swiper-slide">
+                <picture>
+                  <source srcset="<?php echo esc_url($sp_image_url); ?>" media="(max-width: 767px)" />
+                  <img src="<?php echo esc_url($pc_image_url); ?>" alt="スライド画像">
+                </picture>
+              </div>
+              <?php endif; ?>
+              <?php endforeach; ?>
         </div>
       </div>
     </div>
@@ -37,76 +36,71 @@
   <!-- キャンーペーン -->
   <section id="top-campaign" class="top-campaign top-campaign-layout">
     <div class="top-campaign__inner inner">
-        <div class="top-campaign__container">
-            <div class="top-campaign__title common-title">
-                <p class="common-title__main">campaign</p>
-                <h2 class="common-title__sub">キャンペーン</h2>
-            </div>
-            <!-- 矢印 -->
-            <div class="top-campaign__swiper-button u-desktop">
-                <div class="top-campaign__swiper-button-prev swiper-button-prev js-siwper-button"></div>
-                <div class="top-campaign__swiper-button-next swiper-button-next js-siwper-button"></div>
-            </div>
+      <div class="top-campaign__container">
+        <div class="top-campaign__title common-title">
+          <p class="common-title__main">campaign</p>
+          <h2 class="common-title__sub">キャンペーン</h2>
         </div>
-        <div class="top-campaign__swiper">
-            <div class="swiper js-top-campaign-swiper">
-                <ul class="swiper-wrapper">
-                    <?php
-                    // 最新のキャンペーン投稿を取得
-                    $args = array(
-                        'post_type' => 'campaign', // カスタム投稿タイプ名
-                        'posts_per_page' => -1, // 全ての投稿を表示
-                        'orderby' => 'date', // 並び替えの基準
-                        'order' => 'DESC' // 降順
-                    );
-                    $campaign_query = new WP_Query($args);
-                    if ($campaign_query->have_posts()) :
-                        while ($campaign_query->have_posts()) : $campaign_query->the_post();
-                            $category = get_the_terms(get_the_ID(), 'campaign_category'); // カスタムタクソノミーを取得
-                            $category_name = !empty($category) ? $category[0]->name : '';
-                            $price_comment = get_field('campaign_card_price_comment');
-                            $normal_price = get_field('campaign_card_normal_price');
-                            $campaign_price = get_field('campaign_card_campaign_price');
-                            // 価格から「¥」とカンマを取り除いて数値に変換
-                            $normal_price = intval(preg_replace('/[^\d]/', '', $normal_price));
-                            $campaign_price = intval(preg_replace('/[^\d]/', '', $campaign_price));
-                    ?>
-                            <li class="swiper-slide">
-                                <div class="top-campaign__card campaign-card">
-                                    <div class="campaign-card__img">
-                                        <?php if (has_post_thumbnail()) : ?>
-                                            <img src="<?php the_post_thumbnail_url('full'); ?>" alt="<?php the_title_attribute(); ?>">
-                                        <?php else : ?>
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="campaign-card__content">
-                                        <p class="campaign-card__category"><?php echo esc_html($category_name); ?></p>
-                                        <p class="campaign-card__title"><?php the_title(); ?></p>
-                                        <p class="campaign-card__text"><?php echo esc_html($price_comment); ?></p>
-                                        <div class="campaign-card__price">
-                                            <p class="campaign-card__price-black">¥<?php echo number_format($normal_price); ?></p>
-                                            <p class="campaign-card__price-green">¥<?php echo number_format($campaign_price); ?></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                    <?php
-                        endwhile;
-                        wp_reset_postdata();
-                    else :
-                        echo '<p>キャンペーンがありません。</p>';
-                    endif;
-                    ?>
-                </ul>
-            </div>
+        <!-- 矢印 -->
+        <div class="top-campaign__swiper-button u-desktop">
+          <div class="top-campaign__swiper-button-prev swiper-button-prev js-siwper-button"></div>
+          <div class="top-campaign__swiper-button-next swiper-button-next js-siwper-button"></div>
         </div>
-        <div class="top-campaign__button-wrapper">
-            <a href="<?php echo esc_url(home_url("/campaign")) ?>" class="common-button">View more<span></span></a>
+      </div>
+      <div class="top-campaign__swiper">
+        <div class="swiper js-top-campaign-swiper">
+          <ul class="swiper-wrapper">
+            <?php
+            // 最新のキャンペーン投稿を取得
+            $args = array(
+              'post_type' => 'campaign', // カスタム投稿タイプ名
+              'posts_per_page' => -1, // 全ての投稿を表示
+            );
+            $campaign_query = new WP_Query($args);
+            if ($campaign_query->have_posts()) :
+              while ($campaign_query->have_posts()) : $campaign_query->the_post();
+                $category = get_the_terms(get_the_ID(), 'campaign_category'); // カスタムタクソノミーを取得
+                $category_name = !empty($category) ? $category[0]->name : '';
+                $price_comment = get_field('campaign_card_price_comment');
+                $normal_price = get_field('campaign_card_normal_price');
+                $campaign_price = get_field('campaign_card_campaign_price');
+                // 価格から「¥」とカンマを取り除いて数値に変換
+                $normal_price = intval(preg_replace('/[^\d]/', '', $normal_price));
+                $campaign_price = intval(preg_replace('/[^\d]/', '', $campaign_price));
+            ?>
+                <li class="swiper-slide">
+                  <div class="top-campaign__card campaign-card">
+                    <div class="campaign-card__img">
+                      <?php if (has_post_thumbnail()) : ?>
+                        <img src="<?php the_post_thumbnail_url('full'); ?>" alt="<?php the_title_attribute(); ?>">
+                      <?php else : ?>
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
+                      <?php endif; ?>
+                    </div>
+                    <div class="campaign-card__content">
+                      <p class="campaign-card__category"><?php echo esc_html($category_name); ?></p>
+                      <p class="campaign-card__title"><?php the_title(); ?></p>
+                      <p class="campaign-card__text"><?php echo esc_html($price_comment); ?></p>
+                      <div class="campaign-card__price">
+                        <p class="campaign-card__price-black">¥<?php echo number_format($normal_price); ?></p>
+                        <p class="campaign-card__price-green">¥<?php echo number_format($campaign_price); ?></p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              <?php endwhile; ?>
+              <?php wp_reset_postdata(); ?>
+            <?php else : ?>
+              <p>キャンペーンがありません。</p>
+            <?php endif; ?>
+          </ul>
         </div>
+      </div>
+      <div class="top-campaign__button-wrapper">
+        <a href="<?php echo esc_url(home_url("/campaign")) ?>" class="common-button">View more<span></span></a>
+      </div>
     </div>
-</section>
-
+  </section>
   <!-- アバウト -->
   <section id="top-about" class="top-about top-about-layout">
     <div class="top-about__inner inner">
@@ -177,34 +171,41 @@
         $args = array(
           'post_type' => 'post', // 投稿タイプを「post」に指定
           'posts_per_page' => 3, // 表示する投稿数を3に設定
-          'orderby' => 'date', // 日付で並べ替え
-          'order' => 'DESC', // 降順で並べ替え（新しいものが先に表示される）
         );
         $custom_query = new WP_Query($args); // カスタムクエリを作成
         ?>
-        <?php if ($custom_query->have_posts()) : // 投稿があるかチェック ?>
-          <?php while ($custom_query->have_posts()) : $custom_query->the_post(); // 投稿がある限りループ ?>
+        <?php if ($custom_query->have_posts()) : // 投稿があるかチェック
+        ?>
+          <?php while ($custom_query->have_posts()) : $custom_query->the_post(); // 投稿がある限りループ
+          ?>
             <li class="blog-list__item blog-card blog-card--2">
-              <a href="<?php the_permalink(); // 投稿のパーマリンクを取得 ?>">
+              <a href="<?php the_permalink(); // 投稿のパーマリンクを取得
+                        ?>">
                 <div class="blog-card__img">
-                  <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック ?>
-                    <?php the_post_thumbnail('full'); // アイキャッチ画像をフルサイズで表示 ?>
-                  <?php else : // アイキャッチ画像が設定されていない場合 ?>
+                  <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック
+                  ?>
+                    <?php the_post_thumbnail('full'); // アイキャッチ画像をフルサイズで表示
+                    ?>
+                  <?php else : // アイキャッチ画像が設定されていない場合
+                  ?>
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/noimage.jpg'); ?>" alt="NoImage画像">
                   <?php endif; ?>
                 </div>
                 <div class="blog-card__content">
-                  <time class="blog-card__date" datetime="<?php echo get_the_date('c'); ?>"><?php echo get_the_date('Y.m/d'); // 投稿の日付を表示 ?></time>
-                  <p class="blog-card__title"><?php the_title(); // 投稿のタイトルを表示 ?></p>
+                  <time class="blog-card__date" datetime="<?php echo get_the_date('c'); ?>"><?php echo get_the_date('Y.m/d'); // 投稿の日付を表示
+                                                                                            ?></time>
+                  <p class="blog-card__title"><?php the_title(); // 投稿のタイトルを表示
+                                              ?></p>
                   <p class="blog-card__text">
-                    <?php echo wp_trim_words(get_the_excerpt(), 85, '...'); // 投稿の抜粋を100語にトリムして表示 ?>
+                    <?php echo wp_trim_words(get_the_excerpt(), 85, '...'); // 投稿の抜粋を100語にトリムして表示
+                    ?>
                   </p>
                 </div>
               </a>
             </li>
           <?php endwhile; ?>
           <?php wp_reset_postdata(); // カスタムクエリのデータをリセット ?>
-        <?php else : // 投稿がない場合の処理 ?>
+        <?php else : // 投稿がない場合の処理?>
           <p>記事が見つかりませんでした。</p>
         <?php endif; ?>
       </ul>
@@ -226,14 +227,15 @@
         $args = array(
           'post_type' => 'voice', // カスタム投稿タイプ「voice」を指定
           'posts_per_page' => 2, // 表示する投稿数を2に設定
-          'orderby' => 'date', // 日付で並べ替え
-          'order' => 'DESC', // 降順で並べ替え（新しいものが先に表示される）
         );
         $custom_query = new WP_Query($args); // カスタムクエリを作成
         ?>
-        <?php if ($custom_query->have_posts()) : // 投稿があるかチェック ?>
-          <?php while ($custom_query->have_posts()) : $custom_query->the_post(); // 投稿がある限りループ ?>
-            <?php if (have_rows('voice_card')) : while (have_rows('voice_card')) : the_row(); // カスタムフィールド「voice_card」があるかチェック ?>
+        <?php if ($custom_query->have_posts()) : // 投稿があるかチェック
+        ?>
+          <?php while ($custom_query->have_posts()) : $custom_query->the_post(); // 投稿がある限りループ
+          ?>
+            <?php if (have_rows('voice_card')) : while (have_rows('voice_card')) : the_row(); // カスタムフィールド「voice_card」があるかチェック
+            ?>
                 <li class="voice-list__item">
                   <div class="voice-card">
                     <div class="voice-card__flex">
@@ -263,22 +265,27 @@
                         </p>
                       </div>
                       <div class="voice-card__img color-box js-color-box">
-                        <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック ?>
+                        <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック
+                        ?>
                           <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" width="151" height="117" loading="lazy" />
-                        <?php else : // アイキャッチ画像が設定されていない場合 ?>
+                        <?php else : // アイキャッチ画像が設定されていない場合
+                        ?>
                           <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/noimage.jpg" alt="NoImage画像">
                         <?php endif; ?>
                       </div>
                     </div>
                     <p class="voice-card__text">
-                      <?php echo wpautop(esc_html(get_sub_field('voice_review'))); // カスタムフィールド「voice_review」を表示し、自動で段落を追加 ?>
+                      <?php echo wpautop(esc_html(get_sub_field('voice_review'))); // カスタムフィールド「voice_review」を表示し、自動で段落を追加
+                      ?>
                     </p>
                   </div>
                 </li>
             <?php endwhile;
             endif; ?>
-          <?php endwhile; // ループ終了 ?>
-          <?php wp_reset_postdata(); // カスタムクエリのデータをリセット ?>
+          <?php endwhile; // ループ終了
+          ?>
+          <?php wp_reset_postdata(); // カスタムクエリのデータをリセット
+          ?>
         <?php else : ?>
           <p>記事が見つかりませんでした。</p>
         <?php endif; ?>
@@ -288,7 +295,6 @@
       </div>
     </div>
   </section>
-
   <!-- プライス -->
   <section id="top-price" class="top-price top-price-layout">
     <div class="top-price__inner inner">
@@ -319,26 +325,30 @@
             $course_title = SCF::get($title_key, $price_page_id);
             $details = SCF::get($details_key, $price_page_id);
             if (!empty($course_title) && !empty($details)) {
-              echo '<li class="top-price__item">';
-              echo '<h3 class="top-price__item-title">' . esc_html($course_title) . '</h3>';
-              echo '<dl>';
-              foreach ($details as $detail) {
-                $course_content = wp_kses_post($detail['course_content' . substr($title_key, -1)]);
-                $course_price = esc_html($detail['course_price' . substr($title_key, -1)]);
-                if (strpos($course_price, '¥') === false) {
-                  $course_price = '¥' . $course_price;
-                }
-                echo '<div class="top-price__item-content">';
-                echo '<dt class="top-price__item-text">' . $course_content . '</dt>';
-                echo '<dd class="top-price__item-price">' . $course_price . '</dd>';
-                echo '</div>';
-              }
-              echo '</dl>';
-              echo '</li>';
+          ?>
+              <li class="top-price__item">
+                <h3 class="top-price__item-title"><?php echo esc_html($course_title); ?></h3>
+                <dl>
+                  <?php foreach ($details as $detail) {
+                    $course_content = wp_kses_post($detail['course_content' . substr($title_key, -1)]);
+                    $course_price = esc_html($detail['course_price' . substr($title_key, -1)]);
+                    if (strpos($course_price, '¥') === false) {
+                      $course_price = '¥' . $course_price;
+                    }
+                  ?>
+                    <div class="top-price__item-content">
+                      <dt class="top-price__item-text"><?php echo $course_content; ?></dt>
+                      <dd class="top-price__item-price"><?php echo $course_price; ?></dd>
+                    </div>
+                  <?php } ?>
+                </dl>
+              </li>
+          <?php
             }
           }
           ?>
         </ul>
+
       </div>
     </div>
     <div class="top-price__button-wrapper">

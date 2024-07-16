@@ -41,71 +41,62 @@
         <div class="voice__inner inner">
             <ul class="voice-list">
                 <?php
+                // 投稿が存在するかチェック
                 if (have_posts()) :
+                    // 投稿をループ
                     while (have_posts()) : the_post();
-                        if (have_rows('voice_card')) :
-                            while (have_rows('voice_card')) : the_row();
-                                $voice_age = get_sub_field('voice_age');
-                                $voice_gender = get_sub_field('voice_gender');
-                                $voice_review = get_sub_field('voice_review');
-                                // 120文字まで制限
-                                $trimmed_voice_review = mb_substr($voice_review, 0, 140, 'UTF-8') . (mb_strlen($voice_review) > 120 ? '...' : '');
-                                ?>
-                                <li class="voice-card">
-                                    <div class="voice-card__flex">
-                                        <div class="voice-card__content">
-                                            <div class="voice-card__meta">
-                                                <p class="voice-card__info">
-                                                    <?php echo esc_html($voice_age); ?>（<?php echo esc_html($voice_gender); ?>）
-                                                </p>
-                                                <p class="voice-card__category">
-                                                    <?php
-                                                    $categories = get_the_terms(get_the_ID(), 'voice_category');
-                                                    if ($categories && !is_wp_error($categories)) {
-                                                        $category_list = array_map(function ($category) {
-                                                            return esc_html($category->name);
-                                                        }, $categories);
-                                                        echo implode(', ', $category_list);
-                                                    }
-                                                    ?>
-                                                </p>
-                                            </div>
-                                            <h2 class="voice-card__title">
-                                                <?php
-                                                $title = get_the_title();
-                                                if (mb_strlen($title) > 20) {
-                                                    $title = mb_substr($title, 0, 20) . '...';
-                                                }
-                                                echo esc_html($title);
-                                                ?>
-                                            </h2>
-                                        </div>
-                                        <div class="voice-card__img">
-                                            <?php if (has_post_thumbnail()) : ?>
-                                                <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" width="151" height="117" loading="lazy" />
-                                            <?php else : ?>
-                                                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/noimage.jpg" alt="NoImage画像">
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                    <p class="voice-card__text">
-                                        <?php echo wpautop(esc_html($trimmed_voice_review)); ?>
-                                    </p>
-                                </li>
-                <?php
-                            endwhile;
-                        else :
-                            echo '<li>口コミがありません。</li>';
-                        endif;
-                    endwhile;
-                else :
-                    echo '<li>投稿がありません。</li>';
-                endif;
+                        // カスタムタクソノミー 'voice_category' のタームを取得
+                        $category = get_the_terms(get_the_ID(), 'voice_category');
+                        $category_name = !empty($category) ? $category[0]->name : '';
+                        // カスタムフィールドの値を取得
+                        $voice_age = get_field('voice_card_voice_age'); // カスタムフィールド "voice_age" の値を取得
+                        $voice_gender = get_field('voice_card_voice_gender'); // カスタムフィールド "voice_gender" の値を取得
+                        $voice_review = get_field('voice_card_voice_review'); // カスタムフィールド "voice_review" の値を取得
+                        // 140文字まで制限
+                        $trimmed_voice_review = mb_substr($voice_review, 0, 140, 'UTF-8') . (mb_strlen($voice_review) > 140 ? '...' : '');
                 ?>
+                        <li class="voice-card">
+                            <div class="voice-card__flex">
+                                <div class="voice-card__content">
+                                    <div class="voice-card__meta">
+                                        <p class="voice-card__info">
+                                            <?php echo esc_html($voice_age); ?>（<?php echo esc_html($voice_gender); ?>）
+                                        </p>
+                                        <p class="voice-card__category">
+                                            <?php echo esc_html($category_name); ?>
+                                        </p>
+                                    </div>
+                                    <h2 class="voice-card__title voice-card__title--large">
+                                        <?php
+                                        $title = get_the_title(); // 投稿のタイトルを取得
+                                        if (mb_strlen($title) > 20) {
+                                            $title = mb_substr($title, 0, 20) . '...';
+                                        }
+                                        echo esc_html($title);
+                                        ?>
+                                    </h2>
+                                </div>
+                                <div class="voice-card__img">
+                                    <?php if (has_post_thumbnail()) : // アイキャッチ画像があるかチェック 
+                                    ?>
+                                        <img src="<?php the_post_thumbnail_url('full'); ?>" alt="<?php the_title_attribute(); ?>">
+                                    <?php else : ?>
+                                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <p class="voice-card__text">
+                                <?php echo wpautop(esc_html($trimmed_voice_review)); ?>
+                            </p>
+                        </li>
+                    <?php endwhile; ?>
+                <?php else : ?>
+                    <li>投稿がありません。</li>
+                <?php endif; ?>
             </ul>
+            <!-- ページネーション -->
+            <?php wp_pagenavi(); ?>
         </div>
-        <!-- ページネーション -->
-        <?php wp_pagenavi(); ?>
     </section>
 </main>
 <?php get_footer(); ?>

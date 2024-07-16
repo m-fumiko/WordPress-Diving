@@ -759,11 +759,6 @@ main {
 	row-gap: 2.5rem;
 }
 
-.blog-main {
-	margin-left: auto;
-	margin-right: auto;
-}
-
 .blog-review__content {
 	margin-top: 1.5rem;
 }
@@ -799,10 +794,6 @@ main {
 .blog-review__button-wrapper {
 	margin-top: 2.5rem;
 	text-align: center;
-}
-
-.blog-side {
-	width: 86.4%;
 }
 
 .blog-side__items + .blog-side__items {
@@ -855,6 +846,15 @@ main {
 	top: -1.4375rem;
 	width: 7.5rem;
 	z-index: -1;
+}
+
+.blog__left {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.blog__right {
+	width: 86.4%;
 }
 
 .breadcrumb__inner {
@@ -3508,14 +3508,6 @@ html {
 	row-gap: 5.1875rem;
 }
 
-.blog-main {
-	width: 65.3703703704%;
-}
-
-.blog-side {
-	width: 27.2222222222%;
-}
-
 .blog__wrap {
 	display: flex;
 	gap: 5rem;
@@ -3530,6 +3522,14 @@ html {
 	height: 8.625rem;
 	top: -4.625rem;
 	width: 18.75rem;
+}
+
+.blog__left {
+	width: 65.3703703704%;
+}
+
+.blog__right {
+	width: 27.2222222222%;
 }
 
 .breadcrumb__inner {

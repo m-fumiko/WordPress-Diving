@@ -45,43 +45,57 @@
                     <?php
                     // カスタムフィールドから画像を取得
                     $gallery_images = SCF::get('gallery', get_the_ID());
-                    if (!empty($gallery_images)) {
-                        foreach ($gallery_images as $index => $image_array) {
-                            if (isset($image_array['gallery_images']) && !empty($image_array['gallery_images'])) {
-                                $image_id = $image_array['gallery_images']; // ネストされた配列から画像IDを取得
+
+                    if (!empty($gallery_images)) :
+                        foreach ($gallery_images as $index => $image_array) :
+                            // 画像IDが存在し、かつ空でないか確認
+                            if (isset($image_array['gallery_images']) && !empty($image_array['gallery_images'])) :
+                                // ネストされた配列から画像IDを取得
+                                $image_id = $image_array['gallery_images'];
+                                // 画像URLを取得
                                 $img_src = wp_get_attachment_image_src($image_id, 'full')[0];
+                                // 画像のaltテキストを取得
                                 $img_alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
-                                echo '<li class="gallery__item js-modal-open" data-target="' . ($index + 1) . '">';
-                                echo '<img src="' . esc_url($img_src) . '" alt="' . esc_attr($img_alt) . '">';
-                                echo '</li>';
-                            }
-                        }
-                    } else {
-                        echo '<p>ギャラリー画像が設定されていません。</p>';
-                    }
                     ?>
+                                <li class="gallery__item js-modal-open" data-target="<?php echo ($index + 1); ?>">
+                                    <img src="<?php echo esc_url($img_src); ?>" alt="<?php echo esc_attr($img_alt); ?>">
+                                </li>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p>ギャラリー画像が設定されていません。</p>
+                    <?php endif; ?>
                 </ul>
                 <!-- モーダル -->
                 <div class="gallery__modal gallery-modal">
                     <ul class="gallery-modal__items">
                         <?php
-                        if (!empty($gallery_images)) {
-                            foreach ($gallery_images as $index => $image_array) {
-                                if (isset($image_array['gallery_images']) && !empty($image_array['gallery_images'])) {
-                                    $image_id = $image_array['gallery_images']; // ネストされた配列から画像IDを取得
+                        // カスタムフィールドから画像を取得
+                        $gallery_images = SCF::get('gallery', get_the_ID());
+
+                        // ギャラリー画像が存在するかチェック
+                        if (!empty($gallery_images)) :
+                            // 画像データをループ処理
+                            foreach ($gallery_images as $index => $image_array) :
+                                // 画像IDが存在し、かつ空でないか確認
+                                if (isset($image_array['gallery_images']) && !empty($image_array['gallery_images'])) :
+                                    // ネストされた配列から画像IDを取得
+                                    $image_id = $image_array['gallery_images'];
+                                    // 画像URLを取得
                                     $img_src = wp_get_attachment_image_src($image_id, 'full')[0];
+                                    // 画像のaltテキストを取得
                                     $img_alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
-                                    echo '<li class="gallery-modal__item js-modal js-modal-close" id="gallery-modal-' . ($index + 1) . '">';
-                                    echo '<div class="gallery-modal__inner inner">';
-                                    echo '<div class="gallery-modal__img">';
-                                    echo '<img src="' . esc_url($img_src) . '" alt="' . esc_attr($img_alt) . '">';
-                                    echo '</div>';
-                                    echo '</div>';
-                                    echo '</li>';
-                                }
-                            }
-                        }
                         ?>
+                                    <li class="gallery-modal__item js-modal js-modal-close" id="gallery-modal-<?php echo ($index + 1); ?>">
+                                        <div class="gallery-modal__inner inner">
+                                            <div class="gallery-modal__img">
+                                                <img src="<?php echo esc_url($img_src); ?>" alt="<?php echo esc_attr($img_alt); ?>">
+                                            </div>
+                                        </div>
+                                    </li>
+                                <?php endif; // 画像IDの存在チェック終了 ?>
+                            <?php endforeach; // ループ終了 ?>
+                        <?php endif; // ギャラリー画像の存在チェック終了 ?>
                     </ul>
                 </div>
             </div>

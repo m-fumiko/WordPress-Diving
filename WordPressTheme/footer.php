@@ -35,16 +35,22 @@ if (!is_404() && !is_page('contact')) {
                                 <a class="footer-menu__item-title" href="<?php echo esc_url(home_url("/campaign")) ?>">キャンペーン</a>
                                 <ul class="footer-menu__sub-items">
                                     <?php
-                                    $campaign_categories = get_terms(array(
-                                        'taxonomy' => 'campaign_category',
-                                        'hide_empty' => false,
-                                    ));
-                                    if (!empty($campaign_categories)) {
-                                        foreach ($campaign_categories as $category) {
-                                            echo '<li class="footer-menu__sub-item"><a href="' . esc_url(get_term_link($category)) . '">' . esc_html($category->name) . '</a></li>';
-                                        }
-                                    }
+                                    // タクソノミー 'campaign_category' の全てのカテゴリを取得
+                                    $args = array(
+                                        'taxonomy' => 'campaign_category', // タクソノミー名
+                                        'hide_empty' => false, // 投稿がない空のタームも取得する
+                                    );
+                                    $campaign_categories = get_terms($args); // タームを取得
+                                    if (!empty($campaign_categories)) : // タームが存在するかチェック
+                                        foreach ($campaign_categories as $category) : // 各タームをループ処理
                                     ?>
+                                            <li class="footer-menu__sub-item">
+                                                <a href="<?php echo esc_url(get_term_link($category)); ?>">
+                                                    <?php echo esc_html($category->name); ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; // ループ終了?>
+                                    <?php endif; // タームが存在するかチェック終了?>
                                 </ul>
                             </li>
                         </ul>
@@ -91,13 +97,17 @@ if (!is_404() && !is_page('contact')) {
                                 <ul class="footer-menu__sub-items">
                                     <?php
                                     // カスタムクエリを使用して料金表のタイトルを取得
-                                    $price_query = new WP_Query(array(
+                                    $args = array(
                                         'post_type' => 'page',
                                         'pagename' => 'price' // "price" スラッグを持つ固定ページを指定
-                                    ));
-                                    if ($price_query->have_posts()) :
-                                        while ($price_query->have_posts()) :
-                                            $price_query->the_post();
+                                    );
+                                    $price_query = new WP_Query($args); // カスタムクエリを作成
+                                    ?>
+                                    <?php if ($price_query->have_posts()) : // 投稿があるかチェック
+                                    ?>
+                                        <?php while ($price_query->have_posts()) : $price_query->the_post(); // 投稿がある限りループ
+                                        ?>
+                                            <?php
                                             $courses = [
                                                 'course_title1',
                                                 'course_title2',
@@ -106,20 +116,24 @@ if (!is_404() && !is_page('contact')) {
                                                 'course_title5',
                                                 'course_title6',
                                             ];
-                                            foreach ($courses as $title_key) {
-                                                $course_title = SCF::get($title_key);
-                                                if (!empty($course_title)) {
-                                                    echo '<li class="footer-menu__sub-item"><a href="' . esc_url(home_url("/price") . sanitize_title($course_title)) . '">' . esc_html($course_title) . '</a></li>';
-                                                }
-                                            }
-                                        endwhile;
-                                    endif;
-                                    wp_reset_postdata();
+                                            ?>
+                                            <?php foreach ($courses as $title_key) : ?>
+                                                <?php $course_title = SCF::get($title_key); ?>
+                                                <?php if (!empty($course_title)) : ?>
+                                                    <li class="footer-menu__sub-item">
+                                                        <a href="<?php echo esc_url(home_url("/price#") . sanitize_title($course_title)); ?>">
+                                                            <?php echo esc_html($course_title); ?>
+                                                        </a>
+                                                    </li>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        <?php endwhile; ?>
+                                    <?php endif; ?>
+                                    <?php wp_reset_postdata(); // カスタムクエリのデータをリセット
                                     ?>
                                 </ul>
                             </li>
                         </ul>
-
                     </div>
                     <div class="footer-menu__wrap">
                         <ul class="footer-menu__items">

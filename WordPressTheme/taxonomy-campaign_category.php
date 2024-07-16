@@ -41,22 +41,27 @@
         <div class="campaign-card-contents__inner inner">
             <ul class="campaign-card-contents__items">
                 <?php
+                // 投稿が存在するかチェック
                 if (have_posts()) :
+                    // 投稿をループ
                     while (have_posts()) : the_post();
+                        // カスタムタクソノミー 'campaign_category' のタームを取得
                         $category = get_the_terms(get_the_ID(), 'campaign_category');
                         $category_name = !empty($category) ? $category[0]->name : '';
+                        // カスタムフィールドの値を取得
                         $price_comment = get_field('campaign_card_price_comment');
                         $normal_price = get_field('campaign_card_normal_price');
                         $campaign_price = get_field('campaign_card_campaign_price');
                         $campaign_description = get_field('campaign_card_campaign_description');
                         $campaign_period = get_field('campaign_card_campaign_period');
-
+                        // 価格を数値に変換し、不必要な文字を取り除く
                         $normal_price = intval(preg_replace('/[^\d]/', '', $normal_price));
                         $campaign_price = intval(preg_replace('/[^\d]/', '', $campaign_price));
-                        ?>
+                ?>
                         <li class="campaign-card-contents__item campaign-card">
                             <div class="campaign-card__img">
-                                <?php if (has_post_thumbnail()) : ?>
+                                <?php if (has_post_thumbnail()) : // アイキャッチ画像があるかチェック
+                                ?>
                                     <img src="<?php the_post_thumbnail_url('full'); ?>" alt="<?php the_title_attribute(); ?>">
                                 <?php else : ?>
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
@@ -77,28 +82,19 @@
                                     <p class="pc-contents__date"><?php echo esc_html($campaign_period); ?></p>
                                     <p class="pc-contents__contact-text">ご予約・お問い合わせはコチラ</p>
                                     <div class="pc-contents__button-wrapper">
-                                        <a href="/contact" class="common-button">Contact us<span></span></a>
+                                        <a href="<?php echo esc_url(home_url('/contact')); ?>" class="common-button">Contact us<span></span></a>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                    <?php
-                    endwhile;
-                    wp_reset_postdata();
-                else :
-                    echo '<p>キャンペーンがありません。</p>';
-                endif;
-                ?>
+                    <?php endwhile; ?>
+                <?php else : ?>
+                    <p>キャンペーンがありません。</p>
+                <?php endif; ?>
             </ul>
         </div>
         <!-- ページネーション -->
-        <div class="campaign-card-contents__pagenavi wp-pagenavi">
-            <?php
-            echo paginate_links(array(
-                'total' => $wp_query->max_num_pages
-            ));
-            ?>
-        </div>
+            <?php wp_pagenavi(); ?>
     </section>
 </main>
 <?php get_footer(); ?>
