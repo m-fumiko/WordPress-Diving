@@ -60,6 +60,7 @@
     text-align: center;
     @include mq("md") {
         display: flex;
+        justify-content: center;
         text-align: left;
     }
 }

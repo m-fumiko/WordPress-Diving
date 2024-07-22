@@ -1,38 +1,61 @@
 <?php get_header(); ?>
 <main>
   <!-- MV -->
-  <section class="top-mv js-mv">
-    <div class="top-mv__inner">
-      <div class="top-mv__title-wrap">
-        <h2 class="top-mv__main-title">diving</h2>
-        <p class="top-mv__sub-title">into the ocean</p>
-      </div>
-      <div class="top-mv__swiper swiper js-mv-swiper">
-        <div class="swiper-wrapper">
-          <?php
-          // カスタムフィールドの値を取得
-          $slide_images = SCF::get('slider_images');
-          // スライド画像を表示
-          foreach ($slide_images as $slide_image) :
-            $pc_image_id = $slide_image['pc_image'];
-            $sp_image_id = $slide_image['sp_image'];
+  <?php
+  // カスタムフィールドの値を取得
+  $slide_images = SCF::get('slider_images');
 
-            if ($pc_image_id && $sp_image_id) :
-              $pc_image_url = wp_get_attachment_image_src($pc_image_id, 'full')[0];
-              $sp_image_url = wp_get_attachment_image_src($sp_image_id, 'full')[0];
-          ?>
-              <div class="swiper-slide">
-                <picture>
-                  <source srcset="<?php echo esc_url($sp_image_url); ?>" media="(max-width: 767px)" />
-                  <img src="<?php echo esc_url($pc_image_url); ?>" alt="スライド画像">
-                </picture>
-              </div>
+  // スライド画像がある場合のみ表示
+  if (!empty($slide_images)) :
+  ?>
+    <section class="top-mv js-mv">
+      <div class="top-mv__inner">
+        <div class="top-mv__title-wrap">
+          <h2 class="top-mv__main-title">diving</h2>
+          <p class="top-mv__sub-title">into the ocean</p>
+        </div>
+        <div class="top-mv__swiper swiper js-mv-swiper">
+          <div class="swiper-wrapper">
+            <?php
+            // カスタムフィールドからスライド画像を取得
+            $slide_images = SCF::get('slider_images');
+            // スライド画像をループ処理
+            foreach ($slide_images as $slide_image) :
+              $pc_image_id = $slide_image['pc_image']; // PC用画像IDを取得
+              $sp_image_id = $slide_image['sp_image']; // スマホ用画像IDを取得
+              // どちらかの画像IDが存在する場合
+              if ($pc_image_id || $sp_image_id) :
+                // 画像URLを取得（IDが存在する場合）
+                $pc_image_url = $pc_image_id ? wp_get_attachment_image_src($pc_image_id, 'full')[0] : '';
+                $sp_image_url = $sp_image_id ? wp_get_attachment_image_src($sp_image_id, 'full')[0] : '';
+            ?>
+                <div class="swiper-slide">
+                  <picture>
+                    <?php if ($sp_image_url) : // スマホ用画像がある場合 
+                    ?>
+                      <source srcset="<?php echo esc_url($sp_image_url); ?>" media="(max-width: 767px)" />
+                    <?php endif; ?>
+                    <?php if ($pc_image_url) : // PC用画像がある場合 
+                    ?>
+                      <img src="<?php echo esc_url($pc_image_url); ?>" alt="スライド画像">
+                    <?php endif; ?>
+                  </picture>
+                </div>
+              <?php else : // どちらの画像もない場合 
+              ?>
+                <div class="swiper-slide">
+                  <p>画像がありません</p>
+                </div>
               <?php endif; ?>
-              <?php endforeach; ?>
+            <?php endforeach; // ループ終了 
+            ?>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  <?php
+  endif;
+  ?>
   <!-- キャンーペーン -->
   <section id="top-campaign" class="top-campaign top-campaign-layout">
     <div class="top-campaign__inner inner">
@@ -72,8 +95,10 @@
                   <div class="top-campaign__card campaign-card">
                     <div class="campaign-card__img">
                       <?php if (has_post_thumbnail()) : ?>
-                        <img src="<?php the_post_thumbnail_url('full'); ?>" alt="<?php the_title_attribute(); ?>">
+                        <!-- アイキャッチ画像があれば 'full' サイズで出力 -->
+                        <?php the_post_thumbnail('full'); ?>
                       <?php else : ?>
+                        <!-- アイキャッチ画像がなければ NoImage 画像を出力 -->
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
                       <?php endif; ?>
                     </div>
@@ -91,7 +116,9 @@
               <?php endwhile; ?>
               <?php wp_reset_postdata(); ?>
             <?php else : ?>
-              <p>キャンペーンがありません。</p>
+              <li>
+                <p>キャンペーンがありません。</p>
+              </li>
             <?php endif; ?>
           </ul>
         </div>
@@ -204,9 +231,13 @@
               </a>
             </li>
           <?php endwhile; ?>
-          <?php wp_reset_postdata(); // カスタムクエリのデータをリセット ?>
-        <?php else : // 投稿がない場合の処理?>
-          <p>記事が見つかりませんでした。</p>
+          <?php wp_reset_postdata(); // カスタムクエリのデータをリセット 
+          ?>
+        <?php else : // 投稿がない場合の処理 
+        ?>
+          <li>
+            <p>記事が見つかりませんでした。</p>
+          </li>
         <?php endif; ?>
       </ul>
       <div class="top-blog__button-wrapper">
@@ -265,10 +296,11 @@
                         </p>
                       </div>
                       <div class="voice-card__img color-box js-color-box">
-                        <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック
+                        <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック 
                         ?>
-                          <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" width="151" height="117" loading="lazy" />
-                        <?php else : // アイキャッチ画像が設定されていない場合
+                          <!-- アイキャッチ画像を 'full' サイズで出力 -->
+                          <?php the_post_thumbnail('full', ['alt' => the_title_attribute('echo=0'), 'width' => 151, 'height' => 117, 'loading' => 'lazy']); ?>
+                        <?php else : // アイキャッチ画像が設定されていない場合 
                         ?>
                           <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/noimage.jpg" alt="NoImage画像">
                         <?php endif; ?>
@@ -287,7 +319,9 @@
           <?php wp_reset_postdata(); // カスタムクエリのデータをリセット
           ?>
         <?php else : ?>
-          <p>記事が見つかりませんでした。</p>
+          <li>
+            <p>記事が見つかりませんでした。</p>
+          </li>
         <?php endif; ?>
       </ul>
       <div class="top-voice__button-wrapper">
@@ -320,35 +354,35 @@
             'course_title3' => 'details3',
             'course_title4' => 'details4',
           ];
-          foreach ($courses as $title_key => $details_key) {
+          // 各コースをループ処理
+          foreach ($courses as $title_key => $details_key) :
             // SCFプラグインを使用してデータを取得
-            $course_title = SCF::get($title_key, $price_page_id);
-            $details = SCF::get($details_key, $price_page_id);
-            if (!empty($course_title) && !empty($details)) {
+            $course_title = SCF::get($title_key, $price_page_id); // コースタイトルを取得
+            $details = SCF::get($details_key, $price_page_id); // コース詳細情報を取得
+            // コースタイトルと詳細情報が存在する場合
+            if (!empty($course_title) && !empty($details)) :
           ?>
               <li class="top-price__item">
-                <h3 class="top-price__item-title"><?php echo esc_html($course_title); ?></h3>
+                <h3 class="top-price__item-title"><?php echo esc_html($course_title); ?></h3> <!-- コースタイトルを表示 -->
                 <dl>
-                  <?php foreach ($details as $detail) {
-                    $course_content = wp_kses_post($detail['course_content' . substr($title_key, -1)]);
-                    $course_price = esc_html($detail['course_price' . substr($title_key, -1)]);
-                    if (strpos($course_price, '¥') === false) {
+                  <?php foreach ($details as $detail) : // 各詳細情報をループ処理
+                    $course_content = wp_kses_post($detail['course_content' . substr($title_key, -1)]); // コース内容を取得
+                    $course_price = esc_html($detail['course_price' . substr($title_key, -1)]); // コース価格を取得
+                    // コース価格に '¥' が含まれていない場合、先頭に追加
+                    if (strpos($course_price, '¥') === false) :
                       $course_price = '¥' . $course_price;
-                    }
+                    endif;
                   ?>
                     <div class="top-price__item-content">
-                      <dt class="top-price__item-text"><?php echo $course_content; ?></dt>
-                      <dd class="top-price__item-price"><?php echo $course_price; ?></dd>
+                      <dt class="top-price__item-text"><?php echo $course_content; ?></dt> <!-- コース内容を表示 -->
+                      <dd class="top-price__item-price"><?php echo $course_price; ?></dd> <!-- コース価格を表示 -->
                     </div>
-                  <?php } ?>
+                  <?php endforeach; ?>
                 </dl>
               </li>
-          <?php
-            }
-          }
-          ?>
+            <?php endif; ?>
+          <?php endforeach; ?>
         </ul>
-
       </div>
     </div>
     <div class="top-price__button-wrapper">

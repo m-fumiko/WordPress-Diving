@@ -53,15 +53,18 @@
                         $voice_gender = get_field('voice_card_voice_gender'); // カスタムフィールド "voice_gender" の値を取得
                         $voice_review = get_field('voice_card_voice_review'); // カスタムフィールド "voice_review" の値を取得
                         // 140文字まで制限
-                        $trimmed_voice_review = mb_substr($voice_review, 0, 140, 'UTF-8') . (mb_strlen($voice_review) > 140 ? '...' : '');
+                        $trimmed_voice_review = mb_substr($voice_review, 0, 200, 'UTF-8') . (mb_strlen($voice_review) > 200 ? '...' : '');
                 ?>
                         <li class="voice-card">
                             <div class="voice-card__flex">
                                 <div class="voice-card__content">
                                     <div class="voice-card__meta">
-                                        <p class="voice-card__info">
-                                            <?php echo esc_html($voice_age); ?>（<?php echo esc_html($voice_gender); ?>）
-                                        </p>
+                                        <?php if (!empty($voice_age) && !empty($voice_gender)) : // voice_ageとvoice_genderが両方設定されているかチェック 
+                                        ?>
+                                            <p class="voice-card__info">
+                                                <?php echo esc_html($voice_age); ?>（<?php echo esc_html($voice_gender); ?>）
+                                            </p>
+                                        <?php endif; ?>
                                         <p class="voice-card__category">
                                             <?php echo esc_html($category_name); ?>
                                         </p>
@@ -77,10 +80,12 @@
                                     </h2>
                                 </div>
                                 <div class="voice-card__img">
-                                    <?php if (has_post_thumbnail()) : // アイキャッチ画像があるかチェック 
-                                    ?>
-                                        <img src="<?php the_post_thumbnail_url('full'); ?>" alt="<?php the_title_attribute(); ?>">
+                                    <!-- アイキャッチ画像があるかチェック -->
+                                    <?php if (has_post_thumbnail()) : ?>
+                                        <!-- アイキャッチ画像があれば 'full' サイズで出力 -->
+                                        <?php the_post_thumbnail('full'); ?>
                                     <?php else : ?>
+                                        <!-- アイキャッチ画像がなければ NoImage 画像を出力 -->
                                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
                                     <?php endif; ?>
                                 </div>
@@ -89,9 +94,12 @@
                                 <?php echo wpautop(esc_html($trimmed_voice_review)); ?>
                             </p>
                         </li>
+
                     <?php endwhile; ?>
                 <?php else : ?>
-                    <li>投稿がありません。</li>
+                    <li>
+                        <p>投稿がありません。</p>
+                    </li>
                 <?php endif; ?>
             </ul>
             <!-- ページネーション -->

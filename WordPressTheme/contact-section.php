@@ -33,9 +33,11 @@
               <p class="common-contact__access-text">お問い合わせ情報ページが見つかりません。</p>
             <?php endif; ?>
           </div>
-          <div class="common-contact__access-map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3579.36291128021!2d127.67381048705204!3d26.21739516794133!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34e5699d28718f37%3A0x2fa598ddae601d3b!2z44CSOTAwLTAwMzIg5rKW57iE55yM6YKj6KaH5biC5p2-5bGx77yR5LiB55uu77yR77yR!5e0!3m2!1sja!2sjp!4v1702611019185!5m2!1sja!2sjp" width="" height="" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
+          <?php if (!empty($address)) : // addressが設定されているかチェック ?>
+            <div class="common-contact__access-map">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3579.36291128021!2d127.67381048705204!3d26.21739516794133!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34e5699d28718f37%3A0x2fa598ddae601d3b!2z44CSOTAwLTAwMzIg5rKW57iE55yM6YKj6KaH5biC5p2-5bGx77yR5LiB55uu77yR77yR!5e0!3m2!1sja!2sjp!4v1702611019185!5m2!1sja!2sjp" width="" height="" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          <?php endif; ?>
         </div>
       </div>
       <div class="common-contact__content">

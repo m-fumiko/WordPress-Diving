@@ -1,5 +1,5 @@
 <?php
-// テーマの設定を行う関数
+/* テーマの設定を行う関数 */
 function my_setup()
 {
     // アイキャッチ画像のサポートを有効化
@@ -20,7 +20,7 @@ function my_setup()
 // テーマがセットアップされた後に実行されるアクションフックに関数を追加
 add_action('after_setup_theme', 'my_setup');
 
-// スクリプトの読み込みを行う関数
+/* スクリプトの読み込みを行う関数 */
 function my_script_init()
 {
     // WordPressに登録されているjQueryを解除します
@@ -70,7 +70,7 @@ function my_script_init()
 // 'wp_enqueue_scripts'アクションフックに'my_script_init'関数を追加します
 add_action('wp_enqueue_scripts', 'my_script_init');
 
-// テーマの基本設定
+/* テーマの基本設定 */
 function my_theme_setup()
 {
     add_theme_support('post-thumbnails');
@@ -78,7 +78,7 @@ function my_theme_setup()
 }
 add_action('after_setup_theme', 'my_theme_setup');
 
-// キャンペーンアーカイブの表示件数を設定
+/* キャンペーンアーカイブの表示件数を設定 */
 function set_campaign_posts_per_page($query)
 {
     if (!is_admin() && $query->is_main_query() && (is_post_type_archive('campaign') || is_tax('campaign_category'))) {
@@ -87,7 +87,7 @@ function set_campaign_posts_per_page($query)
 }
 add_action('pre_get_posts', 'set_campaign_posts_per_page');
 
-// ボイスアーカイブの表示件数を設定
+/* ボイスアーカイブの表示件数を設定 */
 function set_voice_posts_per_page($query)
 {
     if (!is_admin() && $query->is_main_query() && (is_post_type_archive('voice') || is_tax('voice_category'))) {
@@ -105,7 +105,7 @@ function custom_attribute($html)
     return $html;
 }
 
-// 記事の閲覧数を増加させる関数
+/* 記事の閲覧数を増加させる関数 */
 function set_post_views($postID)
 {
     $count_key = 'post_views_count';
@@ -120,7 +120,7 @@ function set_post_views($postID)
     }
 }
 
-// 記事が表示されたときに閲覧数を増加させる
+/* 記事が表示されたときに閲覧数を増加させる */
 function track_post_views($post_id)
 {
     if (!is_single()) return;
@@ -132,7 +132,7 @@ function track_post_views($post_id)
 }
 add_action('wp_head', 'track_post_views');
 
-// アーカイブタイトルから余計な文字を削除するフィルターを追加
+/* アーカイブタイトルから余計な文字を削除するフィルターを追加 */
 add_filter('get_the_archive_title', function ($title) {
     // カテゴリーアーカイブの場合
     if (is_category()) {
@@ -179,7 +179,7 @@ add_filter('get_the_archive_title', function ($title) {
     return $title;
 });
 
-// Contact Form 7でのキャンペーン内容を、投稿ページタイトルから動的に取得
+/* Contact Form 7でのキャンペーン内容を、投稿ページタイトルから動的に取得 */
 function campaign_titles_dropdown()
 {
     $args = array(
@@ -203,7 +203,7 @@ function campaign_titles_dropdown()
 
 add_shortcode('campaign_titles', 'campaign_titles_dropdown');
 
-// お問い合わせのセレクトメニュー
+/* お問い合わせのセレクトメニュー */
 // JavaScriptをエンキュー
 function enqueue_custom_scripts()
 {
@@ -221,7 +221,7 @@ function ajax_get_campaign_titles()
 add_action('wp_ajax_get_campaign_titles', 'ajax_get_campaign_titles');
 add_action('wp_ajax_nopriv_get_campaign_titles', 'ajax_get_campaign_titles');
 
-// Contact Form 7で自動挿入されるPタグ、brタグを削除
+/* Contact Form 7で自動挿入されるPタグ、brタグを削除 */
 add_filter('wpcf7_autop_or_not', 'wpcf7_autop_return_false');
 function wpcf7_autop_return_false()
 {
@@ -234,7 +234,7 @@ function my_theme_enqueue_styles()
 }
 add_action('wp_enqueue_scripts', 'my_theme_enqueue_styles');
 
-// 管理画面の『投稿』の名前を変更
+/* 管理画面の『投稿』の名前を変更 */
 function Change_menulabel()
 {
     global $menu;

@@ -13,14 +13,18 @@
                 );
                 $popular_posts = new WP_Query($args); // カスタムクエリを作成
                 ?>
-                <?php if ($popular_posts->have_posts()) : // 投稿があるかチェック ?>
-                    <?php while ($popular_posts->have_posts()) : $popular_posts->the_post(); // 投稿がある限りループ ?>
+                <?php if ($popular_posts->have_posts()) : // 投稿があるかチェック 
+                ?>
+                    <?php while ($popular_posts->have_posts()) : $popular_posts->the_post(); // 投稿がある限りループ 
+                    ?>
                         <li class="blog-article__item">
                             <a href="<?php the_permalink(); ?>">
                                 <div class="blog-article__flex">
                                     <div class="blog-article__img">
-                                        <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック ?>
-                                            <?php the_post_thumbnail('custom-thumbnail'); // アイキャッチ画像を表示 ?>
+                                        <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック 
+                                        ?>
+                                            <?php the_post_thumbnail('custom-thumbnail'); // アイキャッチ画像を表示 
+                                            ?>
                                         <?php else : ?>
                                             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
                                         <?php endif; ?>
@@ -32,10 +36,14 @@
                                 </div>
                             </a>
                         </li>
-                    <?php endwhile; // ループ終了 ?>
-                    <?php wp_reset_postdata(); // カスタムクエリのデータをリセット ?>
+                    <?php endwhile; // ループ終了 
+                    ?>
+                    <?php wp_reset_postdata(); // カスタムクエリのデータをリセット 
+                    ?>
                 <?php else : ?>
-                    <li>人気記事がありません。</li>
+                    <li>
+                        <p>人気記事がありません。</p>
+                    </li>
                 <?php endif; ?>
             </ul>
         </div>
@@ -52,8 +60,10 @@
             );
             $latest_reviews = new WP_Query($args); // カスタムクエリを作成
             ?>
-            <?php if ($latest_reviews->have_posts()) : // 投稿があるかチェック ?>
-                <?php while ($latest_reviews->have_posts()) : $latest_reviews->the_post(); // 投稿がある限りループ ?>
+            <?php if ($latest_reviews->have_posts()) : // 投稿があるかチェック 
+            ?>
+                <?php while ($latest_reviews->have_posts()) : $latest_reviews->the_post(); // 投稿がある限りループ 
+                ?>
                     <?php
                     // カスタムフィールドの値を取得
                     $voice_card = get_field('voice_card');
@@ -64,8 +74,10 @@
                     ?>
                         <div class="blog-review__content">
                             <div class="blog-review__img">
-                                <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック ?>
-                                    <?php the_post_thumbnail('full'); // アイキャッチ画像を表示 ?>
+                                <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック 
+                                ?>
+                                    <?php the_post_thumbnail('full'); // アイキャッチ画像を表示 
+                                    ?>
                                 <?php else : ?>
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
                                 <?php endif; ?>
@@ -79,10 +91,14 @@
                             </div>
                         </div>
                     <?php } ?>
-                <?php endwhile; // ループ終了 ?>
-                <?php wp_reset_postdata(); // カスタムクエリのデータをリセット ?>
+                <?php endwhile; // ループ終了 
+                ?>
+                <?php wp_reset_postdata(); // カスタムクエリのデータをリセット 
+                ?>
             <?php else : ?>
-                <p>口コミがありません。</p>
+                <li>
+                    <p>口コミがありません。</p>
+                </li>
             <?php endif; ?>
         </div>
     </div>
@@ -99,8 +115,10 @@
                 );
                 $latest_campaigns = new WP_Query($args); // カスタムクエリを作成
                 ?>
-                <?php if ($latest_campaigns->have_posts()) : // 投稿があるかチェック ?>
-                    <?php while ($latest_campaigns->have_posts()) : $latest_campaigns->the_post(); // 投稿がある限りループ ?>
+                <?php if ($latest_campaigns->have_posts()) : // 投稿があるかチェック 
+                ?>
+                    <?php while ($latest_campaigns->have_posts()) : $latest_campaigns->the_post(); // 投稿がある限りループ 
+                    ?>
                         <?php
                         // カスタムフィールドの値を取得
                         $campaign_card = get_field('campaign_card');
@@ -114,8 +132,10 @@
                         ?>
                         <li class="blog-campaign__card">
                             <div class="blog-campaign__card-img">
-                                <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック ?>
-                                    <?php the_post_thumbnail('full'); // アイキャッチ画像を表示 ?>
+                                <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック 
+                                ?>
+                                    <?php the_post_thumbnail('full'); // アイキャッチ画像を表示 
+                                    ?>
                                 <?php else : ?>
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
                                 <?php endif; ?>
@@ -129,10 +149,14 @@
                                 </div>
                             </div>
                         </li>
-                    <?php endwhile; // ループ終了 ?>
-                    <?php wp_reset_postdata(); // カスタムクエリのデータをリセット ?>
+                    <?php endwhile; // ループ終了 
+                    ?>
+                    <?php wp_reset_postdata(); // カスタムクエリのデータをリセット 
+                    ?>
                 <?php else : ?>
-                    <li>キャンペーンがありません。</li>
+                    <li>
+                        <p>キャンペーンがありません。</p>
+                    </li>
                 <?php endif; ?>
             </ul>
             <div class="blog-campaign__button-wrapper">

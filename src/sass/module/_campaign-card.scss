@@ -90,8 +90,12 @@
 .campaign-card__price {
     margin-top: rem(10);
     display: flex;
+    gap: rem(16);
     align-items: baseline;
     justify-content: center;
+    @include mq("md") {
+        gap: rem(24);
+    }
 }
 
 .campaign-card__price.campaign-card__price--sub {
@@ -116,14 +120,14 @@
 }
 
 .campaign-card__price-green {
-    margin-left: rem(18);
+    // margin-left: rem(18);
     font-size: rem(32);
     font-weight: $bold;
     font-family: $second-font-family;
     line-height: 1;
     color: $color-green;
     @include mq("md") {
-        margin-left: rem(38);
+        // margin-left: rem(38);
         font-size: rem(40);
     }
 }

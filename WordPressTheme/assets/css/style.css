@@ -981,6 +981,7 @@ main {
 .campaign-card__price {
 	align-items: baseline;
 	display: flex;
+	gap: 1rem;
 	justify-content: center;
 	margin-top: 0.625rem;
 }
@@ -1012,7 +1013,6 @@ main {
 	font-size: 2rem;
 	font-weight: 700;
 	line-height: 1;
-	margin-left: 1.125rem;
 }
 
 .campaign-card__pc-contents {
@@ -3589,9 +3589,12 @@ html {
 	margin-top: 1.625rem;
 }
 
+.campaign-card__price {
+	gap: 1.5rem;
+}
+
 .campaign-card__price-green {
 	font-size: 2.5rem;
-	margin-left: 2.375rem;
 }
 
 .common-contact__inner::after {
@@ -3621,6 +3624,7 @@ html {
 
 .common-contact__access-info {
 	display: flex;
+	justify-content: center;
 	text-align: left;
 }
 

@@ -54,7 +54,9 @@
                                 <?php endwhile; ?>
                             </ul>
                         <?php else : ?>
-                            <p>記事が投稿されていません</p>
+                            <li>
+                                <p>記事が投稿されていません</p>
+                            </li>
                         <?php endif; ?>
                         <!-- ページネーション -->
                         <?php if (function_exists('wp_pagenavi')) {

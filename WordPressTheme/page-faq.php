@@ -25,14 +25,19 @@
                     foreach ($faqs as $faq) :
                         $question = esc_html($faq['faq_question']); // 質問を取得
                         $answer = esc_html($faq['faq_answer']); // 回答を取得
+                        // questionまたはanswerが設定されているかをチェック
+                        if (!empty($question) && !empty($answer)) :
                 ?>
-                        <li class="faq-list__item faq-item">
-                            <p class="faq-item__question js-faq-question"><?php echo $question; ?></p>
-                            <div class="faq-item__answer"><?php echo nl2br($answer); ?></div>
-                        </li>
+                            <li class="faq-list__item faq-item">
+                                <p class="faq-item__question js-faq-question"><?php echo $question; ?></p>
+                                <div class="faq-item__answer"><?php echo nl2br($answer); ?></div>
+                            </li>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 <?php else : ?>
-                    <li class="faq-list__item faq-item">FAQがありません。</li>
+                    <li class="faq-list__item faq-item">
+                        <p>FAQがありません。</p>
+                    </li>
                 <?php endif; ?>
             </ul>
         </div>

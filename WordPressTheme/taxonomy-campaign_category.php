@@ -18,7 +18,7 @@
     <div class="tag tag-layout">
         <div class="tag__inner inner">
             <ul class="tag__items">
-                <li class="tag__menu-item <?php if (is_post_type_archive('campaign')) echo 'tag__menu-item--green'; ?>">
+                <li class="tag__menu-item <?php if (is_post_type_archive('campaign')) : ?> tag__menu-item--green <?php endif; ?>">
                     <a href="<?php echo esc_url(get_post_type_archive_link('campaign')); ?>">ALL</a>
                 </li>
                 <?php
@@ -26,12 +26,18 @@
                     'taxonomy' => 'campaign_category',
                     'hide_empty' => false,
                 ));
-                if (!empty($terms)) {
-                    foreach ($terms as $term) {
+                if (!empty($terms)) :
+                    foreach ($terms as $term) :
                         $active_class = is_tax('campaign_category', $term->slug) ? 'tag__menu-item--green' : '';
-                        echo '<li class="tag__menu-item ' . esc_attr($active_class) . '"><a href="' . esc_url(get_term_link($term)) . '">' . esc_html($term->name) . '</a></li>';
-                    }
-                }
+                ?>
+                        <li class="tag__menu-item <?php echo esc_attr($active_class); ?>">
+                            <a href="<?php echo esc_url(get_term_link($term)); ?>">
+                                <?php echo esc_html($term->name); ?>
+                            </a>
+                        </li>
+                <?php
+                    endforeach; // ループ終了
+                endif; // タームが存在するかチェック終了
                 ?>
             </ul>
         </div>
@@ -60,10 +66,12 @@
                 ?>
                         <li class="campaign-card-contents__item campaign-card">
                             <div class="campaign-card__img">
-                                <?php if (has_post_thumbnail()) : // アイキャッチ画像があるかチェック
-                                ?>
-                                    <img src="<?php the_post_thumbnail_url('full'); ?>" alt="<?php the_title_attribute(); ?>">
+                                <!-- アイキャッチ画像があるかチェック -->
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <!-- アイキャッチ画像があれば 'full' サイズで出力 -->
+                                    <?php the_post_thumbnail('full'); ?>
                                 <?php else : ?>
+                                    <!-- アイキャッチ画像がなければ NoImage 画像を出力 -->
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
                                 <?php endif; ?>
                             </div>
@@ -94,7 +102,7 @@
             </ul>
         </div>
         <!-- ページネーション -->
-            <?php wp_pagenavi(); ?>
+        <?php wp_pagenavi(); ?>
     </section>
 </main>
 <?php get_footer(); ?>

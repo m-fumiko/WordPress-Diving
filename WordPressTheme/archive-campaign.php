@@ -28,7 +28,8 @@
                     'hide_empty' => false, // 投稿がない空のタームも取得する
                 ));
                 ?>
-                <?php if (!empty($terms)) : // タームが存在するかチェック ?>
+                <?php if (!empty($terms)) : // タームが存在するかチェック 
+                ?>
                     <?php foreach ($terms as $term) : // 各タームをループ処理
                         // 現在表示されているタームと一致する場合、アクティブクラスを追加
                         $active_class = is_tax('campaign_category', $term->slug) ? 'tag__menu-item--green' : ''; ?>
@@ -37,8 +38,10 @@
                                 <?php echo esc_html($term->name); ?>
                             </a>
                         </li>
-                    <?php endforeach; // ループ終了 ?>
-                <?php endif; // タームが存在するかチェック終了 ?>
+                    <?php endforeach; // ループ終了 
+                    ?>
+                <?php endif; // タームが存在するかチェック終了 
+                ?>
             </ul>
         </div>
     </div>
@@ -66,21 +69,29 @@
                 ?>
                         <li class="campaign-card-contents__item campaign-card">
                             <div class="campaign-card__img">
-                                <?php if (has_post_thumbnail()) : // アイキャッチ画像があるかチェック
-                                ?>
-                                    <img src="<?php the_post_thumbnail_url('full'); ?>" alt="<?php the_title_attribute(); ?>">
+                                <!-- アイキャッチ画像があるかチェック -->
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <!-- アイキャッチ画像があれば 'full' サイズで出力 -->
+                                    <?php the_post_thumbnail('full'); ?>
                                 <?php else : ?>
+                                    <!-- アイキャッチ画像がなければ NoImage 画像を出力 -->
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/noimage.jpg" alt="No Image">
                                 <?php endif; ?>
                             </div>
                             <div class="campaign-card__content">
                                 <p class="campaign-card__category"><?php echo esc_html($category_name); ?></p>
                                 <h2 class="campaign-card__title campaign-card__title--large"><?php the_title(); ?></h2>
-                                <p class="campaign-card__text campaign-card__text--sub"><?php echo esc_html($price_comment); ?></p>
-                                <div class="campaign-card__price campaign-card__price--sub">
-                                    <p class="campaign-card__price-black">¥<?php echo number_format($normal_price); ?></p>
-                                    <p class="campaign-card__price-green">¥<?php echo number_format($campaign_price); ?></p>
-                                </div>
+                                <?php if (!empty($campaign_price)) : // キャンペーン価格が設定されているかチェック 
+                                ?>
+                                    <p class="campaign-card__text campaign-card__text--sub"><?php echo esc_html($price_comment); ?></p>
+                                    <div class="campaign-card__price campaign-card__price--sub">
+                                        <?php if (!empty($normal_price)) : // 通常価格が設定されているかチェック 
+                                        ?>
+                                            <p class="campaign-card__price-black">¥<?php echo number_format($normal_price); ?></p>
+                                        <?php endif; ?>
+                                        <p class="campaign-card__price-green">¥<?php echo number_format($campaign_price); ?></p>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="campaign-card__pc-contents pc-contents u-desktop">
                                     <p class="pc-contents__article"><?php echo nl2br(esc_html($campaign_description)); ?></p>
                                 </div>
@@ -95,7 +106,9 @@
                         </li>
                     <?php endwhile; ?>
                 <?php else : ?>
-                    <p>キャンペーンがありません。</p>
+                    <li>
+                        <p>キャンペーンがありません。</p>
+                    </li>
                 <?php endif; ?>
             </ul>
         </div>
