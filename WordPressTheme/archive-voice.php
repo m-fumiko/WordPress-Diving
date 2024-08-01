@@ -49,11 +49,12 @@
                         $category = get_the_terms(get_the_ID(), 'voice_category');
                         $category_name = !empty($category) ? $category[0]->name : '';
                         // カスタムフィールドの値を取得
-                        $voice_age = get_field('voice_card_voice_age'); // カスタムフィールド "voice_age" の値を取得
-                        $voice_gender = get_field('voice_card_voice_gender'); // カスタムフィールド "voice_gender" の値を取得
-                        $voice_review = get_field('voice_card_voice_review'); // カスタムフィールド "voice_review" の値を取得
+                        $voice_info = get_field('voice_info'); // カスタムフィールド "voice_info" の値を取得
+                        $voice_age = isset($voice_info['voice_age']) ? $voice_info['voice_age'] : ''; // カスタムフィールド "voice_age" の値を取得
+                        $voice_gender = isset($voice_info['voice_gender']) ? $voice_info['voice_gender'] : ''; // カスタムフィールド "voice_gender" の値を取得
                         // 140文字まで制限
-                        $trimmed_voice_review = mb_substr($voice_review, 0, 200, 'UTF-8') . (mb_strlen($voice_review) > 200 ? '...' : '');
+                        $content = get_the_content();
+                        $trimmed_content = mb_substr($content, 0, 200, 'UTF-8') . (mb_strlen($content) > 200 ? '...' : '');
                 ?>
                         <li class="voice-card">
                             <div class="voice-card__flex">
@@ -90,9 +91,9 @@
                                     <?php endif; ?>
                                 </div>
                             </div>
-                            <p class="voice-card__text">
-                                <?php echo wpautop(esc_html($trimmed_voice_review)); ?>
-                            </p>
+                            <div class="voice-card__text">
+                                <?php the_content(); // 投稿の内容を表示 ?>
+                            </div>
                         </li>
 
                     <?php endwhile; ?>

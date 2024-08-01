@@ -66,10 +66,10 @@
                 ?>
                     <?php
                     // カスタムフィールドの値を取得
-                    $voice_card = get_field('voice_card');
-                    if ($voice_card) {
-                        $voice_age = isset($voice_card['voice_age']) ? $voice_card['voice_age'] : '';
-                        $voice_gender = isset($voice_card['voice_gender']) ? $voice_card['voice_gender'] : '';
+                    $voice_info = get_field('voice_info');
+                    if ($voice_info) {
+                        $voice_age = isset($voice_info['voice_age']) ? $voice_info['voice_age'] : '';
+                        $voice_gender = isset($voice_info['voice_gender']) ? $voice_info['voice_gender'] : '';
                         $voice_title = get_the_title();
                     ?>
                         <div class="blog-review__content">
@@ -120,15 +120,14 @@
                     <?php while ($latest_campaigns->have_posts()) : $latest_campaigns->the_post(); // 投稿がある限りループ 
                     ?>
                         <?php
+                        // カスタムタクソノミー 'campaign_category' のタームを取得
+                        $category = get_the_terms(get_the_ID(), 'campaign_category');
+                        $category_name = !empty($category) ? $category[0]->name : '';
                         // カスタムフィールドの値を取得
-                        $campaign_card = get_field('campaign_card');
-                        $price_comment = isset($campaign_card['price_comment']) ? $campaign_card['price_comment'] : '';
-                        $normal_price = isset($campaign_card['normal_price']) ? $campaign_card['normal_price'] : '';
-                        $campaign_price = isset($campaign_card['campaign_price']) ? $campaign_card['campaign_price'] : '';
-
-                        // 数値に変換
-                        $normal_price_int = !empty($normal_price) ? intval(preg_replace('/[^\d]/', '', $normal_price)) : 0;
-                        $campaign_price_int = !empty($campaign_price) ? intval(preg_replace('/[^\d]/', '', $campaign_price)) : 0;
+                        $campaign_price = get_field('campaign_price');
+                        $price_comment = isset($campaign_price['price_comment']) ? $campaign_price['price_comment'] : '';
+                        $normal_price = isset($campaign_price['normal_price']) ? $campaign_price['normal_price'] : '';
+                        $discount_price = isset($campaign_price['discount_price']) ? $campaign_price['discount_price'] : '';
                         ?>
                         <li class="blog-campaign__card">
                             <div class="blog-campaign__card-img">
@@ -144,8 +143,12 @@
                                 <p class="blog-campaign__card-title"><?php the_title(); ?></p>
                                 <p class="blog-campaign__card-text"><?php echo esc_html($price_comment); ?></p>
                                 <div class="blog-campaign__card-price">
-                                    <p class="blog-campaign__card-black">¥<?php echo number_format($normal_price_int); ?></p>
-                                    <p class="blog-campaign__card-green">¥<?php echo number_format($campaign_price_int); ?></p>
+                                    <?php if (!empty($normal_price)) : ?>
+                                        <p class="blog-campaign__card-black">¥<?php echo number_format((float) $normal_price); ?></p>
+                                    <?php endif; ?>
+                                    <?php if (!empty($discount_price)) : ?>
+                                        <p class="blog-campaign__card-green">¥<?php echo number_format((float) $discount_price); ?></p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </li>

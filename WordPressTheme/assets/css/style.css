@@ -3183,6 +3183,8 @@ main {
 }
 
 .voice-card__flex {
+	-moz-column-gap: 0.625rem;
+	column-gap: 0.625rem;
 	display: flex;
 }
 

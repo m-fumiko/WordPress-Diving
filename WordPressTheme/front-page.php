@@ -84,12 +84,33 @@
               while ($campaign_query->have_posts()) : $campaign_query->the_post();
                 $category = get_the_terms(get_the_ID(), 'campaign_category'); // カスタムタクソノミーを取得
                 $category_name = !empty($category) ? $category[0]->name : '';
-                $price_comment = get_field('campaign_card_price_comment');
-                $normal_price = get_field('campaign_card_normal_price');
-                $campaign_price = get_field('campaign_card_campaign_price');
-                // 価格から「¥」とカンマを取り除いて数値に変換
-                $normal_price = intval(preg_replace('/[^\d]/', '', $normal_price));
-                $campaign_price = intval(preg_replace('/[^\d]/', '', $campaign_price));
+
+                // カスタムフィールドの値を取得
+                $campaign_price = get_field('campaign_price');
+                $campaign_period = get_field('campaign_period');
+
+                // キャンペーン価格のサブフィールドを取得
+                $price_comment = isset($campaign_price['price_comment']) ? $campaign_price['price_comment'] : '';
+                $normal_price = isset($campaign_price['normal_price']) ? $campaign_price['normal_price'] : '';
+                $discount_price = isset($campaign_price['discount_price']) ? $campaign_price['discount_price'] : '';
+
+                // キャンペーン期間のサブフィールドを取得
+                $start_date = isset($campaign_period['start_date']) ? $campaign_period['start_date'] : '';
+                $end_date = isset($campaign_period['end_date']) ? $campaign_period['end_date'] : '';
+
+                // 日付を取得してフォーマットを変更
+                $start_year = date('Y', strtotime($start_date));
+                $end_year = date('Y', strtotime($end_date));
+                $start_formatted = date('Y/n/j', strtotime($start_date));
+                $end_formatted = date('n/j', strtotime($end_date));
+
+                // 西暦が同じかどうかで表示形式を変える
+                if ($start_year === $end_year) {
+                  $period = "{$start_formatted} - {$end_formatted}";
+                } else {
+                  $end_formatted_full = date('Y/n/j', strtotime($end_date));
+                  $period = "{$start_formatted} - {$end_formatted_full}";
+                }
             ?>
                 <li class="swiper-slide">
                   <div class="top-campaign__card campaign-card">
@@ -105,11 +126,19 @@
                     <div class="campaign-card__content">
                       <p class="campaign-card__category"><?php echo esc_html($category_name); ?></p>
                       <p class="campaign-card__title"><?php the_title(); ?></p>
-                      <p class="campaign-card__text"><?php echo esc_html($price_comment); ?></p>
-                      <div class="campaign-card__price">
-                        <p class="campaign-card__price-black">¥<?php echo number_format($normal_price); ?></p>
-                        <p class="campaign-card__price-green">¥<?php echo number_format($campaign_price); ?></p>
-                      </div>
+                      <?php if (!empty($discount_price)) : // ディスカウント価格が設定されている場合のみ表示 
+                      ?>
+                        <?php if (!empty($price_comment)) : ?>
+                          <p class="campaign-card__text campaign-card__text--sub"><?php echo esc_html($price_comment); ?></p>
+                        <?php endif; ?>
+                        <div class="campaign-card__price campaign-card__price--sub">
+                          <?php if (!empty($normal_price)) : // 通常価格が設定されているかチェック 
+                          ?>
+                            <p class="campaign-card__price-black">¥<?php echo number_format((float) $normal_price); ?></p>
+                          <?php endif; ?>
+                          <p class="campaign-card__price-green">¥<?php echo number_format((float) $discount_price); ?></p>
+                        </div>
+                      <?php endif; ?>
                     </div>
                   </div>
                 </li>
@@ -224,7 +253,7 @@
                   <p class="blog-card__title"><?php the_title(); // 投稿のタイトルを表示
                                               ?></p>
                   <p class="blog-card__text">
-                    <?php echo wp_trim_words(get_the_excerpt(), 85, '...'); // 投稿の抜粋を100語にトリムして表示
+                    <?php echo wp_trim_words(get_the_excerpt(), 90, '...'); // 投稿の抜粋を100語にトリムして表示
                     ?>
                   </p>
                 </div>
@@ -261,63 +290,66 @@
         );
         $custom_query = new WP_Query($args); // カスタムクエリを作成
         ?>
-        <?php if ($custom_query->have_posts()) : // 投稿があるかチェック
+        <?php if ($custom_query->have_posts()) : // 投稿があるかチェック 
         ?>
-          <?php while ($custom_query->have_posts()) : $custom_query->the_post(); // 投稿がある限りループ
+          <?php while ($custom_query->have_posts()) : $custom_query->the_post(); // 投稿がある限りループ 
           ?>
-            <?php if (have_rows('voice_card')) : while (have_rows('voice_card')) : the_row(); // カスタムフィールド「voice_card」があるかチェック
+            <?php
+            // カスタムタクソノミー 'voice_category' のタームを取得
+            $category = get_the_terms(get_the_ID(), 'voice_category');
+            $category_name = !empty($category) ? $category[0]->name : '';
+            // カスタムフィールドの値を取得
+            $voice_info = get_field('voice_info'); // カスタムフィールド "voice_info" の値を取得
+            $voice_age = isset($voice_info['voice_age']) ? $voice_info['voice_age'] : ''; // カスタムフィールド "voice_age" の値を取得
+            $voice_gender = isset($voice_info['voice_gender']) ? $voice_info['voice_gender'] : ''; // カスタムフィールド "voice_gender" の値を取得
+            // 140文字まで制限
+            $content = get_the_content();
+            $trimmed_content = mb_substr($content, 0, 200, 'UTF-8') . (mb_strlen($content) > 200 ? '...' : '');
             ?>
-                <li class="voice-list__item">
-                  <div class="voice-card">
-                    <div class="voice-card__flex">
-                      <div class="voice-card__content">
-                        <div class="voice-card__meta">
-                          <p class="voice-card__info"><?php echo esc_html(get_sub_field('voice_age')); ?>（<?php echo esc_html(get_sub_field('voice_gender')); ?>）</p> <!-- カスタムフィールド「voice_age」と「voice_gender」を表示 -->
-                          <p class="voice-card__category">
-                            <?php
-                            $categories = get_the_terms(get_the_ID(), 'voice_category'); // カテゴリーを取得
-                            if ($categories && !is_wp_error($categories)) {
-                              $category_list = array_map(function ($category) {
-                                return esc_html($category->name);
-                              }, $categories);
-                              echo implode(', ', $category_list); // カテゴリー名をカンマ区切りで表示
-                            }
-                            ?>
-                          </p>
-                        </div>
-                        <p class="voice-card__title">
-                          <?php
-                          $title = get_the_title(); // 投稿のタイトルを取得
-                          if (mb_strlen($title) > 20) {
-                            $title = mb_substr($title, 0, 20) . '...'; // タイトルが20文字以上の場合、20文字で切り取って「...」を追加
-                          }
-                          echo esc_html($title); // タイトルを表示
-                          ?>
-                        </p>
-                      </div>
-                      <div class="voice-card__img color-box js-color-box">
-                        <?php if (has_post_thumbnail()) : // アイキャッチ画像が設定されているかチェック 
-                        ?>
-                          <!-- アイキャッチ画像を 'full' サイズで出力 -->
-                          <?php the_post_thumbnail('full', ['alt' => the_title_attribute('echo=0'), 'width' => 151, 'height' => 117, 'loading' => 'lazy']); ?>
-                        <?php else : // アイキャッチ画像が設定されていない場合 
-                        ?>
-                          <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/noimage.jpg" alt="NoImage画像">
-                        <?php endif; ?>
-                      </div>
-                    </div>
-                    <p class="voice-card__text">
-                      <?php echo wpautop(esc_html(get_sub_field('voice_review'))); // カスタムフィールド「voice_review」を表示し、自動で段落を追加
+            <li class="voice-list__item">
+              <div class="voice-card">
+                <div class="voice-card__flex">
+                  <div class="voice-card__content">
+                    <div class="voice-card__meta">
+                      <?php if (!empty($voice_age) && !empty($voice_gender)) : // voice_ageとvoice_genderが両方設定されているかチェック 
                       ?>
-                    </p>
+                        <p class="voice-card__info">
+                          <?php echo esc_html($voice_age); ?>（<?php echo esc_html($voice_gender); ?>）
+                        </p>
+                      <?php endif; ?>
+                      <p class="voice-card__category">
+                        <?php echo esc_html($category_name); ?>
+                      </p>
+                    </div>
+                    <h2 class="voice-card__title voice-card__title--large">
+                      <?php
+                      $title = get_the_title(); // 投稿のタイトルを取得
+                      if (mb_strlen($title) > 20) {
+                        $title = mb_substr($title, 0, 20) . '...';
+                      }
+                      echo esc_html($title);
+                      ?>
+                    </h2>
                   </div>
-                </li>
-            <?php endwhile;
-            endif; ?>
-          <?php endwhile; // ループ終了
-          ?>
-          <?php wp_reset_postdata(); // カスタムクエリのデータをリセット
-          ?>
+                  <div class="voice-card__img color-box js-color-box">
+                    <!-- アイキャッチ画像があるかチェック -->
+                    <?php if (has_post_thumbnail()) : ?>
+                      <!-- アイキャッチ画像があれば 'full' サイズで出力 -->
+                      <?php the_post_thumbnail('full', ['alt' => the_title_attribute('echo=0'), 'width' => 151, 'height' => 117, 'loading' => 'lazy']); ?>
+                    <?php else : ?>
+                      <!-- アイキャッチ画像がなければ NoImage 画像を出力 -->
+                      <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/noimage.jpg" alt="NoImage画像">
+                    <?php endif; ?>
+                  </div>
+                </div>
+                <p class="voice-card__text">
+                  <?php echo wp_trim_words(strip_shortcodes(get_the_content()), 115, '...'); // 投稿の内容を要約し、ショートコードを除去 
+                  ?>
+                </p>
+              </div>
+            </li>
+          <?php endwhile; ?>
+          <?php wp_reset_postdata(); ?>
         <?php else : ?>
           <li>
             <p>記事が見つかりませんでした。</p>

@@ -18,7 +18,7 @@
     <div class="tag tag-layout">
         <div class="tag__inner inner">
             <ul class="tag__items">
-                <li class="tag__menu-item <?php if (is_post_type_archive('voice')) : ?> tag__menu-item--green <?php endif; ?>">
+                <li class="tag__menu-item <?php if (is_post_type_archive('voice')) echo 'tag__menu-item--green'; ?>">
                     <a href="<?php echo esc_url(get_post_type_archive_link('voice')); ?>">ALL</a>
                 </li>
                 <?php
@@ -26,18 +26,12 @@
                     'taxonomy' => 'voice_category',
                     'hide_empty' => false,
                 ));
-                if (!empty($terms)) :
-                    foreach ($terms as $term) :
+                if (!empty($terms)) {
+                    foreach ($terms as $term) {
                         $active_class = is_tax('voice_category', $term->slug) ? 'tag__menu-item--green' : '';
-                ?>
-                        <li class="tag__menu-item <?php echo esc_attr($active_class); ?>">
-                            <a href="<?php echo esc_url(get_term_link($term)); ?>">
-                                <?php echo esc_html($term->name); ?>
-                            </a>
-                        </li>
-                <?php
-                    endforeach; // ループ終了
-                endif; // タームが存在するかチェック終了
+                        echo '<li class="tag__menu-item ' . esc_attr($active_class) . '"><a href="' . esc_url(get_term_link($term)) . '">' . esc_html($term->name) . '</a></li>';
+                    }
+                }
                 ?>
             </ul>
         </div>
@@ -55,19 +49,23 @@
                         $category = get_the_terms(get_the_ID(), 'voice_category');
                         $category_name = !empty($category) ? $category[0]->name : '';
                         // カスタムフィールドの値を取得
-                        $voice_age = get_field('voice_card_voice_age'); // カスタムフィールド "voice_age" の値を取得
-                        $voice_gender = get_field('voice_card_voice_gender'); // カスタムフィールド "voice_gender" の値を取得
-                        $voice_review = get_field('voice_card_voice_review'); // カスタムフィールド "voice_review" の値を取得
+                        $voice_info = get_field('voice_info'); // カスタムフィールド "voice_info" の値を取得
+                        $voice_age = isset($voice_info['voice_age']) ? $voice_info['voice_age'] : ''; // カスタムフィールド "voice_age" の値を取得
+                        $voice_gender = isset($voice_info['voice_gender']) ? $voice_info['voice_gender'] : ''; // カスタムフィールド "voice_gender" の値を取得
                         // 140文字まで制限
-                        $trimmed_voice_review = mb_substr($voice_review, 0, 140, 'UTF-8') . (mb_strlen($voice_review) > 140 ? '...' : '');
+                        $content = get_the_content();
+                        $trimmed_content = mb_substr($content, 0, 200, 'UTF-8') . (mb_strlen($content) > 200 ? '...' : '');
                 ?>
                         <li class="voice-card">
                             <div class="voice-card__flex">
                                 <div class="voice-card__content">
                                     <div class="voice-card__meta">
-                                        <p class="voice-card__info">
-                                            <?php echo esc_html($voice_age); ?>（<?php echo esc_html($voice_gender); ?>）
-                                        </p>
+                                        <?php if (!empty($voice_age) && !empty($voice_gender)) : // voice_ageとvoice_genderが両方設定されているかチェック 
+                                        ?>
+                                            <p class="voice-card__info">
+                                                <?php echo esc_html($voice_age); ?>（<?php echo esc_html($voice_gender); ?>）
+                                            </p>
+                                        <?php endif; ?>
                                         <p class="voice-card__category">
                                             <?php echo esc_html($category_name); ?>
                                         </p>
@@ -93,16 +91,15 @@
                                     <?php endif; ?>
                                 </div>
                             </div>
-                            <p class="voice-card__text">
-                                <?php echo wpautop(esc_html($trimmed_voice_review)); ?>
-                            </p>
+                            <div class="voice-card__text">
+                                <?php the_content(); // 投稿の内容を表示 ?>
+                            </div>
                         </li>
+
                     <?php endwhile; ?>
                 <?php else : ?>
                     <li>
-                        <p>
-                            投稿がありません。
-                        </p>
+                        <p>投稿がありません。</p>
                     </li>
                 <?php endif; ?>
             </ul>

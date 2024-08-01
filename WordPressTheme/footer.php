@@ -4,6 +4,7 @@ if (!is_404() && !is_page('contact')) {
     get_template_part('contact-section');
 }
 ?>
+
 <!-- トップに戻るボタン -->
 <div class="top-button top-button-layout js-top-button">
     <a href="#top">

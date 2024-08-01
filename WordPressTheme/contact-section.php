@@ -9,28 +9,39 @@
         <div class="common-contact__access-info">
           <div class="common-contact__access-text-wrap">
             <?php
-            // 「contact-section」ページのIDを取得
-            $contact_page = get_page_by_path('contact-section'); // ここでスラッグを使用してページを取得
-            if ($contact_page) :
-              $contact_page_id = $contact_page->ID;
-              // ACFフィールドから情報を取得
-              $contact_info = get_field('contact_information', $contact_page_id);
-              // 情報を表示
-              if ($contact_info) :
-                $address = $contact_info['address'];
-                $tel = $contact_info['tel'];
-                $open = $contact_info['open'];
-                $closed = $contact_info['closed'];
+            // フロントページのIDを取得
+            $front_page_id = get_option('page_on_front');
+
+            // ACFフィールドから情報を取得
+            $contact_info = get_field('contact_information', $front_page_id);
+
+            if ($contact_info) :
+              $address = isset($contact_info['address']) ? $contact_info['address'] : '';
+              $tel = isset($contact_info['tel']) ? $contact_info['tel'] : '';
+              $open = isset($contact_info['open_time']) ? $contact_info['open_time'] : '';
+              $close = isset($contact_info['close_time']) ? $contact_info['close_time'] : '';
+              $closed = isset($contact_info['closed']) ? $contact_info['closed'] : '';
+
+              // 時間の表示形式を確認して変換
+              $open_time = !empty($open) ? date('G:i', strtotime($open)) : '';
+              $close_time = !empty($close) ? date('G:i', strtotime($close)) : '';
             ?>
+              <?php if ($address) : ?>
                 <p class="common-contact__access-text"><?php echo esc_html($address); ?></p>
+              <?php endif; ?>
+              <?php if ($tel) : ?>
                 <p class="common-contact__access-text"><a href="tel:<?php echo esc_attr($tel); ?>">TEL: <?php echo esc_html($tel); ?></a></p>
-                <p class="common-contact__access-text">営業時間: <?php echo esc_html($open); ?></p>
+              <?php endif; ?>
+              <?php if ($open_time && $close_time) : ?>
+                <p class="common-contact__access-text">営業時間: <?php echo esc_html($open_time) . ' - ' . esc_html($close_time); ?></p>
+              <?php elseif ($open_time) : ?>
+                <p class="common-contact__access-text">営業時間: <?php echo esc_html($open_time); ?></p>
+              <?php endif; ?>
+              <?php if ($closed) : ?>
                 <p class="common-contact__access-text">定休日: <?php echo esc_html($closed); ?></p>
-              <?php else : ?>
-                <p class="common-contact__access-text">情報が設定されていません。</p>
               <?php endif; ?>
             <?php else : ?>
-              <p class="common-contact__access-text">お問い合わせ情報ページが見つかりません。</p>
+              <p class="common-contact__access-text">情報が設定されていません。</p>
             <?php endif; ?>
           </div>
           <?php if (!empty($address)) : // addressが設定されているかチェック ?>
