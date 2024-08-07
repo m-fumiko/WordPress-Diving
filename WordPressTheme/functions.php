@@ -82,7 +82,7 @@ add_action('after_setup_theme', 'my_theme_setup');
 function set_campaign_posts_per_page($query)
 {
     if (!is_admin() && $query->is_main_query() && (is_post_type_archive('campaign') || is_tax('campaign_category'))) {
-        $query->set('posts_per_page', 6);
+        $query->set('posts_per_page', 4);
     }
 }
 add_action('pre_get_posts', 'set_campaign_posts_per_page');
@@ -410,7 +410,6 @@ add_action('pre_get_posts', 'custom_orderby');
 
 
 /* ダッシュボードにオリジナルウィジェットを追加する */
-// ダッシュボードにオリジナルウィジェットを追加する
 add_action('wp_dashboard_setup', 'custom_dashboard_widgets');
 function custom_dashboard_widgets() {
     wp_add_dashboard_widget('custom_theme_options_widget', '編集メニュー', 'custom_dashboard_widget_function');
