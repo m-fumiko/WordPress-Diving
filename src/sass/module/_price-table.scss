@@ -1,16 +1,20 @@
 @use "global" as *;
 
-.price-list__row {
+.price-table__content {
+    border: 1px solid $color-green;
     @include mq("md") {
-        display: table-row;
+        display: flex;
     }
 }
 
-.price-list__row + .price-list__row {
-    border-top: 1px solid $color-green;
+.price-table__content + .price-table__content {
+    margin-top: rem(40);
+    @include mq("md") {
+        margin-top: rem(80);
+    }
 }
 
-.price-list__title {
+.price-table__title {
     padding-top: rem(12);
     padding-right: rem(8);
     padding-bottom: rem(12);
@@ -28,19 +32,21 @@
         padding-right: rem(8);
         padding-bottom: rem(70);
         padding-left: rem(8);
-        display: table-cell;
-        width: 28.5714285714%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: rem(200);
     }
 }
 
-.price-list__title span {
+.price-table__title span {
     position: relative;
 }
 
-.price-list__title span::before {
+.price-table__title span::before {
     position: absolute;
     content: '';
-    top: 39%;
+    top: 47%;
     transform: translateY(-50%);
     left: rem(-33);
     mask-image: url(../images/ocean_sea_icon1.svg);
@@ -59,7 +65,16 @@
     }
 }
 
-.price-list__item {
+.price-table__items {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.price-table__row + .price-table__row {
+    border-top: 1px solid $color-green;
+}
+
+.price-table__item {
     padding-top:rem(6);
     padding-right: rem(8);
     padding-bottom: rem(5);
@@ -68,13 +83,14 @@
     font-size: rem(16);
     font-weight: $regular;
     line-height: 1.5;
+    text-align: center;
     @include mq("md") {
+        width: 68%;
         text-align: left;
-        width: 48.433048%;
     }
 }
 
-.price-list__value {
+.price-table__value {
     padding-top: rem(18);
     padding-right: rem(16);
     padding-bottom: rem(18);
@@ -87,75 +103,15 @@
     line-height: 1;
     border-left: 1px solid $color-green;
     @include mq("md") {
-        width: 23.0769231%;
+        width: 32%;
     }
 }
 
-.price-list__item,
-.price-list__value {
-    display: inline-block;
+.price-table__item,
+.price-table__value {
     min-height: rem(60);
     @include mq("md") {
-        display: table-cell;
         padding: rem(17) rem(16);
     }
 }
 
-
-// ワードプレススタイル調整用
-// .price-list__item {
-//     line-height: 1.5;
-//     // display: block;
-//     @include mq("md") {
-//         line-height: 1.5;
-//     }
-// }
-
-// .special-course {
-//     line-height: 3;
-//     // display: block;
-//     @include mq("md") {
-//         line-height: 1.5;
-//     }
-// }
-
-// .u-mobile-price {
-//     display: block;
-
-//     @include mq("md") {
-//       display: none;
-//     }
-//   }
-
-// .price-list__item span.u-mobile-price {
-//     display: block;
-//     @include mq("md") {
-//         display: none;
-//     }
-// }
-
-// .price-list__item {
-//     line-height: 3;
-//     @include mq("md") {
-//         line-height: 1.5;
-//     }
-// }
-
-// .price-list__item,
-// .price-list__value {
-//     display: inline-block;
-//     min-height: rem(60);
-//     @include mq("md") {
-//         display: table-cell;
-//         padding: rem(17) rem(16);
-//     }
-// }
-
-// .price-list__item span {
-//     display: inline;
-// }
-
-// /* スペースを含むu-mobile-priceクラスを非表示にする */
-// .no-space .u-mobile-price {
-//     display: none;
-// }

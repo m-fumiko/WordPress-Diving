@@ -385,6 +385,8 @@
             'course_title2' => 'details2',
             'course_title3' => 'details3',
             'course_title4' => 'details4',
+            'course_title5' => 'details5',
+            'course_title6' => 'details6',
           ];
           // 各コースをループ処理
           foreach ($courses as $title_key => $details_key) :
